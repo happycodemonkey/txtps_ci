@@ -12,6 +12,7 @@
 				show_404();
 			}
 
+			$this->load->helper('url');
 			$data['title'] = ucfirst($page);
 			
 			$this->load->view('templates/header', $data);
