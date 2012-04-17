@@ -13,9 +13,9 @@
 <body>
 <div class="header_menu">
 	<a href="http://www.tacc.utexas.edu"><?php echo image_asset('tacc_s.png'); ?></a>
-	<a href="/pages/about">About</a>
+	<a href="/pages/view/about">About</a>
 	<a href="/pages/contact">Contact</a>
-	<a href="/pages/help">Help</a>
+	<a href="/pages/view/help">Help</a>
 <?php 
 	if ($this->ion_auth->logged_in()) {
 		$user = $this->ion_auth->user()->row();
@@ -26,7 +26,9 @@
 	}
 ?>
 </div>
+<a href="/pages/view/home">
 <?php echo image_asset('TxTPS_s.png'); ?>
+</a>
 <h2>Texas Test Problem Server</h2>
 <ul id="nav">
 	<li>
@@ -53,10 +55,10 @@
 	<li>
 		<a href="#">Explore</a>
 		<ul>
-			<li><a href="#">About TxTPS</a></li>
-			<li><a href="#">Contact Us</a></li>
+			<li><a href="/pages/view/about">About TxTPS</a></li>
+			<li><a href="/pages/contact">Contact Us</a></li>
 			<li><a href="#">News</a></li>
-			<li><a href="#">FAQ</a></li>
+			<li><a href="/pages/view/faq">FAQ</a></li>
 		</ul>
 		<div class="clear"></div>
 	</li>
