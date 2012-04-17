@@ -17,6 +17,9 @@
 	if ($this->ion_auth->logged_in()) {
 		$user = $this->ion_auth->user()->row();
 		echo $user->email;
+		if ($this->ion_auth->is_admin()) {
+			echo " (Admin) ";
+		}
 		echo " <a href='/users/logout'>Logout</a> ";
 	} else {
 		echo " <a href='/users/login'>Login</a> ";
@@ -41,7 +44,7 @@
 	<li>
 		<a href="#">Help</a>
 		<ul>
-			<li><a href="#">File Formats</a></li>
+			<li><a href="/pages/view/formats">File Formats</a></li>
 			<li><a href="#">Using TxTPS</a></li>
 			<li><a href="#">Software</a></li>
 		</ul>
@@ -56,6 +59,15 @@
 		</ul>
 		<div class="clear"></div>
 	</li>
+<?php if ($this->ion_auth->is_admin()) : ?>
+	<li>
+		<a href="#">Admin</a>
+		<ul>
+			<li><a href="/users/manage">Manage Users</a></li>
+		</ul>
+		<div class="clear"></div>
+	</li>
+<?php endif; ?>
 </ul>
 <div class="clear"></div>
 <hr />

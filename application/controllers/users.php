@@ -58,5 +58,27 @@
 			$this->load->helper('url');
 			redirect('pages/view/home');
 		}
+
+		public function manage($action = null, $id = null) {
+			if ($this->ion_auth->is_admin()) {
+				if ($action && $id) {
+					if ($action == 'admin') {
+						if (!$this->ion_auth->in_group('admin', $id)) {
+							// @TODO: don't hardcode....
+							$this->ion_auth->add_to_group(1, $id);
+						} else {
+							$this->ion_auth->remove_from_group(1, $id);
+						}
+					} else if ($action == 'delete') {
+						$this->ion_auth->delete_user($id);
+					}
+				} 
+				$this->load->view('templates/header');
+				$this->load->view('users/manage');
+				$this->load->view('templates/footer');
+			} else {
+				show_404();
+			}
+		}
 	}
 ?>
