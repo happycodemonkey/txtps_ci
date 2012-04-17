@@ -50,5 +50,13 @@
 			$this->load->view('users/register.php', $data);
 			$this->load->view('templates/footer', $data);
 		}
+
+		public function logout() {
+			$data['title'] = 'Logout';
+
+			$this->ion_auth->logout();
+			$this->load->helper('url');
+			redirect('pages/view/home');
+		}
 	}
 ?>
