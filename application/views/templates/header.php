@@ -1,21 +1,33 @@
 <html>
 <head>
-<script type="text/javascript" src="assets/js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="assets/js/site.js"></script>
-<style src="assets/css/site.css"></style>
+<?php
+	$this->load->helper('asset'); #modified asset helper
+	echo js_asset('jquery-1.7.2.min.js');
+	echo js_asset('site.js');
+	echo css_asset('site.css');
+
+	$this->load->library('ion_auth');
+?>
 <title>TxTPS - Texas Test Problem Server</title>
 </head>
 <body>
 <div class="header_menu">
-	<a href="http://tacc.utexas.edu"><img src="assets/images/tacc_s.png" /></a>
-	<a href="/about">About</a>
-	<a href="/contact">Contact</a>
-	<a href="/help">Help</a>
-	<a href="/login">Login</a>
-	<a href="/register">Register</a>
+	<a href="http://www.tacc.utexas.edu"><?php echo image_asset('tacc_s.png'); ?></a>
+	<a href="/pages/about">About</a>
+	<a href="/pages/contact">Contact</a>
+	<a href="/pages/help">Help</a>
+<?php 
+	if ($this->ion_auth->logged_in()) {
+		$user = $this->ion_auth->user()->row();
+		echo $user->email;
+	} else {
+		echo " <a href='/users/login'>Login</a> ";
+		echo " <a href='/users/register'>Register</a> ";
+	}
+?>
 </div>
-<img src="assets/images/TxTPS_s.png" />
-<h2>Texas Test Problem Server - Logo</h2>
+<?php echo image_asset('TxTPS_s.png'); ?>
+<h2>Texas Test Problem Server</h2>
 <ul id="nav">
 	<li>
 		<a href="#">Create</a>
