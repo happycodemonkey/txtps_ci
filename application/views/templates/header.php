@@ -33,16 +33,16 @@
 <h2>Texas Test Problem Server</h2>
 <ul id="nav">
 	<li>
-		<a href="#">Problems</a>
+		<a href="/problems/menu">Problems</a>
 		<ul>
 			<li><a href="#">Stored Problems</a></li>
-			<li><a href="#">Collections</a></li>
-			<li><a href="#">Generators</a></li>
+			<li><a href="/collections/view">Collections</a></li>
+			<li><a href="/generators/view">Generators</a></li>
 		</ul>
 		<div class="clear"></div>
 	</li>
 	<li>
-		<a href="#">Help</a>
+		<a href="/pages/view/help_menu">Help</a>
 		<ul>
 			<li><a href="/pages/view/formats">File Formats</a></li>
 			<li><a href="#">Using TxTPS</a></li>
@@ -51,7 +51,7 @@
 		<div class="clear"></div>
 	</li>
 	<li>
-		<a href="#">About</a>
+		<a href="/pages/view/about_menu">About</a>
 		<ul>
 			<li><a href="/pages/view/about">About TxTPS</a></li>
 			<li><a href="/pages/contact">Contact Us</a></li>
@@ -61,9 +61,12 @@
 	</li>
 <?php if ($this->ion_auth->is_admin()) : ?>
 	<li>
-		<a href="#">Admin</a>
+		<a href="/pages/view/admin_menu">Admin</a>
 		<ul>
-			<li><a href="/users/manage">Manage Users</a></li>
+			<li><a href="/users/manage">Users</a></li>
+			<li><a href="/collections/manage">Collections</a></li>
+			<li><a href="/generators/manage">Generators</a></li>
+			<li><a href="/problems/manage">Problems</a></li>
 		</ul>
 		<div class="clear"></div>
 	</li>

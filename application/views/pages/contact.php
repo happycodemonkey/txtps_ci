@@ -1,7 +1,7 @@
+<h2>Contact us</h2>
 <?php
 	$this->load->helper('form');
 
-	echo "<h2>Contact us</h2>";
 	echo form_open('pages/contact/send');
 	echo form_label('<b>Your Email</b>');
 	echo "<br />";
