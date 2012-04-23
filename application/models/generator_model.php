@@ -13,7 +13,7 @@
 			return $this->db->get('generator');
 		}
 
-		function get_generators($filter, $key) {
+		function get_generators($filter = null, $key = null) {
 			if ($filter && $key) {
 				$this->db->where($filter, $key);
 			}

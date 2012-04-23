@@ -12,4 +12,10 @@ $(document).ready(function () {
 		}
 	);
 	
+	$('.accordian_header').click(
+		function() {
+			$(this).next('div.accordian').toggle();
+		}
+	);
+	
 });
