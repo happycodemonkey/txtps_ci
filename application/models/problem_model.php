@@ -6,12 +6,20 @@
 			$this->load->database();
 		}
 
-		function get_problems($filter = null, $key = null) {
+		function get_problem($filter = null, $key = null) {
 			if ($filter && $key) {
 				$this->db->where($filter, $key);
 			}
 			$this->db->order_by('generator_id');
 			return $this->db->get('product');
+		}
+
+		function delete_problem($problem_id) {
+			return $this->db->delete('product', array($id => $problem_id));
+		}
+
+		function add_problem($new_problem) {
+			$this->db->insert('product', $new_problem);
 		}
 	}
 ?>

@@ -1,8 +1,8 @@
-<h2>Collection Management</h2>
+<h1>Collection Management</h1>
 
 <a href="/collections/add">Create a new collection</a>
 
-<h3>Existing Collections</h3>
+<h2>Existing Collections</h2>
 <table width=80%>
 <tr>
 	<td><b>Collection name</b></td>

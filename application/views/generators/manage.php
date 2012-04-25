@@ -1,3 +1,9 @@
+<h1>Generator Management</h1>
+
+<a href="/generators/add">Add a new generator</a>
+
+<h2>Existing Generators</h2>
+
 <?php
 	$current_collection = 0;
 	foreach ($generators->result() as $generator) {
@@ -11,11 +17,11 @@
 			print "<span class='accordian_header'><h2>" . $collections[$generator->collection_id] . "</h2></span>";
 			print "<div class='accordian'>";
 		}
-		print "<table><tr>";
+		print "<table width=50%><tr>";
 		print "<td>" . $generator->name . "</td>";
-		print "<td><a href='/generators/view/id/" . $generator->id . "'>View</a></td>";
-		print "<td><a href='/generators/delete/" . $generator->id . "'>Delete</a></td>";
-		print "<td><a href='/generators/edit/" . $generator->id . "'>Edit</a></td>";
+		print "<td width=10%><a href='/generators/view/id/" . $generator->id . "'>View</a></td>";
+		print "<td width=10%><a href='/generators/edit/" . $generator->id . "'>Edit</a></td>";
+		print "<td width=10%><a href='/generators/delete/" . $generator->id . "'>Delete</a></td>";
 		print "</tr></table>";
 	}
 ?>

@@ -4,6 +4,7 @@
 	$this->load->helper('asset'); #modified asset helper
 	echo js_asset('jquery-1.7.2.min.js');
 	echo js_asset('site.js');
+	echo js_asset('MathJax/MathJax.js?config=default');
 	echo css_asset('site.css');
 
 	$this->load->library('ion_auth');

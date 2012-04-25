@@ -13,7 +13,7 @@
 			return $this->db->get('generator');
 		}
 
-		function get_generators($filter = null, $key = null) {
+		function get_generator($filter = null, $key = null) {
 			if ($filter && $key) {
 				$this->db->where($filter, $key);
 			}
@@ -21,5 +21,17 @@
 			return $this->db->get('generator');
 		}
 
+		function delete_generator($generator_id) {
+			return $this->db->delete('generator', array('id' => $generator_id));
+		}
+
+		function add_generator($new_generator) {
+			return $this->db->insert('generator', $new_generator);
+		}
+
+		function get_arguments($generator_id) {
+			$this->db->where('generator_id', $generator_id);
+			return $this->db->get('arguments');
+		}
 	}
 ?>

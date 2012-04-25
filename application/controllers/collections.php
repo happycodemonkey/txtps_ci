@@ -27,8 +27,7 @@
 		}
 
 		public function add() {
-
-			if($this->input->post('collection_name') && $this->input->post('collection_description')) {
+			if ($this->input->post('add_collection')) {
 				$this->load->model('Collection_model');
 				if ($this->Collection_model->create_collection(
 					$this->input->post('collection_name'), 
