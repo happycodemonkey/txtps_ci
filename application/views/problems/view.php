@@ -1,46 +1,31 @@
-<h2>
-<?php
-	print "<a href='/collections/view/" . $collection->id . "'>" . $collection->name . "</a> / <a href='/generators/view/id/" . $generator->id . "'>" . $generator->name . "</a> / " . $problem->identifier;
-?>
-</h2>
+<h1>Problems</h1>
 
-<h3>Generator Description</h3>
+<a href="/generators/view">Go to a generator</a> to add a problem
 
 <?php
-	print $generator->description;
-?>
+	$current_generator = 0;
+	foreach ($problems as $problem) {
+		if ($current_generator != $problem->generator_id && array_key_exists($problem->generator_id, $generators)) {
+			if ($current_generator != 0) {
+				print "</div>";
+			}
+			
+			$current_generator = $problem->generator_id;
+			$generator = $generators[$problem->generator_id];
 
-<h3>Images</h3>
-
-<?php
-
-	if (empty($images)) {
-		print "There are no images for this problem.";
-	} else {
-		foreach ($images as $image) {
-			//load
+			print "<h2 class='accordian_header'>" . $collections[$generator[1]] . " : " . $generator[0] . "</h2>";
+			print "<div class='accordian'>";
 		}
-	}
-?>
 
-<h3>Arguments</h3>
-
-<?php
-	foreach (explode(",", trim($problem->arguments, "{}")) as $arguments) {
-		$value_pair = explode(":", $arguments);
-		print trim($value_pair[0], '"') . " = " . trim($value_pair[1], '"') . "<br />";
-	}
-?>
-
-<h3>Files</h3>
-
-<?php
-
-	if (empty($files)) {
-		print "There are no files for this problem.";
-	} else {
-		foreach ($files as $file) {
-			//load
+		print "<table width=50%><tr>";
+		if ($this->ion_auth->is_admin()) {
+			print "<td>" . $problem->identifier . "</td>";
+			print "<td width=10%><a href='/problems/view/" . $problem->id . "'>View</a></td>";
+			print "<td width=10%><a href='/problems/edit/" . $problem->id . "'>Edit</a></td>";
+			print "<td width=10%><a href='/problems/delete/" . $problem->id . "'>Delete</a></td>";
+		} else {
+			print "<td><a href='/problems/view/" . $problem->id . "'>" . $problem->identifier . "</a></td>";
 		}
+		print "</tr></table>";
 	}
 ?>

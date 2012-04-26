@@ -9,6 +9,8 @@
 		function get_problem($filter = null, $key = null) {
 			if ($filter && $key) {
 				$this->db->where($filter, $key);
+			} else if ($filter) {
+				$this->db->where('id', $filter);
 			}
 			$this->db->order_by('generator_id');
 			return $this->db->get('product');

@@ -1,45 +1,29 @@
 <?php
 	class Generators extends CI_CONTROLLER {
-		public function manage($filter = null, $key = null) {
-			if ($this->ion_auth->is_admin()) {
-				$this->load->model('Generator_model');
-				$this->load->model('Collection_model');
-
-				$data['generators'] = $this->Generator_model->get_generator($filter, $key);
-				
-				$collections_data = array();
-				foreach ($this->Collection_model->get_collection()->result() as $collection) {
-					$collections_data[$collection->id] = $collection->name;
-				}
-
-				$data['collections'] = $collections_data;
-				$data['title'] = 'Manage Generators';
-
-				$this->load->view('templates/header', $data);
-				$this->load->view('generators/manage', $data);
-				$this->load->view('templates/footer', $data);
-			} else {
-				show_404();
-			}
-		}
-
-		public function view($filter = null, $key = null) {
+		public function view($generator_id = null) {
 			$this->load->model('Generator_model');
+			$this->load->model('Collection_model');
 
-		 	$data['generators'] = $this->Generator_model->get_generator($filter, $key);
-			if ($filter == "collection_id") {
-				$this->load->model('Collection_model');
-				$data['collection'] = $this->Collection_model->get_collection($key)->result();
-			} else {
-				$this->load->model('Problem_model');
-				$data['problems'] = $this->Problem_model->get_problem('generator_id', $key);
+			$data['generators'] = $this->Generator_model->get_generator($generator_id)->result();
+			
+			$collections_data = array();
+			foreach ($this->Collection_model->get_collection()->result() as $collection) {
+				$collections_data[$collection->id] = $collection->name;
 			}
-			$data['title'] = 'Generators';
-			
+
+			$data['collections'] = $collections_data;
+
 			$this->load->view('templates/header', $data);
-			$this->load->view('generators/view', $data);
+			if ($generator_id) {
+				$this->load->model('Problem_model');
+				$this->load->model('Resource_model');
+				$data['problems'] = $this->Problem_model->get_problem('generator_id', $generator_id)->result();
+				$data['images'] = $this->Resource_model->get_resource('image', 'generator', $generator_id)->result();
+				$this->load->view('generators/profile', $data);
+			} else {
+				$this->load->view('generators/view', $data);
+			}
 			$this->load->view('templates/footer', $data);
-			
 		}
 
 		public function delete($generator_id) {

@@ -36,7 +36,7 @@
 	<li>
 		<a href="/problems/menu">Problems</a>
 		<ul>
-			<li><a href="#">Stored Problems</a></li>
+			<li><a href="/problems/view">Stored Problems</a></li>
 			<li><a href="/collections/view">Collections</a></li>
 			<li><a href="/generators/view">Generators</a></li>
 		</ul>
@@ -65,9 +65,6 @@
 		<a href="/pages/view/admin_menu">Admin</a>
 		<ul>
 			<li><a href="/users/manage">Users</a></li>
-			<li><a href="/collections/manage">Collections</a></li>
-			<li><a href="/generators/manage">Generators</a></li>
-			<li><a href="/problems/manage">Problems</a></li>
 		</ul>
 		<div class="clear"></div>
 	</li>
