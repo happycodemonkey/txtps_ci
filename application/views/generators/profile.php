@@ -1,26 +1,24 @@
 <?php
-	foreach ($generators as $generator) {
-		print "<h1 class='accordian_header'><a href='/collections/view/" . $generator->collection_id . "'>" . $collections[$generator->collection_id] . "</a> / " . $generator->name . "</h1>";
-		print "<a href='/problems/add/" . $generator->id . "'>Add a problem</a><br /><br />";
-		print "<h2>Description</h2>";
-		print $generator->description;
-		print "<h2>Images</h2>";
-		if (count($images) == 0) {
-			print "There are no images for this generator.";	
-		} else {
-			foreach ($images as $image) {
-				print "<img src='" . $image_path . $image->name . "' />";	
-			}
+	print "<h1 class='accordian_header'><a href='/collections/profile/" . $generators->collection_id . "'>" . $collections->name . "</a> / " . $generators->name . "</h1>";
+	print "<h2>Description</h2>";
+	print $generators->description;
+	print "<h2>Images</h2>";
+	if (count($images) == 0) {
+		print "There are no images for this generator.";	
+	} else {
+		foreach ($images as $image) {
+			print "<img src='" . $image->name . "' />";	
 		}
-		print "<h2 class='accordian_header'>Problems</h2>";
-		if (count($problems) == 0) {
-			print "There are no problems for this generator."; 
-		} else {
-			print "<div class='accordian'>";
-			foreach ($problems as $problem) {
-				print $problem->identifier . "<br />";
-			}
-			print "</div>";
+	}
+	print "<h2 class='accordian_header'>Problems</h2>";
+	print "<a href='/problems/add/" . $generators->id . "'>Add a problem</a><br /><br />";
+	if (count($problems) == 0) {
+		print "There are no problems for this generator."; 
+	} else {
+		print "<div class='accordian'>";
+		foreach ($problems as $problem) {
+			print "<a href='/problems/profile/" . $problem->id . "'>" . $problem->identifier . "</a><br />";
 		}
+		print "</div>";
 	}
 ?>

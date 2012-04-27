@@ -1,29 +1,39 @@
 <?php
 	class Generators extends CI_CONTROLLER {
-		public function view($generator_id = null) {
+		public function view() {
 			$this->load->model('Generator_model');
 			$this->load->model('Collection_model');
 
-			$data['generators'] = $this->Generator_model->get_generator($generator_id)->result();
+			$data['generators'] = $this->Generator_model->get_generator()->result();
 			
+			$this->load->view('templates/header');
+
 			$collections_data = array();
 			foreach ($this->Collection_model->get_collection()->result() as $collection) {
 				$collections_data[$collection->id] = $collection->name;
 			}
 
 			$data['collections'] = $collections_data;
+			$this->load->view('generators/view', $data);
+			$this->load->view('templates/footer');
+		}
 
-			$this->load->view('templates/header', $data);
-			if ($generator_id) {
-				$this->load->model('Problem_model');
-				$this->load->model('Resource_model');
-				$data['problems'] = $this->Problem_model->get_problem('generator_id', $generator_id)->result();
-				$data['images'] = $this->Resource_model->get_resource('image', 'generator', $generator_id)->result();
-				$this->load->view('generators/profile', $data);
-			} else {
-				$this->load->view('generators/view', $data);
-			}
-			$this->load->view('templates/footer', $data);
+		public function profile($generator_id) {
+			$this->load->model('Generator_model');
+			$this->load->model('Collection_model');
+
+			$generators = array_shift($this->Generator_model->get_generator($generator_id)->result());
+			
+			$this->load->view('templates/header');
+			$this->load->model('Problem_model');
+			$this->load->model('Resource_model');
+			$data['generators'] = $generators;
+			$data['collections'] = array_shift($this->Collection_model->get_collection($generators->collection_id)->result());
+			$data['problems'] = $this->Problem_model->get_problem('generator_id', $generator_id)->result();
+			$data['images'] = $this->Resource_model->get_resource('image', 'generator', $generator_id)->result();
+			$this->load->view('generators/profile', $data);
+			$this->load->view('templates/footer');
+
 		}
 
 		public function delete($generator_id) {
@@ -31,7 +41,7 @@
 			$this->Generator_model->delete_generator($generator_id);
 		}
 
-		public function add() {
+		public function add($collection_id = null) {
 			$this->load->model('Collection_model');
 			$this->load->model('Generator_model');
 			if ($this->input->post('add_generator')) {
@@ -64,6 +74,10 @@
 				}
 			}
 
+			if ($collection_id) {
+				$data['collection_id'] = $collection_id;
+			}
+
 			$dropdown_options = array();
 			foreach ($this->Collection_model->get_collection()->result() as $collection) {
 				$dropdown_options[$collection->id] = $collection->name;
@@ -71,9 +85,9 @@
 
 			$data['options'] = $dropdown_options;
 
-			$this->load->view('templates/header', $data);
+			$this->load->view('templates/header');
 			$this->load->view('generators/add', $data);
-			$this->load->view('templates/footer', $data);
+			$this->load->view('templates/footer');
 
 		}
 

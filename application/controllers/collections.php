@@ -1,28 +1,31 @@
 <?php
 	class Collections extends CI_CONTROLLER {
-		public function view($collection_id = null) {
+		public function view() {
 			$this->load->model('Collection_model');
 			$this->load->model('Generator_model');
-			$collections = $this->Collection_model->get_collection($collection_id);
-			if ($collections) {
-				$collection_data = array();
-				$gens_data = array();
-				foreach ($collections->result() as $collection) {
-					$gens_data[$collection->id] = $this->Generator_model->get_num_generators($collection->id)->result();
-					$collection_data[$collection->id] = $collection->name;
-				}
+			$collections = $this->Collection_model->get_collection()->result();
+			$data['collections'] = $collections;
+
+			$this->load->view('templates/header');
+			$gens_data = array();
+			foreach ($collections as $collection) {
+				$gens_data[$collection->id] = $this->Generator_model->get_num_generators($collection->id)->result();
 			}
 
-			$data['collections'] = $collection_data;
-			$data['generators'] = $gens_data;
+			$data['num_gens'] = $gens_data;
+			$this->load->view('collections/view', $data);
+			$this->load->view('templates/footer');
+		}
 
-			$this->load->view('templates/header', $data);
-			if ($collection_id) {
-				$this->load->view('collections/profile', $data);
-			} else {
-				$this->load->view('collections/view', $data);
-			}
-			$this->load->view('templates/footer', $data);
+		public function profile($collection_id) {
+			$this->load->model('Collection_model');
+			$this->load->model('Generator_model');
+			$data['collections'] = array_shift($this->Collection_model->get_collection($collection_id)->result());
+
+			$this->load->view('templates/header');
+			$data['generators'] = $this->Generator_model->get_generator('collection_id', $collection_id)->result();
+			$this->load->view('collections/profile', $data);
+			$this->load->view('templates/footer');
 		}
 
 		public function add() {
@@ -32,16 +35,15 @@
 					$this->input->post('collection_name'), 
 					$this->input->post('collection_description'))
 				) { 
-					print "Successfully added the collection.";
+					$data['success'] = "Successfully added the collection.";
 				} else {
-					print "There was a problem adding your collection";
+					$data['error'] = "There was a problem adding your collection";
 				}
 			}
 
-			$data['title'] = 'Add a New Collection';
-			$this->load->view('templates/header', $data);
+			$this->load->view('templates/header');
 			$this->load->view('collections/add', $data);
-			$this->load->view('templates/footer', $data);
+			$this->load->view('templates/footer');
 
 		}
 	}

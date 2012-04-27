@@ -34,11 +34,11 @@
 <h2>Texas Test Problem Server</h2>
 <ul id="nav">
 	<li>
-		<a href="/problems/menu">Problems</a>
+		<a href="/problems/menu">Create</a>
 		<ul>
-			<li><a href="/problems/view">Stored Problems</a></li>
 			<li><a href="/collections/view">Collections</a></li>
 			<li><a href="/generators/view">Generators</a></li>
+			<li><a href="/problems/view">Stored Problems</a></li>
 		</ul>
 		<div class="clear"></div>
 	</li>

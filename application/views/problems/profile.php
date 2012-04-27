@@ -1,6 +1,6 @@
 <?php
 	print "<h2>";
-	print "<h2 class='accordian_header'><a href='/collections/view/" . $collections->id . "'>" . $collections->name . "</a> / <a href='/generators/view/" . $problems->generator_id . "'>" . $generators->name . "</a> / " . $problems->identifier . "</h2>";
+	print "<h2 class='accordian_header'><a href='/collections/profile/" . $collections->id . "'>" . $collections->name . "</a> / <a href='/generators/profile/" . $problems->generator_id . "'>" . $generators->name . "</a> / " . $problems->identifier . "</h2>";
 	print "</h2><h3>Generator Description</h3>";
 	print $generators->description;
 	print "<h3>Images</h3>";

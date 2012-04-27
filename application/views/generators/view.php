@@ -1,6 +1,8 @@
 <h1>Generators</h1>
 
+<?php if($this->ion_auth->is_admin()) : ?>
 <a href="/generators/add">Add a new generator</a>
+<?php endif; ?>
 
 <?php
 	$current_collection = 0;
@@ -18,11 +20,11 @@
 		print "<table width=50%><tr>";
 		if ($this->ion_auth->is_admin()) {
 			print "<td>" . $generator->name . "</td>";
-			print "<td width=10%><a href='/generators/view/" . $generator->id . "'>View</a></td>";
+			print "<td width=10%><a href='/generators/profile/" . $generator->id . "'>View</a></td>";
 			print "<td width=10%><a href='/generators/edit/" . $generator->id . "'>Edit</a></td>";
 			print "<td width=10%><a href='/generators/delete/" . $generator->id . "'>Delete</a></td>";
 		} else {
-			print "<td><a href='/generators/view/" . $generator->id . "'>" . $generator->name . "</a></td>";
+			print "<td><a href='/generators/profile/" . $generator->id . "'>" . $generator->name . "</a></td>";
 		}
 		print "</tr></table>";
 	}

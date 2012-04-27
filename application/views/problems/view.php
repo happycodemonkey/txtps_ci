@@ -20,11 +20,11 @@
 		print "<table width=50%><tr>";
 		if ($this->ion_auth->is_admin()) {
 			print "<td>" . $problem->identifier . "</td>";
-			print "<td width=10%><a href='/problems/view/" . $problem->id . "'>View</a></td>";
+			print "<td width=10%><a href='/problems/profile/" . $problem->id . "'>View</a></td>";
 			print "<td width=10%><a href='/problems/edit/" . $problem->id . "'>Edit</a></td>";
 			print "<td width=10%><a href='/problems/delete/" . $problem->id . "'>Delete</a></td>";
 		} else {
-			print "<td><a href='/problems/view/" . $problem->id . "'>" . $problem->identifier . "</a></td>";
+			print "<td><a href='/problems/profile/" . $problem->id . "'>" . $problem->identifier . "</a></td>";
 		}
 		print "</tr></table>";
 	}
