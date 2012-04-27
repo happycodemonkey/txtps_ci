@@ -13,7 +13,7 @@
 			$current_generator = $problem->generator_id;
 			$generator = $generators[$problem->generator_id];
 
-			print "<h2 class='accordian_header'>" . $collections[$generator[1]] . " : " . $generator[0] . "</h2>";
+			print "<h2 class='accordian_header'>" . $collections[$generator[1]] . " / " . $generator[0] . "</h2>";
 			print "<div class='accordian'>";
 		}
 
