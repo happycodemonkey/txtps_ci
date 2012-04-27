@@ -1,34 +1,22 @@
 <h1>Collections</h1>
 
+<?php if ($this->ion_auth->is_admin()) : ?>
 <a href="/collections/add">Create a new collection</a>
+<?php endif; ?>
 
-<table width=80%>
-<tr>
-	<td><b>Collection name</b></td>
-	<td><b>Number of Generators</b></td>
-	<?php if ($this->ion_auth->is_admin()) : ?>
-	<td colspan=3><b>Actions</b></td>
-	<?php endif; ?>
-</tr>
+<table>
 <?php
-	foreach ($collections as $id => $name) {
+	foreach ($collections as $collection) {
 		print "<tr>";
 		if ($this->ion_auth->is_admin()) {
-			print "<td>" . $name . "</td>";
+			print "<td>" . $collection->name . "</td>";
 		} else {
-			print "<td><a href='/collections/view/" . $id . "'>" . $name . "</a></td>";
+			print "<td><a href='/collections/profile/" . $collection->id . "'>" . $collection->name . "</a></td>";
 		}
-		print "<td><a href='/generators/view/collection_id/" . $id . "'>";
-		if (count($generators[$id]) != 0) {
-			print $generators[$id][0]->num_gens;
-		} else {
-			print "0";
-		}
-		print "</a></td>";
 		if ($this->ion_auth->is_admin()) {
-			print "<td><a href='/collections/view/" . $id . "'>View</a></td>";
-			print "<td><a href='/collections/edit/" . $id . "'>Edit</a></td>";
-			print "<td><a href='/collections/delete/" . $id . "'>Delete</a></td>";
+			print "<td><a href='/collections/profile/" . $collection->id . "'>View</a></td>";
+			print "<td><a href='/collections/edit/" . $collection->id . "'>Edit</a></td>";
+			print "<td><a href='/collections/delete/" . $collection->id . "'>Delete</a></td>";
 		}
 		print "</tr>";
 	}
