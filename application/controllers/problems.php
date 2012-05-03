@@ -56,19 +56,23 @@
 		}
 
 		public function add($generator_id) {
-			$this->load->model('Generator_model');
-			$this->load->model('Problem_model');
+			if ($this->ion_auth->logged_id()) {
+				$this->load->model('Generator_model');
+				$this->load->model('Problem_model');
 
 
-                        $generator = $this->Generator_model->get_generator($generator_id)->result();
-                        
-			$data['generator_name'] = $generator[0]->name;
-			$data['generator_id'] = $generator_id;
-			$data['arguments'] = $this->Generator_model->get_arguments($generator_id)->result();
+				$generator = $this->Generator_model->get_generator($generator_id)->result();
+				
+				$data['generator_name'] = $generator[0]->name;
+				$data['generator_id'] = $generator_id;
+				$data['arguments'] = $this->Generator_model->get_arguments($generator_id)->result();
 
-			$this->load->view('templates/header');
-			$this->load->view('problems/add', $data);
-			$this->load->view('templates/footer');
+				$this->load->view('templates/header');
+				$this->load->view('problems/add', $data);
+				$this->load->view('templates/footer');
+			} else {
+				show_404();
+			}
 		}
 	}
 ?>

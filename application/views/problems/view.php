@@ -1,7 +1,8 @@
 <h1>Problems</h1>
 
+<?php if ($this->ion_auth->logged_in()) : ?>
 <a href="/generators/view">Go to a generator</a> to add a problem
-
+<?php endif; ?>
 <?php
 	$current_generator = 0;
 	foreach ($problems as $problem) {

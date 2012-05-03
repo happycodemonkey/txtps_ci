@@ -66,9 +66,13 @@
 					'description' => $this->input->post('generator_description'),
 					'script' => $file_data['file_name']
 				);
-				
-				if ($this->Generator_model->add_generator($new_generator)) {
-					$data['saved'] = "Yes";
+
+				$generator = $this->Generator_model->add_generator($new_generator);
+
+				if (isset($generator->result()->id)) {
+						$data['saved'] = "Yes";
+						$this->load->helper('url');
+						redirect('/generators/add_arguments/' . $generator->result()->id);
 				} else {
 					$data['error'] = "There was a problem saving your generator.";
 				}
@@ -87,6 +91,31 @@
 
 			$this->load->view('templates/header');
 			$this->load->view('generators/add', $data);
+			$this->load->view('templates/footer');
+
+		}
+
+		public function add_arguments($generator_id) {
+			$data['generator_id'] = $generator_id;
+			error_log($generator_id);
+
+			if ($this->input->post('add_arguments')) {
+				$this->load->helper('url');
+				$url = '/generators/add_images/' . $this->input->post('generator_id');
+				redirect($url);
+			}
+
+			$this->load->view('templates/header');
+			$this->load->view('generators/add_arguments', $data);
+			$this->load->view('templates/footer');
+
+		}
+
+		public function add_images($generator_id) {
+			$data['generator_id'] = $generator_id;
+
+			$this->load->view('templates/header');
+			$this->load->view('generators/add_images', $data);
 			$this->load->view('templates/footer');
 
 		}

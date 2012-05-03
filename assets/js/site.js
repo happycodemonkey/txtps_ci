@@ -17,5 +17,18 @@ $(document).ready(function () {
 			$(this).next('div.accordian').toggle();
 		}
 	);
-	
+
+	$('#append_argument').click(
+		function(e) {
+			e.preventDefault();
+			
+		}
+	);
+
+	$('#append_image').click(
+		function(e) {
+			e.preventDefault();
+		}
+	);	
 });
+
