@@ -6,22 +6,31 @@
 	}
 
 	$this->load->helper('form');
-	echo form_open_multipart('generators/add_images');
-	echo form_hidden('add_images', 'yes');
 ?>
-	<h2 class='accordian_header'>Images</h2>
-	<div id='added_arguments'>
-
+	<h2>Images</h2>
+	<div id='added_images'>
+		<?php
+			foreach ($images as $image) {
+				print $image->name . "&nbsp;&nbsp; <a href='/generators/delete_image/" . $image->id . "/" . $generator_id . "'>Delete</a><br />";
+			}
+		?>
 	</div>
-	<div class='accordian' id='images'>
+	<div id='images'>
+		<?php
+			echo form_open_multipart('generators/add_images/' . $generator_id);
+			echo form_hidden('add_image', 'yes');
+			echo form_hidden('generator_id', $generator_id);
+		?>
 		<?php echo form_label('<b>Image:</b>'); ?>
 		<br />
 		<?php echo form_upload('generator_image', isset($generator_image) ? $generator_image : ''); ?>
 		<br /><br />
 	</div>
 <?php	
-	echo form_button(array('name'=>'append_image', 'id'=>'append_image', 'value'=>'append', 'content'=>'Add Another Image'));
+	echo form_submit('append_image', 'Add Image');
 	echo "&nbsp;&nbsp;";
+	echo form_open('generators/add_images');
+	echo form_hidden('finish', 'yes');
 	echo form_submit('submit', 'Finish');
 	echo form_close();
 

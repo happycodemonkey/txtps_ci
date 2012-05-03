@@ -10,3 +10,9 @@ Structure
 * Seperated by user level as well...
 	- Manage : Admin Pages *ONLY*
 	- View : General User Pages
+
+@TODO:
+- Remake Schema
+- Replace 404's with actual errors/redirect to login re: user access
+- Generator add: add a go-back button between steps
+- Build edit pages

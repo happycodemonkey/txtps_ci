@@ -35,5 +35,13 @@
 			$this->db->where('generator_id', $generator_id);
 			return $this->db->get('arguments');
 		}
+
+		function add_argument($new_argument) {
+			return $this->db->insert('arguments', $new_argument);
+		}
+
+		function delete_argument($argument_id) {
+			return $this->db->delete('arguments', array('id'=>$argument_id));
+		}
 	}
 ?>

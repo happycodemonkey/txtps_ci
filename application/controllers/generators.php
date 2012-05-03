@@ -96,13 +96,27 @@
 		}
 
 		public function add_arguments($generator_id) {
+			$this->load->model('Generator_model');
+			$data['arguments'] = $this->Generator_model->get_arguments($generator_id)->result();
 			$data['generator_id'] = $generator_id;
-			error_log($generator_id);
-
+			
 			if ($this->input->post('add_arguments')) {
+				$new_argument = array(
+					'name' => $this->input->post('argument_name'),
+					'description' => $this->input->post('argument_description'),
+					'generator_id' => $this->input->post('generator_id'),
+					'variable' => $this->input->post('argument_variable'),
+					'type' => $this->input->post('argument_type'),
+					'options' => $this->input->post('argument_options'),
+					'optional' => $this->input->post('argument_optional')
+				);				
+
+				$this->Generator_model->add_argument($new_argument);
 				$this->load->helper('url');
-				$url = '/generators/add_images/' . $this->input->post('generator_id');
-				redirect($url);
+				redirect('/generators/add_arguments/' . $generator_id);
+			} else if ($this->input->post('continue')) {
+				$this->load->helper('url');
+				redirect('/generators/add_images/' . $this->input->post('generator_id'));
 			}
 
 			$this->load->view('templates/header');
@@ -111,13 +125,51 @@
 
 		}
 
+		public function delete_argument($argument_id, $generator_id) {
+			$this->load->model('Generator_model');
+			$this->Generator_model->delete_argument($argument_id);
+			$this->load->helper('url');
+			redirect('/generators/add_arguments/' . $generator_id);
+			
+		}
+
 		public function add_images($generator_id) {
+			$this->load->model('Resource_model');
 			$data['generator_id'] = $generator_id;
+			$data['images'] = $this->Resource_model->get_resources_by_resource_id('image','generator',$generator_id)->result();
+
+			if ($this->input->post('add_image')) {
+				$config['upload_path'] = getEnv('DOCUMENT_ROOT') . "/assets/image/";
+				$config['allowed_types'] = "py|txt|sh";
+				$this->load->library('upload', $config);
+
+				if ($this->upload->do_upload('generator_image')) {
+					$file_data = $this->upload->data();
+				} else {
+					$data['error'] = "ERROR: " . $this->upload->display_errors();
+				}
+
+				$new_image = array(
+					'resource_id' => $this->input->post('generator_id'),
+					'resource_type' => 'generator',
+					'name' => $file_data['file_name']
+				);
+
+				$this->Resource_model->add_resource('image', $new_image);
+			}
 
 			$this->load->view('templates/header');
 			$this->load->view('generators/add_images', $data);
 			$this->load->view('templates/footer');
 
+		}
+
+		public function delete_image($image_id, $generator_id) {
+			$this->load->model('Resource_model');
+			$this->Resource_model->delete_resource('image',$image_id);
+			$this->load->helper('url');
+			redirect('/generators/add_images/' . $generator_id);
+			
 		}
 
 	}

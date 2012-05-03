@@ -31,7 +31,7 @@
 		<br /><br />
 	</div>
 <?php	
-	echo form_submit('submit', 'Create Generator');
+	echo form_submit('submit', 'Continue');
 	echo form_close();
 
 ?>

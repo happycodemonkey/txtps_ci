@@ -18,17 +18,14 @@ $(document).ready(function () {
 		}
 	);
 
-	$('#append_argument').click(
-		function(e) {
-			e.preventDefault();
-			
+	$('#argument_type').change(
+		function() {
+			if ($(this).val() == "SELECT") {
+				$('#argument_select_options').show();
+			} else {
+				$('#argument_select_options').hide();
+			}
 		}
 	);
-
-	$('#append_image').click(
-		function(e) {
-			e.preventDefault();
-		}
-	);	
 });
 
