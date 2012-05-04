@@ -28,8 +28,9 @@
 	</div>
 <?php	
 	echo form_submit('append_image', 'Add Image');
+	echo form_close();
 	echo "&nbsp;&nbsp;";
-	echo form_open('generators/add_images');
+	echo form_open('generators/view');
 	echo form_hidden('finish', 'yes');
 	echo form_submit('submit', 'Finish');
 	echo form_close();
