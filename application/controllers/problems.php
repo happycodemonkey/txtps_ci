@@ -29,14 +29,22 @@
 			$this->load->model('Problem_model');
 			$this->load->model('Collection_model');
 			$this->load->model('Generator_model');
+			$this->load->model('Argument_model');
 
 			$problems = array_shift($this->Problem_model->get_problem($problem_id)->result());
 			$generators = array_shift($this->Generator_model->get_generator($problems->generator_id)->result());
 			$collections = array_shift($this->Collection_model->get_collection($generators->collection_id)->result());
+			
+			$arguments = array();
+			foreach ($this->Argument_model->get_problem_argument('problem_id', $problem_id)->result() as $argument) {
+				$gen_arg = array_shift($this->Argument_model->get_generator_argument('id', $argument->argument_id)->result());
+				$arguments[$gen_arg->variable] = $argument->value;
+			}
 
 			$data['problems'] = $problems;
 			$data['generators'] = $generators;
 			$data['collections'] = $collections;
+			$data['arguments'] = $arguments;
 			$this->load->view('templates/header');
 			$this->load->view('problems/profile', $data);
 			$this->load->view('templates/footer');
@@ -56,16 +64,39 @@
 		}
 
 		public function add($generator_id) {
-			if ($this->ion_auth->logged_id()) {
+			if ($this->ion_auth->logged_in()) {
 				$this->load->model('Generator_model');
 				$this->load->model('Problem_model');
 
-
-				$generator = $this->Generator_model->get_generator($generator_id)->result();
+				$data['generator'] = array_shift($this->Generator_model->get_generator($generator_id)->result());
+				$gen_arguments = $this->Generator_model->get_arguments($generator_id)->result();
 				
-				$data['generator_name'] = $generator[0]->name;
 				$data['generator_id'] = $generator_id;
-				$data['arguments'] = $this->Generator_model->get_arguments($generator_id)->result();
+				$data['arguments'] = $arguments;
+
+				if ($this->input->post('add_problem')) {
+					$this->load->helper('string');
+					$new_problem = array(
+						'identifier' => random_string('alnum', 6),
+						'generator_id' => $this->input->post('generator_id'),
+						'description' => $this->input->post('problem_description')
+					);
+
+					$problem = array_shift($this->Problem_model->add_problem($new_problem)->result());
+
+					foreach ($arguments as $argument) {
+						$new_problem_arguments = array(
+							'problem_id' => $problem->problem_id,
+							'argument_id' => $argument->id,
+							'value' => $this->input->post($argument->id)
+						);
+						
+						$this->Problem_model->add_argument($new_problem_arguments);
+					}
+
+					$this->load->helper('url');
+					redirect('/problems/profile/' . $problem->problem_id);
+				}
 
 				$this->load->view('templates/header');
 				$this->load->view('problems/add', $data);

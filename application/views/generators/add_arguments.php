@@ -30,7 +30,7 @@
 				'SELECT' => 'Select'
 			);
 		?>
-		<?php echo form_label('<b>Name:</b>'); ?>
+		<?php echo form_label('<b>*Name:</b>'); ?>
 		<br />
 		<?php echo form_input(array('name'=>'argument_name','id'=>'argument_name'), isset($argument_name) ? $argument_name : ''); ?>
 		<br /><br />
@@ -42,11 +42,11 @@
 		<br />
 		<?php echo form_textarea(array('name'=>'argument_description','id'=>'argument_description'), isset($argument_description) ? $argument_description : ''); ?>
 		<br /><br />
-		<?php echo form_label('<b>Variable:</b>'); ?>
+		<?php echo form_label('<b>*Variable:</b>'); ?>
 		<br />
 		<?php echo form_input(array('name'=>'argument_variable','id'=>'argument_variable'), isset($argument_variable) ? $argument_variable : ''); ?>
 		<br /><br />
-		<?php echo form_label('<b>Type:</b>'); ?>
+		<?php echo form_label('<b>*Type:</b>'); ?>
 		<br />
 		<?php echo form_dropdown('argument_type', $argument_types, isset($argument_type) ? $argument_type : '', 'id="argument_type"'); ?>
 		<br /><br />

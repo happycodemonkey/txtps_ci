@@ -13,11 +13,11 @@
 		echo form_open_multipart('generators/add');
 		echo form_hidden('add_generator', 'yes');
 		?>
-		<?php echo form_label('<b>Name:</b>'); ?>
+		<?php echo form_label('<b>*Name:</b>'); ?>
 		<br />
 		<?php echo form_input('generator_name', isset($generator_name) ? $generator_name : ''); ?>
 		<br /><br />
-		<?php echo form_label('<b>Collection:</b>'); ?>
+		<?php echo form_label('<b>*Collection:</b>'); ?>
 		<br />
 		<?php echo form_dropdown('collection_id', $options, isset($collection_id) ? $collection_id : ''); ?>
 		<br /><br />
@@ -25,7 +25,7 @@
 		<br />
 		<?php echo form_textarea('generator_description', isset($generator_description) ? $generator_description : ''); ?>
 		<br /><br />
-		<?php echo form_label('<b>Script:</b>'); ?>
+		<?php echo form_label('<b>*Script:</b>'); ?>
 		<br />
 		<?php echo form_upload('generator_script', isset($generator_script) ? $generator_script : ''); ?>
 		<br /><br />

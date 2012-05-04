@@ -17,9 +17,8 @@
 	print "<h3>Arguments</h3>";
 
 
-	foreach (explode(",", trim($problems->arguments, "{}")) as $arguments) {
-		$value_pair = explode(":", $arguments);
-		print trim($value_pair[0], '"') . " = " . trim($value_pair[1], '"') . "<br />";
+	foreach ($arguments as $key => $value) {
+		print $key . " = " . $value . "<br />";
 	}
 
 	print "<h3>Files</h3>";
