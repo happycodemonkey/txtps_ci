@@ -67,9 +67,10 @@
 			if ($this->ion_auth->logged_in()) {
 				$this->load->model('Generator_model');
 				$this->load->model('Problem_model');
+				$this->load->model('Argument_model');
 
 				$data['generator'] = array_shift($this->Generator_model->get_generator($generator_id)->result());
-				$gen_arguments = $this->Generator_model->get_arguments($generator_id)->result();
+				$arguments = $this->Argument_model->get_generator_argument('generator_id', $generator_id)->result();
 				
 				$data['generator_id'] = $generator_id;
 				$data['arguments'] = $arguments;
@@ -86,16 +87,16 @@
 
 					foreach ($arguments as $argument) {
 						$new_problem_arguments = array(
-							'problem_id' => $problem->problem_id,
+							'problem_id' => $problem->id,
 							'argument_id' => $argument->id,
 							'value' => $this->input->post($argument->id)
 						);
 						
-						$this->Problem_model->add_argument($new_problem_arguments);
+						$this->Argument_model->add_problem_argument($new_problem_arguments);
 					}
 
 					$this->load->helper('url');
-					redirect('/problems/profile/' . $problem->problem_id);
+					redirect('/problems/profile/' . $problem->id);
 				}
 
 				$this->load->view('templates/header');

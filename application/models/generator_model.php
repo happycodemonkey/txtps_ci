@@ -29,7 +29,7 @@
 
 		function add_generator($new_generator) {
 			$this->db->insert('generator', $new_generator);
-			return $this->db->select('last_insert_id() as generator_id')->limit(1)->get('generator');
+			return $this->db->select('last_insert_id() as id')->limit(1)->get('generator');
 		}
 
 	}

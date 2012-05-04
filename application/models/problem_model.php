@@ -22,7 +22,7 @@
 
 		function add_problem($new_problem) {
 			$this->db->insert('product', $new_problem);
-			return $this->db->select('last_insert_id() as problem_id')->limit(1)->get('product');
+			return $this->db->select('last_insert_id() as id')->limit(1)->get('product');
 		}
 
 	}

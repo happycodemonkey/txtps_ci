@@ -31,18 +31,21 @@
 		public function add() {
 			if ($this->input->post('add_collection')) {
 				$this->load->model('Collection_model');
-				if ($this->Collection_model->create_collection(
-					$this->input->post('collection_name'), 
-					$this->input->post('collection_description'))
-				) { 
-					$data['success'] = "Successfully added the collection.";
-				} else {
-					$data['error'] = "There was a problem adding your collection";
+				$new_collection = array(
+					'name' => $this->input->post('collection_name'),
+					'description' => $this->input->post('collection_description')
+				);
+
+				$collection = array_shift($this->Collection_model->create_collection($new_collection)->result());
+
+				if ($collection->id) { 
+					$this->load->helper('url');
+					redirect('/collections/profile/' . $collection->id);
 				}
 			}
 
 			$this->load->view('templates/header');
-			$this->load->view('collections/add', $data);
+			$this->load->view('collections/add');
 			$this->load->view('templates/footer');
 
 		}

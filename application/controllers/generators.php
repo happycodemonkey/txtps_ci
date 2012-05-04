@@ -67,10 +67,10 @@
 					'script' => $file_data['file_name']
 				);
 
-				$generator = $this->Generator_model->add_generator($new_generator)->result();
-				if (isset($generator[0]->generator_id)) {
+				$generator = array_shift($this->Generator_model->add_generator($new_generator)->result());
+				if ($generator->id) {
 						$this->load->helper('url');
-						redirect('/generators/add_arguments/' . $generator[0]->generator_id);
+						redirect('/generators/add_arguments/' . $generator->id);
 				} else {
 					$data['error'] = "There was a problem saving your generator.";
 				}
@@ -95,7 +95,8 @@
 
 		public function add_arguments($generator_id) {
 			$this->load->model('Generator_model');
-			$data['arguments'] = $this->Generator_model->get_arguments($generator_id)->result();
+			$this->load->model('Argument_model');
+			$data['arguments'] = $this->Argument_model->get_generator_argument('generator_id', $generator_id)->result();
 			$data['generator_id'] = $generator_id;
 			
 			if ($this->input->post('add_arguments')) {
@@ -109,7 +110,7 @@
 					'optional' => $this->input->post('argument_optional')
 				);				
 
-				$this->Generator_model->add_argument($new_argument);
+				$this->Argument_model->add_generator_argument($new_argument);
 				$this->load->helper('url');
 				redirect('/generators/add_arguments/' . $generator_id);
 			} else if ($this->input->post('continue')) {

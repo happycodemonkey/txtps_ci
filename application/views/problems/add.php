@@ -22,7 +22,7 @@
 		echo form_label('<b>Arguments:</b>'); 
 	?>
 	<br />
-	<table width='30%'>
+	<table width='40%'>
 	<?php
 		foreach ($arguments as $argument) {
 			echo "<tr>";
@@ -31,6 +31,7 @@
 				echo "*"; 
 			} 
 			echo form_label($argument->name) . "</td>";
+			echo "<td width='10%'>(" . $argument->type . ")</td>";
 			echo "<td width='10%'>" . form_input($argument->id) . "</td>";
 			echo "</tr>";
 		}

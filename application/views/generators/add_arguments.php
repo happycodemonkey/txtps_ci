@@ -36,7 +36,7 @@
 		<br /><br />
 		<?php echo form_label('<b>Optional:</b>'); ?>
 		<br />
-		<?php echo form_checkbox(array('name'=>'argument_optional','id'=>'argument_optional'), isset($argument_optional) ? $argument_optional : '', FALSE); ?>
+		<?php echo form_checkbox(array('name'=>'argument_optional','id'=>'argument_optional', 'value'=>1), isset($argument_optional) ? $argument_optional : '', FALSE); ?>
 		<br /><br />
 		<?php echo form_label('<b>Description:</b>'); ?>
 		<br />

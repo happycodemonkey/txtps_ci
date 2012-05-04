@@ -12,8 +12,10 @@ Structure
 	- View : General User Pages
 
 @TODO:
-- Remake Schema: write script for table creation
+- Remake Schema: after testing install new schema (fresh db)
 - Replace 404's with actual errors/redirect to login re: user access
 - Generator add: add a go-back button between steps
 - Build edit pages
 - Error messaging: required fields
+- Check that arguments are the correct type
+- Adding files to generators/problems

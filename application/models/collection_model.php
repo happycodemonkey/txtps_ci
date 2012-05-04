@@ -5,13 +5,9 @@
 			$this->load->database();
 		}
 
-		function create_collection($collection_name = 'New Collection', $collection_description = 'New Collection Description') {
-			$data = array(
-				'name' => $collection_name,
-				'description' => $collection_description
-			);
-
-			return $this->db->insert('collection', $data);
+		function create_collection($new_collection) {
+			$this->db->insert('collection', $new_collection);
+			return $this->db->select('last_insert_id() as id')->limit(1)->get('collection');
 		}
 
 		function delete_collection($collection_id) {
