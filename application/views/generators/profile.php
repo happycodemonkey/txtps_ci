@@ -6,8 +6,9 @@
 	if (count($images) == 0) {
 		print "There are no images for this generator.";	
 	} else {
+		$this->load->helper('asset');
 		foreach ($images as $image) {
-			print "<img src='" . $image->name . "' />";	
+			print image_asset($image->name);
 		}
 	}
 	print "<h2 class='accordian_header'>Problems</h2>";

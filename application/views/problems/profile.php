@@ -10,8 +10,11 @@
 	if (empty($images)) {
 		print "There are no images for this problem.";
 	} else {
+		$this->load->helper('asset');
 		foreach ($images as $image) {
-			print $image->name . "&nbsp;&nbsp;<a href='/problems/delete_image/" . $image->id . "/" . $problems->id . "'>Delete</a><br />";
+			print image_asset($image->name);
+			print "<br /><br />";
+			print "&nbsp;&nbsp;<a href='/problems/delete_image/" . $image->id . "/" . $problems->id . "'>Delete</a><br />";
 		}
 	}
 	
