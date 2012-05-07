@@ -30,7 +30,7 @@
 			$data['generators'] = $generators;
 			$data['collections'] = array_shift($this->Collection_model->get_collection($generators->collection_id)->result());
 			$data['problems'] = $this->Problem_model->get_problem('generator_id', $generator_id)->result();
-			$data['images'] = $this->Resource_model->get_resources_by_resource_id('image', 'generator', $generator_id)->result();
+			$data['images'] = $this->Resource_model->get_resources_by_reference_id('image', 'generator', $generator_id)->result();
 			$this->load->view('generators/profile', $data);
 			$this->load->view('templates/footer');
 
@@ -135,7 +135,7 @@
 		public function add_images($generator_id) {
 			$this->load->model('Resource_model');
 			$data['generator_id'] = $generator_id;
-			$data['images'] = $this->Resource_model->get_resources_by_resource_id('image','generator',$generator_id)->result();
+			$data['images'] = $this->Resource_model->get_resources_by_reference_id('image','generator',$generator_id)->result();
 
 			if ($this->input->post('add_image')) {
 				$config['upload_path'] = getEnv('DOCUMENT_ROOT') . "/assets/image/";
@@ -146,12 +146,13 @@
 					$file_data = $this->upload->data();
 					if ($file_data['file_name']) {
 						$new_image = array(
-							'resource_id' => $this->input->post('generator_id'),
-							'resource_type' => 'generator',
+							'resource_type' => 'image',
+							'reference_id' => $this->input->post('generator_id'),
+							'reference_type' => 'generator',
 							'name' => $file_data['file_name']
 						);
 
-						$this->Resource_model->add_resource('image', $new_image);
+						$this->Resource_model->add_resource($new_image);
 						$this->load->helper('url');
 						redirect('/generators/add_images/' . $generator_id);
 					} else {
@@ -171,7 +172,7 @@
 
 		public function delete_image($image_id, $generator_id) {
 			$this->load->model('Resource_model');
-			$this->Resource_model->delete_resource('image',$image_id);
+			$this->Resource_model->delete_resource($image_id);
 			$this->load->helper('url');
 			redirect('/generators/add_images/' . $generator_id);
 			

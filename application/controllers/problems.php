@@ -30,6 +30,7 @@
 			$this->load->model('Collection_model');
 			$this->load->model('Generator_model');
 			$this->load->model('Argument_model');
+			$this->load->model('Resource_model');
 
 			$problems = array_shift($this->Problem_model->get_problem($problem_id)->result());
 			$generators = array_shift($this->Generator_model->get_generator($problems->generator_id)->result());
@@ -45,6 +46,7 @@
 			$data['generators'] = $generators;
 			$data['collections'] = $collections;
 			$data['arguments'] = $arguments;
+			$data['images'] = $this->Resource_model->get_resources_by_reference_id('image', 'problem', $problem_id)->result();
 			$this->load->view('templates/header');
 			$this->load->view('problems/profile', $data);
 			$this->load->view('templates/footer');
@@ -105,6 +107,51 @@
 			} else {
 				show_404();
 			}
+
+		}
+		
+		//@TODO: generalize this more?
+		function add_images($problem_id) {
+			$this->load->model('Resource_model');
+			$data['problem_id'] = $problem_id;
+			$data['images'] = $this->Resource_model->get_resources_by_reference_id('image','problem',$problem_id)->result();
+
+			if ($this->input->post('add_image')) {
+				$config['upload_path'] = getEnv('DOCUMENT_ROOT') . "/assets/image/";
+				$config['allowed_types'] = "jpg|png|gif";
+				$this->load->library('upload', $config);
+
+				if ($this->upload->do_upload('problem_image')) {
+					$file_data = $this->upload->data();
+					if ($file_data['file_name']) {
+						$new_image = array(
+							'resource_type' => 'image',
+							'reference_id' => $this->input->post('problem_id'),
+							'reference_type' => 'problem',
+							'name' => $file_data['file_name']
+						);
+
+						$this->Resource_model->add_resource($new_image);
+						$this->load->helper('url');
+						redirect('/problems/add_images/' . $problem_id);
+					} else {
+						$data['error'] = "ERROR: No file specified";
+					}
+				} else {
+					$data['error'] = "ERROR: " . $this->upload->display_errors();
+				}
+
+			}
+			$this->load->view('templates/header');
+			$this->load->view('problems/add_images', $data);
+			$this->load->view('templates/footer');
+		}
+
+		function delete_image($image_id, $problem_id) {
+			$this->load->model('Resource_model');
+			$this->Resource_model->delete_resource($image_id);
+			$this->load->helper('url');
+			redirect('/problems/profile/' . $problem_id);
 		}
 	}
 ?>

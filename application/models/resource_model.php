@@ -5,23 +5,26 @@
 			$this->load->database();
 		}
 
-		function get_resources_by_resource_id($resource, $type, $key) {
-			$this->db->where('resource_type', $type);
-			$this->db->where('resource_id', $key);
-			return $this->db->get($resource);
+		function get_resources_by_reference_id($resource_type, $reference, $reference_id) {
+			// resource type: image or file
+			// reference type: collection, generator, or file
+			$this->db->where('resource_type', $resource_type);
+			$this->db->where('reference_type', $reference);
+			$this->db->where('reference_id', $reference_id);
+			return $this->db->get('resource');
 		}
 
-		function get_resource_by_id($resource, $key) {
-			$this->db->where('id', $key);
-			return $this->db->get($resource);
+		function get_resource_by_id($resource_id) {
+			$this->db->where('id', $resource_id);
+			return $this->db->get('resource');
 		}
 
-		function add_resource($resource, $new_resource) {
-			return $this->db->insert($resource, $new_resource);
+		function add_resource($new_resource) {
+			return $this->db->insert('resource', $new_resource);
 		}
 
-		function delete_resource($resource, $key) {
-			return $this->db->delete($resource, array('id' => $new_resource));
+		function delete_resource($resource_id) {
+			return $this->db->delete('resource', array('id' => $resource_id));
 		}
 	}
 ?>

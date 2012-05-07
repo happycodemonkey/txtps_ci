@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS `txtps`;
+
+USE `txtps`;
+ 
 DROP TABLE IF EXISTS `collection`;
 
 CREATE TABLE `collection` (

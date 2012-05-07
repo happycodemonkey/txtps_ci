@@ -13,16 +13,16 @@
 				$this->db->where('id', $filter);
 			}
 			$this->db->order_by('generator_id');
-			return $this->db->get('product');
+			return $this->db->get('problem');
 		}
 
 		function delete_problem($problem_id) {
-			return $this->db->delete('product', array($id => $problem_id));
+			return $this->db->delete('problem', array($id => $problem_id));
 		}
 
 		function add_problem($new_problem) {
-			$this->db->insert('product', $new_problem);
-			return $this->db->select('last_insert_id() as id')->limit(1)->get('product');
+			$this->db->insert('problem', $new_problem);
+			return $this->db->select('last_insert_id() as id')->limit(1)->get('problem');
 		}
 
 	}
