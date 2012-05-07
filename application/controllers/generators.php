@@ -42,86 +42,94 @@
 		}
 
 		public function add($collection_id = null) {
-			$this->load->model('Collection_model');
-			$this->load->model('Generator_model');
-			if ($this->input->post('add_generator')) {
-				$data['generator_name'] = $this->input->post('generator_name');
-				$data['collection_id'] = $this->input->post('collection_id');
-				$data['generator_description'] = $this->input->post('generator_description');
-				$data['generator_script'] = $this->input->post('generator_script');
+			if ($this->ion_auth->is_admin()) {
+				$this->load->model('Collection_model');
+				$this->load->model('Generator_model');
+				if ($this->input->post('add_generator')) {
+					$data['generator_name'] = $this->input->post('generator_name');
+					$data['collection_id'] = $this->input->post('collection_id');
+					$data['generator_description'] = $this->input->post('generator_description');
+					$data['generator_script'] = $this->input->post('generator_script');
 
-				$config['upload_path'] = "/opt/apps/";
-				$config['allowed_types'] = "py|txt|sh";
-				$this->load->library('upload', $config);
+					$config['upload_path'] = "/opt/apps/";
+					$config['allowed_types'] = "py|txt|sh";
+					$this->load->library('upload', $config);
 
-				if ($this->upload->do_upload('generator_script')) {
-					$file_data = $this->upload->data();
-				} else {
-					$data['error'] = "ERROR: " . $this->upload->display_errors();
+					if ($this->upload->do_upload('generator_script')) {
+						$file_data = $this->upload->data();
+					} else {
+						$data['error'] = "ERROR: " . $this->upload->display_errors();
+					}
+
+					$new_generator = array(
+						'name' => $this->input->post('generator_name'),
+						'collection_id' => $this->input->post('collection_id'),
+						'description' => $this->input->post('generator_description'),
+						'script' => $file_data['file_name']
+					);
+
+					$generator = array_shift($this->Generator_model->add_generator($new_generator)->result());
+					if ($generator->id) {
+							$this->load->helper('url');
+							redirect('/generators/add_arguments/' . $generator->id);
+					} else {
+						$data['error'] = "There was a problem saving your generator.";
+					}
 				}
 
-				$new_generator = array(
-					'name' => $this->input->post('generator_name'),
-					'collection_id' => $this->input->post('collection_id'),
-					'description' => $this->input->post('generator_description'),
-					'script' => $file_data['file_name']
-				);
-
-				$generator = array_shift($this->Generator_model->add_generator($new_generator)->result());
-				if ($generator->id) {
-						$this->load->helper('url');
-						redirect('/generators/add_arguments/' . $generator->id);
-				} else {
-					$data['error'] = "There was a problem saving your generator.";
+				if ($collection_id) {
+					$data['collection_id'] = $collection_id;
 				}
+
+				$dropdown_options = array();
+				foreach ($this->Collection_model->get_collection()->result() as $collection) {
+					$dropdown_options[$collection->id] = $collection->name;
+				}
+
+				$data['options'] = $dropdown_options;
+
+				$this->load->view('templates/header');
+				$this->load->view('generators/add', $data);
+				$this->load->view('templates/footer');
+			} else {
+				$this->load->helper('url');
+				redirect('/pages/view/permission');
 			}
-
-			if ($collection_id) {
-				$data['collection_id'] = $collection_id;
-			}
-
-			$dropdown_options = array();
-			foreach ($this->Collection_model->get_collection()->result() as $collection) {
-				$dropdown_options[$collection->id] = $collection->name;
-			}
-
-			$data['options'] = $dropdown_options;
-
-			$this->load->view('templates/header');
-			$this->load->view('generators/add', $data);
-			$this->load->view('templates/footer');
-
 		}
 
 		public function add_arguments($generator_id) {
-			$this->load->model('Generator_model');
-			$this->load->model('Argument_model');
-			$data['arguments'] = $this->Argument_model->get_generator_argument('generator_id', $generator_id)->result();
-			$data['generator_id'] = $generator_id;
-			
-			if ($this->input->post('add_arguments')) {
-				$new_argument = array(
-					'name' => $this->input->post('argument_name'),
-					'description' => $this->input->post('argument_description'),
-					'generator_id' => $this->input->post('generator_id'),
-					'variable' => $this->input->post('argument_variable'),
-					'type' => $this->input->post('argument_type'),
-					'options' => $this->input->post('argument_options'),
-					'optional' => $this->input->post('argument_optional')
-				);				
+			if ($this->ion_auth->is_admin()) {
+				$this->load->model('Generator_model');
+				$this->load->model('Argument_model');
+				$data['arguments'] = $this->Argument_model->get_generator_argument('generator_id', $generator_id)->result();
+				$data['generator_id'] = $generator_id;
+				
+				if ($this->input->post('add_arguments')) {
+					$new_argument = array(
+						'name' => $this->input->post('argument_name'),
+						'description' => $this->input->post('argument_description'),
+						'generator_id' => $this->input->post('generator_id'),
+						'variable' => $this->input->post('argument_variable'),
+						'type' => $this->input->post('argument_type'),
+						'options' => $this->input->post('argument_options'),
+						'optional' => $this->input->post('argument_optional')
+					);				
 
-				$this->Argument_model->add_generator_argument($new_argument);
+					$this->Argument_model->add_generator_argument($new_argument);
+					$this->load->helper('url');
+					redirect('/generators/add_arguments/' . $generator_id);
+				} else if ($this->input->post('continue')) {
+					$this->load->helper('url');
+					redirect('/generators/add_images/' . $this->input->post('generator_id'));
+				}
+
+				$this->load->view('templates/header');
+				$this->load->view('generators/add_arguments', $data);
+				$this->load->view('templates/footer');
+			} else {
 				$this->load->helper('url');
-				redirect('/generators/add_arguments/' . $generator_id);
-			} else if ($this->input->post('continue')) {
-				$this->load->helper('url');
-				redirect('/generators/add_images/' . $this->input->post('generator_id'));
+				redirect('/pages/view/permission');
 			}
-
-			$this->load->view('templates/header');
-			$this->load->view('generators/add_arguments', $data);
-			$this->load->view('templates/footer');
-
 		}
 
 		public function delete_argument($argument_id, $generator_id) {
@@ -133,41 +141,45 @@
 		}
 
 		public function add_images($generator_id) {
-			$this->load->model('Resource_model');
-			$data['generator_id'] = $generator_id;
-			$data['images'] = $this->Resource_model->get_resources_by_reference_id('image','generator',$generator_id)->result();
+			if ($this->ion_auth->is_admin()) {
+				$this->load->model('Resource_model');
+				$data['generator_id'] = $generator_id;
+				$data['images'] = $this->Resource_model->get_resources_by_reference_id('image','generator',$generator_id)->result();
 
-			if ($this->input->post('add_image')) {
-				$config['upload_path'] = getEnv('DOCUMENT_ROOT') . "/assets/image/";
-				$config['allowed_types'] = "jpg|png|gif";
-				$this->load->library('upload', $config);
+				if ($this->input->post('add_image')) {
+					$config['upload_path'] = getEnv('DOCUMENT_ROOT') . "/assets/image/resource/";
+					$config['allowed_types'] = "jpg|png|gif";
+					$this->load->library('upload', $config);
 
-				if ($this->upload->do_upload('generator_image')) {
-					$file_data = $this->upload->data();
-					if ($file_data['file_name']) {
-						$new_image = array(
-							'resource_type' => 'image',
-							'reference_id' => $this->input->post('generator_id'),
-							'reference_type' => 'generator',
-							'name' => $file_data['file_name']
-						);
+					if ($this->upload->do_upload('generator_image')) {
+						$file_data = $this->upload->data();
+						if ($file_data['file_name']) {
+							$new_image = array(
+								'resource_type' => 'image',
+								'reference_id' => $this->input->post('generator_id'),
+								'reference_type' => 'generator',
+								'name' => $file_data['file_name']
+							);
 
-						$this->Resource_model->add_resource($new_image);
-						$this->load->helper('url');
-						redirect('/generators/add_images/' . $generator_id);
+							$this->Resource_model->add_resource($new_image);
+							$this->load->helper('url');
+							redirect('/generators/add_images/' . $generator_id);
+						} else {
+							$data['error'] = "ERROR: No file specified";
+						}
 					} else {
-						$data['error'] = "ERROR: No file specified";
+						$data['error'] = "ERROR: " . $this->upload->display_errors();
 					}
-				} else {
-					$data['error'] = "ERROR: " . $this->upload->display_errors();
+
 				}
 
+				$this->load->view('templates/header');
+				$this->load->view('generators/add_images', $data);
+				$this->load->view('templates/footer');
+			} else {
+				$this->load->helper('url');
+				redirect('/pages/view/permission');
 			}
-
-			$this->load->view('templates/header');
-			$this->load->view('generators/add_images', $data);
-			$this->load->view('templates/footer');
-
 		}
 
 		public function delete_image($image_id, $generator_id) {

@@ -82,7 +82,9 @@
 					$new_problem = array(
 						'identifier' => random_string('alnum', 6),
 						'generator_id' => $this->input->post('generator_id'),
-						'description' => $this->input->post('problem_description')
+						'description' => $this->input->post('problem_description'),
+						'user_id' => $this->ion_auth->user()->row()->id,
+						'created_datetime' => time()
 					);
 
 					$problem = array_shift($this->Problem_model->add_problem($new_problem)->result());
@@ -105,7 +107,8 @@
 				$this->load->view('problems/add', $data);
 				$this->load->view('templates/footer');
 			} else {
-				show_404();
+				$this->load->helper('url');
+				redirect('/users/login');
 			}
 
 		}
@@ -117,7 +120,7 @@
 			$data['images'] = $this->Resource_model->get_resources_by_reference_id('image','problem',$problem_id)->result();
 
 			if ($this->input->post('add_image')) {
-				$config['upload_path'] = getEnv('DOCUMENT_ROOT') . "/assets/image/";
+				$config['upload_path'] = getEnv('DOCUMENT_ROOT') . "/assets/image/resource/";
 				$config['allowed_types'] = "jpg|png|gif";
 				$this->load->library('upload', $config);
 

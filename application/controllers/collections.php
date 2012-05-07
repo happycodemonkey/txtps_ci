@@ -29,25 +29,35 @@
 		}
 
 		public function add() {
-			if ($this->input->post('add_collection')) {
-				$this->load->model('Collection_model');
-				$new_collection = array(
-					'name' => $this->input->post('collection_name'),
-					'description' => $this->input->post('collection_description')
-				);
+			if ($this->ion_auth->is_admin()) {
+				if ($this->input->post('add_collection')) {
+					$this->load->model('Collection_model');
+					$new_collection = array(
+						'name' => $this->input->post('collection_name'),
+						'description' => $this->input->post('collection_description')
+					);
 
-				$collection = array_shift($this->Collection_model->create_collection($new_collection)->result());
+					$collection = array_shift($this->Collection_model->create_collection($new_collection)->result());
 
-				if ($collection->id) { 
-					$this->load->helper('url');
-					redirect('/collections/profile/' . $collection->id);
+					if ($collection->id) { 
+						$this->load->helper('url');
+						redirect('/collections/profile/' . $collection->id);
+					}
 				}
+
+				$this->load->view('templates/header');
+				$this->load->view('collections/add');
+				$this->load->view('templates/footer');
+			} else {
+				$this->load->helper('url');
+				redirect('/pages/view/permission');
 			}
+		}
 
+		function edit($collection_id) {
 			$this->load->view('templates/header');
-			$this->load->view('collections/add');
+			$this->load->view('collections/edit');
 			$this->load->view('templates/footer');
-
 		}
 	}
 ?>
