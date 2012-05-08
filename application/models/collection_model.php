@@ -20,5 +20,11 @@
 			}
 			return $this->db->get('collection');
 		}
+
+		function update_collection($updated_collection, $collection_id) {
+			$this->db->where('id', $collection_id);
+			$this->db->update('collection', $updated_collection);
+			return $collection_id;
+		}
 	}
 ?>

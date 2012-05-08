@@ -55,9 +55,29 @@
 		}
 
 		function edit($collection_id) {
-			$this->load->view('templates/header');
-			$this->load->view('collections/edit');
-			$this->load->view('templates/footer');
+			if ($this->ion_auth->is_admin()) {
+				$this->load->model('Collection_model');
+				if ($this->input->post('collection_id')) {
+					$updated_collection = array(
+						'name' => $this->input->post('collection_name'),
+						'description' => $this->input->post('collection_description')
+					);
+
+					if ($this->Collection_model->update_collection($updated_collection, $collection_id)) {
+						$this->load->helper('url');
+						redirect('/collections/profile/' . $collection_id);
+					}
+				}
+
+				$data['collection'] = array_shift($this->Collection_model->get_collection($collection_id)->result());
+
+				$this->load->view('templates/header');
+				$this->load->view('collections/edit', $data);
+				$this->load->view('templates/footer');
+			} else {
+				$this->load->helper('url');
+				redirect('/pages/view/permission');
+			}
 		}
 	}
 ?>
