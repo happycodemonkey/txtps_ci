@@ -190,5 +190,31 @@
 			
 		}
 
+		public function edit($generator_id) {
+			if ($this->ion_auth->is_admin()) {
+				$this->load->model('Generator_model');
+				$this->load->model('Collection_model');
+
+				$generator = array_shift($this->Generator_model->get_generator('id', $generator_id)->result());
+				$data['generator'] = $generator;
+				$data['collection'] = array_shift($this->Collection_model->get_collection($generator->collection_id)->result());
+
+				$this->load->view('templates/header');
+				$this->load->view('generators/edit', $data);
+				$this->load->view('templates/footer');
+
+				if ($this->input->post('generator_id')) {
+					$updated_generator = array(
+						'description' => $this->input->post('generator_description'),
+						'name' => $this->input->post('generator_name')
+					);
+
+					if ($this->Generator_model->update_generator($updated_generator, $this->input->post('generator_id'))) {
+						$this->load->helper('url');
+						redirect('/generators/profile/' . $this->input->post('generator_id'));
+					}
+				}
+			}
+		}
 	}
 ?>

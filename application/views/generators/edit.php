@@ -10,28 +10,28 @@
 	<h2 class='accordian_header'>Step 1: Overview</h2>
 	<div class='accordian' id='overview'>
 		<?php 
-		echo form_open_multipart('generators/add');
-		echo form_hidden('add_generator', 'yes');
+		echo form_open_multipart('generators/edit');
+		echo form_hidden('generator_id', $generator->id);
 		?>
 		<?php echo form_label('<b>*Name:</b>'); ?>
 		<br />
-		<?php echo form_input('generator_name', isset($generator_name) ? $generator_name : ''); ?>
+		<?php echo form_input('generator_name', isset($generator->name) ? $generator->name : ''); ?>
 		<br /><br />
 		<?php echo form_label('<b>*Collection:</b>'); ?>
 		<br />
-		<?php echo form_dropdown('collection_id', $options, isset($collection_id) ? $collection_id : ''); ?>
+		<?php echo $collection->name; ?>
 		<br /><br />
 		<?php echo form_label('<b>Description:</b>'); ?>
 		<br />
-		<?php echo form_textarea('generator_description', isset($generator_description) ? $generator_description : ''); ?>
+		<?php echo form_textarea('generator_description', isset($generator->description) ? $generator->description : ''); ?>
 		<br /><br />
 		<?php echo form_label('<b>*Script:</b>'); ?>
 		<br />
-		<?php echo form_upload('generator_script', isset($generator_script) ? $generator_script : ''); ?>
+		<?php echo $generator->script; ?>
 		<br /><br />
 	</div>
 <?php	
-	echo form_submit('submit', 'Continue');
+	echo form_submit('submit', 'Update Generator');
 	echo form_close();
 
 ?>

@@ -33,7 +33,12 @@
 		}
 
 		function delete_problem_argument($problem_argument_id) {
-			return $this->db->delete('problem_argument', array('id'=>$problem_argument_id));
+			return $this->db->delete('problem_argument', array('id' => $problem_argument_id));
+		}
+
+		function update_problem_argument($updated_argument, $problem_argument_id) {
+			$this->db->where('id', $problem_argument_id);
+			return $this->db->update('problem_argument', $updated_argument);
 		}
 
 	}

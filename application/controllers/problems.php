@@ -156,5 +156,53 @@
 			$this->load->helper('url');
 			redirect('/problems/profile/' . $problem_id);
 		}
+
+		function edit($problem_id) {
+			$this->load->model('Problem_model');
+			$this->load->model('Generator_model');
+			$this->load->model('Argument_model');
+			$problem = array_shift($this->Problem_model->get_problem('id', $problem_id)->result());
+			if (($this->ion_auth->logged_in() && $problem->user_id == $this->ion_auth->user()->row()->id) || $this->ion_auth->is_admin()) {
+				$data['generator'] = array_shift($this->Generator_model->get_generator('id', $problem->generator_id)->result());
+				$data['problem'] = $problem;
+				$problem_arguments = $this->Argument_model->get_problem_argument('problem_id', $problem_id)->result();
+
+				$arguments = array();
+				$problem_args = array();
+				foreach ($problem_arguments as $problem_argument) {
+					$arguments[] = array_shift($this->Argument_model->get_generator_argument('id', $problem_argument->argument_id)->result());
+					$problem_args[$problem_argument->argument_id] = $problem_argument->value;
+				}
+
+				$data['arguments'] = $arguments;
+				$data['problem_args'] = $problem_args;
+				
+				$this->load->view('templates/header');
+				$this->load->view('problems/edit', $data);
+				$this->load->view('templates/footer');
+
+				if ($this->input->post('problem_id')) {
+					$updated_problem = array(
+						'description' => $this->input->post('problem_description')
+					);
+					
+					foreach ($problem_arguments as $problem_argument) {
+						$updated_argument = array(
+							'value' => $this->input->post($problem_argument->argument_id)
+						);
+
+						$this->Argument_model->update_problem_argument($updated_argument, $problem_argument->id);
+					}
+
+					if ($this->Problem_model->update_problem($updated_problem, $this->input->post('problem_id'))) {
+						$this->load->helper('url');
+						redirect('/problems/profile/' . $this->input->post('problem_id'));
+					}
+				}
+			} else {
+				$this->load->helper('url');
+				redirect('/pages/view/permission');
+			}
+		}
 	}
 ?>

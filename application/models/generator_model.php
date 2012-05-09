@@ -34,7 +34,7 @@
 
 		function update_generator($updated_generator, $generator_id) {
 			$this->db->where('id', $generator_id);
-			$this->db->update('generator', $updated_generator);
+			return $this->db->update('generator', $updated_generator);
 		}
 	}
 ?>

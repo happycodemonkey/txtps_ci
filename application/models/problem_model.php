@@ -27,7 +27,7 @@
 
 		function update_problem($updated_problem, $problem_id) {
 			$this->db->where('id', $problem_id);
-			$this->db->update('problem', $updated_problem);
+			return $this->db->update('problem', $updated_problem);
 		}
 	}
 ?>
