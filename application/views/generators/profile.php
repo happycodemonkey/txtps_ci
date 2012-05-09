@@ -8,7 +8,7 @@
 	} else {
 		$this->load->helper('asset');
 		foreach ($images as $image) {
-			print image_asset($image->name);
+			print image_asset('resource/' . $image->name);
 		}
 	}
 	print "<h2 class='accordian_header'>Problems</h2>";
