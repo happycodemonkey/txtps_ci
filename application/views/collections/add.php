@@ -1,5 +1,5 @@
 <?php
-	echo validation_errors();
+	echo "<h3 class='error'>" . validation_errors() . "</h3>";
 	$this->load->helper('form');
 	echo form_open('collections/add');
 	echo form_hidden('add_collection', 'yes');

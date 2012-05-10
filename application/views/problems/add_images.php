@@ -5,6 +5,8 @@
 		echo $error;
 	}
 
+	echo "<h3 class='error'>" . validation_errors() . "</h3>";
+
 	$this->load->helper('form');
 ?>
 	<h2>Images</h2>

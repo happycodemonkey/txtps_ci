@@ -5,6 +5,8 @@
 		echo $error;
 	}
 
+	echo "<h3 class='error'>" . validation_errors() . "</h3>";
+
 	$this->load->helper('form');
 	echo form_open_multipart('problems/edit/' . $problem->id);
 	echo form_hidden('problem_id', $problem->id);

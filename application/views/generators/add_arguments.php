@@ -5,6 +5,8 @@
 		echo $error;
 	}
 
+	echo "<h3 class='error'>" . validation_errors() . "</h3>";
+
 	$this->load->helper('form');
 ?>
 	<h2><a href='/generators/edit/<?php print $generator_id ?>'><?php print $generator_name?></a> / Arguments</h2>

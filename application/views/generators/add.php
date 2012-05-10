@@ -5,6 +5,8 @@
 		echo $error;
 	}
 
+	echo "<h3 class='error'>" . validation_errors() . "</h3>";
+
 	$this->load->helper('form');
 ?>
 	<h2 class='accordian_header'>Overview</h2>
