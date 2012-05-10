@@ -15,7 +15,7 @@
 	} else {
 		$this->load->helper('asset');
 		foreach ($images as $image) {
-			print image_asset($image->name);
+			print image_asset('resource/' . $image->name);
 			print "<br /><br />";
 			if (($this->ion_auth->logged_in() && $this->ion_auth->user()->row()->id == $problems->user_id) || $this->ion_auth->is_admin()) {
 				print "&nbsp;&nbsp;<a href='/problems/delete_image/" . $image->id . "/" . $problems->id . "'>Delete</a><br />";

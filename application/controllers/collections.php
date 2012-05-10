@@ -30,7 +30,9 @@
 
 		public function add() {
 			if ($this->ion_auth->is_admin()) {
-				if ($this->input->post('add_collection')) {
+				$this->load->library('form_validation');
+				$this->form_validation->set_rules('collection_name','Name','trim|required');
+				if ($this->input->post('add_collection') && $this->form_validation->run()) {
 					$this->load->model('Collection_model');
 					$new_collection = array(
 						'name' => $this->input->post('collection_name'),
@@ -54,10 +56,12 @@
 			}
 		}
 
-		function edit($collection_id) {
+		public function edit($collection_id) {
 			if ($this->ion_auth->is_admin()) {
+				$this->load->library('form_validation');
+				$this->form_validation->set_rules('collection_name','Name','trim|required');
 				$this->load->model('Collection_model');
-				if ($this->input->post('collection_id')) {
+				if ($this->input->post('collection_id') && $this->form_validation->run()) {
 					$updated_collection = array(
 						'name' => $this->input->post('collection_name'),
 						'description' => $this->input->post('collection_description')
@@ -78,6 +82,13 @@
 				$this->load->helper('url');
 				redirect('/pages/view/permission');
 			}
+		}
+
+		public function delete($collection_id) {
+			$this->load->model('Collection_model');
+			$this->Collection_model->delete_collection($collection_id);
+			$this->load->helper('url');
+			redirect('/collections/view');
 		}
 	}
 ?>

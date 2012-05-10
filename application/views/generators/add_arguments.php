@@ -7,7 +7,7 @@
 
 	$this->load->helper('form');
 ?>
-	<h2>Step 2 : Arguments</h2>
+	<h2><a href='/generators/edit/<?php print $generator_id ?>'><?php print $generator_name?></a> / Arguments</h2>
 	<div id='added_arguments'>
 		<?php 
 			foreach ($arguments as $argument) {

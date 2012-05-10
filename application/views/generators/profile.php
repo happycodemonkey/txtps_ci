@@ -11,10 +11,24 @@
 			print image_asset('resource/' . $image->name);
 		}
 	}
+
+	print "<h2 class='accordian_header'>Arguments</h2>";
+
+	if ($this->ion_auth->is_admin()) {
+		print "<a href='/generators/add_arguments/" . $generators->id . "'>Add an argument</a><br /><br />";
+	}	
+
+	print "<div class='accordian'>";
+	foreach ($arguments as $argument) {
+		print $argument->name . ": " . $argument->description . "<br />";
+	}
+	print "</div>";
+
 	print "<h2 class='accordian_header'>Problems</h2>";
 	
 	if ($this->ion_auth->logged_in()) {
 		print "<a href='/problems/add/" . $generators->id . "'>Add a problem</a><br /><br />";
+	
 	}
 
 	if (count($problems) == 0) {

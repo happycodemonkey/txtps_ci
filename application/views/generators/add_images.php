@@ -7,7 +7,8 @@
 
 	$this->load->helper('form');
 ?>
-	<h2>Images</h2>
+	<h2><a href='/generators/edit<?php print $generator_id; ?>'><?php print $generator_name; ?></a> / 
+	<a href='/generators/add_arguments/<?php print $generator_id; ?>'>Arguments</a> / Images</h2>
 	<div id='added_images'>
 		<?php
 			foreach ($images as $image) {

@@ -70,6 +70,7 @@
 				$this->load->model('Generator_model');
 				$this->load->model('Problem_model');
 				$this->load->model('Argument_model');
+				$this->load->library('form_validation');
 
 				$data['generator'] = array_shift($this->Generator_model->get_generator($generator_id)->result());
 				$arguments = $this->Argument_model->get_generator_argument('generator_id', $generator_id)->result();
@@ -77,7 +78,26 @@
 				$data['generator_id'] = $generator_id;
 				$data['arguments'] = $arguments;
 
-				if ($this->input->post('add_problem')) {
+				foreach ($arguments as $argument) {
+					$validation_rules = '';
+					if (!$argument->optional) {
+						$validation_rules .= 'required|';
+					}
+
+					if ($argument->type == 'INTEGER') {
+						$validation_rules .= 'integer';
+
+					} else if ($argument->type == 'DECIMAL' || $argument->type == 'FLOAT') {
+						$validation_rules .= 'decimal';
+
+					} else if ($argument->type == 'STRING') {
+						$validation_rules .= 'string';
+					}
+
+					$this->form_validation->set_rules($argument->id, $argument->name, $validation_rules);
+				}
+
+				if ($this->input->post('add_problem') && $this->form_validation->run()) {
 					$this->load->helper('string');
 					$new_problem = array(
 						'identifier' => random_string('alnum', 6),
@@ -114,7 +134,7 @@
 		}
 		
 		//@TODO: generalize this more?
-		function add_images($problem_id) {
+		public function add_images($problem_id) {
 			$this->load->model('Resource_model');
 			$data['problem_id'] = $problem_id;
 			$data['images'] = $this->Resource_model->get_resources_by_reference_id('image','problem',$problem_id)->result();
@@ -150,14 +170,14 @@
 			$this->load->view('templates/footer');
 		}
 
-		function delete_image($image_id, $problem_id) {
+		public function delete_image($image_id, $problem_id) {
 			$this->load->model('Resource_model');
 			$this->Resource_model->delete_resource($image_id);
 			$this->load->helper('url');
 			redirect('/problems/profile/' . $problem_id);
 		}
 
-		function edit($problem_id) {
+		public function edit($problem_id) {
 			$this->load->model('Problem_model');
 			$this->load->model('Generator_model');
 			$this->load->model('Argument_model');

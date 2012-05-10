@@ -27,10 +27,13 @@
 			$this->load->view('templates/header');
 			$this->load->model('Problem_model');
 			$this->load->model('Resource_model');
+			$this->load->model('Argument_model');
+
 			$data['generators'] = $generators;
 			$data['collections'] = array_shift($this->Collection_model->get_collection($generators->collection_id)->result());
 			$data['problems'] = $this->Problem_model->get_problem('generator_id', $generator_id)->result();
 			$data['images'] = $this->Resource_model->get_resources_by_reference_id('image', 'generator', $generator_id)->result();
+			$data['arguments'] = $this->Argument_model->get_generator_argument('generator_id', $generator_id)->result();
 			$this->load->view('generators/profile', $data);
 			$this->load->view('templates/footer');
 
@@ -101,10 +104,17 @@
 			if ($this->ion_auth->is_admin()) {
 				$this->load->model('Generator_model');
 				$this->load->model('Argument_model');
+				$this->load->library('form_validation');
+
 				$data['arguments'] = $this->Argument_model->get_generator_argument('generator_id', $generator_id)->result();
 				$data['generator_id'] = $generator_id;
+				$data['generator_name'] = array_shift($this->Generator_model->get_generator('id', $generator_id)->result())->name;
+
+				$this->form_validation->set_rules('argument_name', 'Argument name', 'required');
+				$this->form_validation->set_rules('argument_variable', 'Argument variable', 'required');
+				$this->form_validation->set_rules('argument_type', 'Argument type', 'required');
 				
-				if ($this->input->post('add_arguments')) {
+				if ($this->input->post('add_arguments') && $this->form_validation->run()) {
 					$new_argument = array(
 						'name' => $this->input->post('argument_name'),
 						'description' => $this->input->post('argument_description'),
@@ -143,8 +153,10 @@
 		public function add_images($generator_id) {
 			if ($this->ion_auth->is_admin()) {
 				$this->load->model('Resource_model');
+				$this->load->model('Generator_model');
 				$data['generator_id'] = $generator_id;
 				$data['images'] = $this->Resource_model->get_resources_by_reference_id('image','generator',$generator_id)->result();
+				$data['generator_name'] = array_shift($this->Generator_model->get_generator('id', $generator_id)->result())->name;
 
 				if ($this->input->post('add_image')) {
 					$config['upload_path'] = getEnv('DOCUMENT_ROOT') . "/assets/image/resource/";

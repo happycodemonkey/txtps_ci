@@ -14,9 +14,13 @@
 			return $this->db->delete('collection', array('id' => $collection_id)); 
 		}
 
-		function get_collection($collection_id = null) {
+		function get_collection($collection_id = null, $limit = null) {
 			if ($collection_id) {
 				$this->db->where('id', $collection_id);
+			}
+
+			if ($limit) {
+				$this->db->limit($limit);
 			}
 			return $this->db->get('collection');
 		}

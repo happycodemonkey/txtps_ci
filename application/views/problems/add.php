@@ -5,6 +5,8 @@
 		echo $error;
 	}
 
+	echo "<h3 class='error'>" . validation_errors() . "</h3>";
+
 	$this->load->helper('form');
 	echo form_open_multipart('problems/add/' . $generator_id);
 	echo form_hidden('add_problem', 'yes');
@@ -31,8 +33,18 @@
 				echo "*"; 
 			} 
 			echo form_label($argument->name) . "</td>";
-			echo "<td width='10%'>(" . $argument->type . ")</td>";
-			echo "<td width='10%'>" . form_input($argument->id) . "</td>";
+			if ($argument->type == 'SELECT') {
+				$arg_options = array();
+				$arg_options[0] = "Select..."; 
+				foreach (explode(',' , $argument->options) as $option) {
+					$arg_options[$option] = $option;
+				}
+				echo "<td width='10%'>(" . $argument->type . ")</td>";
+				echo "<td width='10%'>" . form_dropdown($argument->id, $arg_options) . "</td>";
+			} else {
+				echo "<td width='10%'>(" . $argument->type . ")</td>";
+				echo "<td width='10%'>" . form_input($argument->id) . "</td>";
+			}
 			echo "</tr>";
 		}
 	?>

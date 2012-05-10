@@ -11,6 +11,16 @@
 			if (!file_exists('application/views/pages/' . $page . '.php')) {
 				show_404();
 			}
+	
+			if ($page == 'home') {
+				$this->load->model('Collection_model');
+				$this->load->model('Generator_model');
+				$this->load->model('Problem_model');
+
+				$data['recent_problems'] = $this->Problem_model->get_problem(null,null,10)->result();
+				$data['recent_collections'] = $this->Collection_model->get_collection(null,10)->result();
+				$data['recent_generators'] = $this->Generator_model->get_generator(null,null,10)->result();
+			}
 
 			$this->load->helper('url');
 			$data['title'] = ucfirst($page);

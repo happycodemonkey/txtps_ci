@@ -13,11 +13,13 @@
 			return $this->db->get('generator');
 		}
 
-		function get_generator($filter = null, $key = null) {
+		function get_generator($filter = null, $key = null, $limit = null) {
 			if ($filter && $key) {
 				$this->db->where($filter, $key);
-			} else if ($filter) {
-				$this->db->where('id', $filter);
+			}
+
+			if ($limit) {
+				$this->db->limit($limit);
 			}
 			$this->db->order_by('collection_id');
 			return $this->db->get('generator');

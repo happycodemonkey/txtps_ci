@@ -7,7 +7,7 @@
 
 	$this->load->helper('form');
 ?>
-	<h2 class='accordian_header'>Step 1: Overview</h2>
+	<h2 class='accordian_header'>Overview</h2>
 	<div class='accordian' id='overview'>
 		<?php 
 		echo form_open_multipart('generators/add');

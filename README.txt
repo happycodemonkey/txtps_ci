@@ -8,10 +8,8 @@ to reflect your correct base_uri (very important!).
 Also make sure that mod_rewrite is allowed, and AllowOverride is set to all in httpd.conf
 
 @TODO:
-- Remake Schema: after testing install new schema (fresh db)
-- Replace 404's with actual errors/redirect to login re: user access
+- Make schema changes on dev
 - Generator add: add a go-back button between steps
-- Build edit pages
 - Error messaging: required fields
 - Check that arguments are the correct type
 - Adding files to generators/problems
