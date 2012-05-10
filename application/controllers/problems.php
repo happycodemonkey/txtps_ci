@@ -179,10 +179,13 @@
 
 		public function edit($problem_id) {
 			$this->load->model('Problem_model');
-			$this->load->model('Generator_model');
-			$this->load->model('Argument_model');
 			$problem = array_shift($this->Problem_model->get_problem('id', $problem_id)->result());
+
 			if (($this->ion_auth->logged_in() && $problem->user_id == $this->ion_auth->user()->row()->id) || $this->ion_auth->is_admin()) {
+				$this->load->model('Generator_model');
+				$this->load->model('Argument_model');
+				$this->load->library('form_validation');
+
 				$data['generator'] = array_shift($this->Generator_model->get_generator('id', $problem->generator_id)->result());
 				$data['problem'] = $problem;
 				$problem_arguments = $this->Argument_model->get_problem_argument('problem_id', $problem_id)->result();
@@ -190,18 +193,32 @@
 				$arguments = array();
 				$problem_args = array();
 				foreach ($problem_arguments as $problem_argument) {
-					$arguments[] = array_shift($this->Argument_model->get_generator_argument('id', $problem_argument->argument_id)->result());
+					$arg = array_shift($this->Argument_model->get_generator_argument('id', $problem_argument->argument_id)->result());
 					$problem_args[$problem_argument->argument_id] = $problem_argument->value;
+					$arguments[] = $arg;
+
+					$validation_rules = '';
+					if (!$arg->optional) {
+						$validation_rules .= 'required|';
+					}
+
+					if ($arg->type == 'INTEGER') {
+						$validation_rules .= 'integer';
+
+					} else if ($arg->type == 'DECIMAL' || $arg->type == 'FLOAT') {
+						$validation_rules .= 'decimal';
+
+					} else if ($arg->type == 'STRING') {
+						$validation_rules .= 'string';
+					}
+
+					$this->form_validation->set_rules($problem_argument->argument_id, $arg->name, $validation_rules);
 				}
 
 				$data['arguments'] = $arguments;
-				$data['problem_args'] = $problem_args;
-				
-				$this->load->view('templates/header');
-				$this->load->view('problems/edit', $data);
-				$this->load->view('templates/footer');
+				$data['problem_args'] = $problem_args;				
 
-				if ($this->input->post('problem_id')) {
+				if ($this->input->post('problem_id') && $this->form_validation->run()) {
 					$updated_problem = array(
 						'description' => $this->input->post('problem_description')
 					);
@@ -219,6 +236,10 @@
 						redirect('/problems/profile/' . $this->input->post('problem_id'));
 					}
 				}
+
+				$this->load->view('templates/header');
+				$this->load->view('problems/edit', $data);
+				$this->load->view('templates/footer');
 			} else {
 				$this->load->helper('url');
 				redirect('/pages/view/permission');

@@ -48,7 +48,13 @@
 			if ($this->ion_auth->is_admin()) {
 				$this->load->model('Collection_model');
 				$this->load->model('Generator_model');
-				if ($this->input->post('add_generator')) {
+				$this->load->library('form_validation');
+
+				$this->form_validation->set_rules('generator_name', 'Generator name', 'required');
+				$this->form_validation->set_rules('collection_id', 'Collection', 'required');
+				$this->form_validation->set_rules('generator_script', 'Script', 'required');
+
+				if ($this->input->post('add_generator') && $this->form_validation->run()) {
 					$data['generator_name'] = $this->input->post('generator_name');
 					$data['collection_id'] = $this->input->post('collection_id');
 					$data['generator_description'] = $this->input->post('generator_description');
@@ -206,6 +212,7 @@
 			if ($this->ion_auth->is_admin()) {
 				$this->load->model('Generator_model');
 				$this->load->model('Collection_model');
+				$this->load->library('form_validation');
 
 				$generator = array_shift($this->Generator_model->get_generator('id', $generator_id)->result());
 				$data['generator'] = $generator;
@@ -215,7 +222,8 @@
 				$this->load->view('generators/edit', $data);
 				$this->load->view('templates/footer');
 
-				if ($this->input->post('generator_id')) {
+				$this->form_validation->set_rules('generator_name', 'Generator name', 'required');
+				if ($this->input->post('generator_id') && $this->form_validation->run()) {
 					$updated_generator = array(
 						'description' => $this->input->post('generator_description'),
 						'name' => $this->input->post('generator_name')
