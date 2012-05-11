@@ -133,7 +133,8 @@
 
 		}
 		
-		//@TODO: generalize this more?
+		/** The images for files are generated...so we get rid of the add
+		********
 		public function add_images($problem_id) {
 			$this->load->model('Resource_model');
 			$data['problem_id'] = $problem_id;
@@ -177,6 +178,7 @@
 			redirect('/problems/profile/' . $problem_id);
 		}
 
+		**/
 		public function edit($problem_id) {
 			$this->load->model('Problem_model');
 			$problem = array_shift($this->Problem_model->get_problem('id', $problem_id)->result());

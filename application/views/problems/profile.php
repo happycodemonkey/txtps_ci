@@ -5,10 +5,11 @@
 	print "</h2><h3>Generator Description</h3>";
 	print $generators->description;
 	print "<h3>Images</h3>";
-	//@TODO: only if they've created the problem OR they're an admin
+	/**
 	if (($this->ion_auth->logged_in() && $this->ion_auth->user()->row()->id == $problems->user_id) || $this->ion_auth->is_admin()) {
 		print "<a href='/problems/add_images/" . $problems->id . "'>Add an image</a><br /><br />";
 	}
+	**/
 
 	if (empty($images)) {
 		print "There are no images for this problem.";
@@ -17,9 +18,11 @@
 		foreach ($images as $image) {
 			print image_asset('resource/' . $image->name);
 			print "<br /><br />";
+			/**
 			if (($this->ion_auth->logged_in() && $this->ion_auth->user()->row()->id == $problems->user_id) || $this->ion_auth->is_admin()) {
 				print "&nbsp;&nbsp;<a href='/problems/delete_image/" . $image->id . "/" . $problems->id . "'>Delete</a><br />";
 			}
+			**/
 		}
 	}
 	

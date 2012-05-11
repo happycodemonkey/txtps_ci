@@ -156,6 +156,7 @@
 			
 		}
 
+		/** TODO: are these images generated too? If so, from where/how? **/
 		public function add_images($generator_id) {
 			if ($this->ion_auth->is_admin()) {
 				$this->load->model('Resource_model');
