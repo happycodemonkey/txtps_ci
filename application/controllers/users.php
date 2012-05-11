@@ -77,7 +77,35 @@
 				$this->load->view('users/manage');
 				$this->load->view('templates/footer');
 			} else {
-				show_404();
+				$this->load->library('url');
+				redirect('pages/view/permission');
+			}
+		}
+
+		public function change_password() {
+			if ($this->ion_auth->logged_in()) {
+				$data['title'] = "Change your password.";
+				$this->load->library('form_validation');
+				$this->form_validation->set_rules('password', 'Password', 'required|matches[retype]|min_length[5]');
+				$this->form_validation->set_rules('retype', 'Retype Password', 'required');
+				if ($this->input->post('password') && $this->form_validation->run()) {
+					$user_id = $this->ion_auth->user()->row()->id;
+					$updated = array(
+						'password' => $this->input->post('password')
+					);
+					
+					if ($this->ion_auth->update($user_id, $updated)) {
+						$data['success'] = "Your password was successfully updated.";
+					} else {
+						$data['error'] = "There was an issue changing your password.";
+					}					
+				}
+				$this->load->view('templates/header');
+				$this->load->view('users/change_password', $data);
+				$this->load->view('templates/footer');
+			} else {
+				$this->load->library('url');
+				redirect('pages/view/permission');
 			}
 		}
 	}

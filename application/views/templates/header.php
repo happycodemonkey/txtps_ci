@@ -22,6 +22,7 @@
 			echo " (Admin) ";
 		}
 		echo " <a href='/users/logout'>Logout</a> ";
+		echo " <a href='/users/change_password'>Change Password</a> ";
 	} else {
 		echo " <a href='/users/login'>Login</a> ";
 		echo " <a href='/users/register'>Register</a> ";
