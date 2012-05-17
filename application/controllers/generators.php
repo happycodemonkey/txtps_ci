@@ -60,6 +60,7 @@
 					$data['generator_description'] = $this->input->post('generator_description');
 					$data['generator_script'] = $this->input->post('generator_script');
 
+					/**
 					$config['upload_path'] = "/opt/apps/";
 					$config['allowed_types'] = "py|txt|sh";
 					$this->load->library('upload', $config);
@@ -69,12 +70,13 @@
 					} else {
 						$data['error'] = "ERROR: " . $this->upload->display_errors();
 					}
+					**/
 
 					$new_generator = array(
 						'name' => $this->input->post('generator_name'),
 						'collection_id' => $this->input->post('collection_id'),
 						'description' => $this->input->post('generator_description'),
-						'script' => $file_data['file_name']
+						'script' => $this->input->post('generator_script');
 					);
 
 					$generator = array_shift($this->Generator_model->add_generator($new_generator)->result());

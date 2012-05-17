@@ -29,7 +29,7 @@
 		<br /><br />
 		<?php echo form_label('<b>*Script:</b>'); ?>
 		<br />
-		<?php echo form_upload('generator_script', isset($generator_script) ? $generator_script : ''); ?>
+		<?php echo form_input('generator_script', isset($generator_script) ? $generator_script : ''); ?>
 		<br /><br />
 	</div>
 <?php	
