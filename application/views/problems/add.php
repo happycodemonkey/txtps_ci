@@ -51,6 +51,6 @@
 	</table>
 	<br />
 <?php
-	echo form_submit('submit', 'Add Problem');
+	echo form_submit('submit', 'Run Problem');
 	echo form_close();
 ?>

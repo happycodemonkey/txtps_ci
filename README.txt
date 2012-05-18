@@ -8,9 +8,5 @@ to reflect your correct base_uri (very important!).
 Also make sure that mod_rewrite is allowed, and AllowOverride is set to all in httpd.conf
 
 @TODO:
-- Make schema changes on dev
-- Generator add: add a go-back button between steps
-- Error messaging: required fields
-- Check that arguments are the correct type
-- Adding files to generators/problems
-- Ensure that pages have correct permissions
+- Running the generator/problem!
+- How are the images, files, etc that are generated stored?

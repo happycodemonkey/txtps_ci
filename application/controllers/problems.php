@@ -119,6 +119,10 @@
 						$this->Argument_model->add_problem_argument($new_problem_arguments);
 					}
 
+					$run_generator = array_shift($this->Generator_model->get_generator('id', $this->input->post('generator_id'))->result());
+
+					//@TODO: we need to run the generator, then store files, images, etc that are outputted.
+
 					$this->load->helper('url');
 					redirect('/problems/profile/' . $problem->id);
 				}
