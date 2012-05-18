@@ -41,6 +41,6 @@
 	</table>
 	<br />
 <?php
-	echo form_submit('submit', 'Update Problem');
+	echo form_submit('submit', 'Re-run Problem');
 	echo form_close();
 ?>

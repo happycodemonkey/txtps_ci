@@ -238,6 +238,7 @@
 					}
 
 					if ($this->Problem_model->update_problem($updated_problem, $this->input->post('problem_id'))) {
+						//@TODO: Run the generator again here
 						$this->load->helper('url');
 						redirect('/problems/profile/' . $this->input->post('problem_id'));
 					}
