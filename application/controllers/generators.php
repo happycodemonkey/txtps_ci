@@ -22,7 +22,7 @@
 			$this->load->model('Generator_model');
 			$this->load->model('Collection_model');
 
-			$generators = array_shift($this->Generator_model->get_generator($generator_id)->result());
+			$generators = array_shift($this->Generator_model->get_generator('id',$generator_id)->result());
 			
 			$this->load->view('templates/header');
 			$this->load->model('Problem_model');

@@ -32,8 +32,8 @@
 			$this->load->model('Argument_model');
 			$this->load->model('Resource_model');
 
-			$problems = array_shift($this->Problem_model->get_problem($problem_id)->result());
-			$generators = array_shift($this->Generator_model->get_generator($problems->generator_id)->result());
+			$problems = array_shift($this->Problem_model->get_problem('id', $problem_id)->result());
+			$generators = array_shift($this->Generator_model->get_generator('id', $problems->generator_id)->result());
 			$collections = array_shift($this->Collection_model->get_collection($generators->collection_id)->result());
 			
 			$arguments = array();
@@ -72,11 +72,12 @@
 				$this->load->model('Argument_model');
 				$this->load->library('form_validation');
 
-				$data['generator'] = array_shift($this->Generator_model->get_generator($generator_id)->result());
+				$data['generator'] = array_shift($this->Generator_model->get_generator('id',$generator_id)->result());
 				$arguments = $this->Argument_model->get_generator_argument('generator_id', $generator_id)->result();
 				
 				$data['generator_id'] = $generator_id;
 				$data['arguments'] = $arguments;
+				$this->form_validation->set_rules('generator_id', 'Generator', 'required');
 
 				foreach ($arguments as $argument) {
 					$validation_rules = '';
@@ -108,6 +109,7 @@
 					);
 
 					$problem = array_shift($this->Problem_model->add_problem($new_problem)->result());
+					$script_args = array();
 
 					foreach ($arguments as $argument) {
 						$new_problem_arguments = array(
@@ -116,15 +118,20 @@
 							'value' => $this->input->post($argument->id)
 						);
 						
+						$script_args[$argument->variable] = $this->input->post($argument->id);
+
 						$this->Argument_model->add_problem_argument($new_problem_arguments);
 					}
 
 					$run_generator = array_shift($this->Generator_model->get_generator('id', $this->input->post('generator_id'))->result());
 
 					//@TODO: we need to run the generator, then store files, images, etc that are outputted.
-
-					$this->load->helper('url');
-					redirect('/problems/profile/' . $problem->id);
+					if ($this->generate_problem($run_generator, $problem->id, $script_args)) {
+						$this->load->helper('url');
+						redirect('/problems/profile/' . $problem->id);
+					} else {
+						error_log("ERROR MESSAGE!");
+					}
 				}
 
 				$this->load->view('templates/header');
@@ -135,6 +142,28 @@
 				redirect('/users/login');
 			}
 
+		}
+
+		private function generate_problem($generator, $problem_id, $args) {
+			$arg_list = "";
+			foreach($args as $name=>$value){
+				$arg_list .=" -$name $value";
+			}			
+
+			$problem = array_shift($this->Problem_model->get_problem('id', $problem_id)->result());
+			$problem_file_dir = $_SERVER['DOCUMENT_ROOT'] . "/problems/" . $problem->identifier . "/";
+			$problem_file_name = $problem->identifier . "_" . $problem->id . ".txt";
+
+			if(mkdir($problem_file_dir)) {
+
+				$shell_command = "$generator->script " . $arg_list ." > " . $problem_file_dir . $problem_file_name;
+				error_log($shell_command);
+				shell_exec($shell_command);
+				return true;
+			} 			
+				
+			error_log("Could not run the generator...cannot mkdir");
+			return false;
 		}
 		
 		/** The images for files are generated...so we get rid of the add
