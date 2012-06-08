@@ -47,10 +47,29 @@
 			$data['collections'] = $collections;
 			$data['arguments'] = $arguments;
 			$data['images'] = $this->Resource_model->get_resources_by_reference_id('image', 'problem', $problem_id)->result();
+
+			if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/problems/' . $problems->identifier)) {
+				$data['files'] = scandir($_SERVER['DOCUMENT_ROOT'] . '/problems/' . $problems->identifier);
+			}
+
 			$this->load->view('templates/header');
 			$this->load->view('problems/profile', $data);
 			$this->load->view('templates/footer');
 
+		}
+
+		public function download($identifier, $problem_id) {
+			$this->load->helper('download');
+			$data = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/problems/' . $identifier . '/' . $identifier . "_" . $problem_id . ".txt");
+
+			if ($data != "" && force_download($file_name, $data)) {
+				force_download($file_name, $data);
+			} else {
+				print "This file is empty.";
+			}
+
+			$this->load->helper('url');
+			redirect('/problems/profile/' . $problem_id);
 		}
 
 		public function menu() {

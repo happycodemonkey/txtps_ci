@@ -39,7 +39,9 @@
 		print "There are no files for this problem.";
 	} else {
 		foreach ($files as $file) {
-			//load
+			if ($file != "." && $file != "..") {
+				print "<a href='/problems/download/" . $problems->identifier . "/" . $problems->id . "'>" . $file . "</a><br />";
+			}
 		}
 	}
 
