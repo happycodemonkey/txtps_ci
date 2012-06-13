@@ -175,7 +175,7 @@
 
 			if(mkdir($problem_file_dir)) {
 
-				$shell_command = "$generator->script " . $arg_list ." > " . $problem_file_dir . $problem_file_name;
+				$shell_command = "python $generator->script " . $arg_list ." > " . $problem_file_dir . $problem_file_name;
 				error_log($shell_command);
 				shell_exec($shell_command);
 				return true;
