@@ -67,9 +67,6 @@
 			} else {
 				print "This file is empty.";
 			}
-
-			$this->load->helper('url');
-			redirect('/problems/profile/' . $problem_id);
 		}
 
 		public function menu() {
