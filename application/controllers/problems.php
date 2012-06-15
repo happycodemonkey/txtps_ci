@@ -175,7 +175,27 @@
 				$shell_command = "python $generator->script " . $arg_list ." > " . $problem_file_dir . $problem_file_name;
 				error_log($shell_command);
 				shell_exec($shell_command);
-				return true;
+				
+				$this->load->library('email');
+				$user = $this->ion_auth->user()->row();
+
+				$message = "Your problem has been generated. Please click <a href='" 
+				. $_SERVER['SERVER_NAME'] . "/problems/profile/" 
+				. $problem_id . "'>here</a> to view it, or <a href='" 
+				. $_SERVER['SERVER_NAME'] . "/problems/download/" . $problem->identifier
+				. "/" . $problem_id . "'>here</a> to download it.";
+
+				$this->email->from('admin@localhost', 'TxTPS');
+				$this->email->to($user->email);
+				$this->email->subject("Your problem has been generated.");
+				$this->email->message($message);
+
+				if ($this->email->send()) {
+					return true;
+				} 
+
+				echo $this->email->print_debugger();
+				return false;
 			} 			
 				
 			error_log("Could not run the generator...cannot mkdir");
