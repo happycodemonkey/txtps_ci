@@ -177,7 +177,8 @@
 
 			if(mkdir($problem_file_dir) && mkdir($problem_file_dir . "/public") && mkdir($problem_file_dir . "/private")) {
 
-				$shell_command = "python $generator->script " . $problem_file_dir . " " . json_encode($arg_list) . " > " . $problem_file_dir . "/private/out.txt";
+				$shell_command = "python $generator->script " . $problem_file_dir . " " . json_encode($arg_list) . " > " 
+					. $problem_file_dir . "/private/stdout 2>&1";
 				error_log($shell_command);
 				shell_exec($shell_command);
 				
