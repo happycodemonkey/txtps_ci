@@ -175,9 +175,9 @@
 			//$problem = array_shift($this->Problem_model->get_problem('id', $problem_id)->result());
 			$problem_file_dir = "/data/files/problems/" . $problem_id;
 
-			if(mkdir($problem_file_dir) && mkdir($problem_file_dir . "/public")) {
+			if(mkdir($problem_file_dir) && mkdir($problem_file_dir . "/public") && mkdir($problem_file_dir . "/private")) {
 
-				$shell_command = "python $generator->script " . $problem_file_dir . " " . json_encode($arg_list);
+				$shell_command = "python $generator->script " . $problem_file_dir . " " . json_encode($arg_list) . " > " . $problem_file_dir . "/private/out.txt";
 				error_log($shell_command);
 				shell_exec($shell_command);
 				
