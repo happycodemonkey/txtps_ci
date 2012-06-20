@@ -48,8 +48,8 @@
 			$data['arguments'] = $arguments;
 			$data['images'] = $this->Resource_model->get_resources_by_reference_id('image', 'problem', $problem_id)->result();
 
-			if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/problems/' . $problems->identifier)) {
-				$data['files'] = scandir($_SERVER['DOCUMENT_ROOT'] . '/problems/' . $problems->identifier);
+			if (file_exists('/data/files/problems/' . $problem_id)) {
+				$data['files'] = scandir('/data/files/problems/' . $problem_id . '/public');
 			}
 
 			$this->load->view('templates/header');
@@ -58,14 +58,20 @@
 
 		}
 
-		public function download($identifier, $problem_id) {
+		public function download($problem_id) {
 			$this->load->helper('download');
-			$data = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/problems/' . $identifier . '/' . $identifier . "_" . $problem_id . ".txt");
+			$file_dir = '/data/files/problems/' . $problem_id . '/public/';
 
-			if ($data != "" && force_download($file_name, $data)) {
-				force_download($file_name, $data);
-			} else {
-				print "This file is empty.";
+			foreach (scandir($file_dir) as $file_name) {
+				if ($file_name != "." && $file_name != "..") {
+					$data = file_get_contents($file_dir . $file_name);
+
+					if ($data != "" && force_download($file_name, $data)) {
+						force_download($file_name, $data);
+					} else {
+						print "This file is empty.";
+					}
+				}
 			}
 		}
 
@@ -161,18 +167,17 @@
 		}
 
 		private function generate_problem($generator, $problem_id, $args) {
-			$arg_list = "";
+			$arg_list = array();
 			foreach($args as $name=>$value){
-				$arg_list .=" -$name $value";
+				$arg_list[$name] = $value;
 			}			
 
-			$problem = array_shift($this->Problem_model->get_problem('id', $problem_id)->result());
-			$problem_file_dir = $_SERVER['DOCUMENT_ROOT'] . "/problems/" . $problem->identifier . "/";
-			$problem_file_name = $problem->identifier . "_" . $problem->id . ".txt";
+			//$problem = array_shift($this->Problem_model->get_problem('id', $problem_id)->result());
+			$problem_file_dir = "/data/files/problems/" . $problem_id;
 
-			if(mkdir($problem_file_dir)) {
+			if(mkdir($problem_file_dir) && mkdir($problem_file_dir . "/public")) {
 
-				$shell_command = "python $generator->script " . $arg_list ." > " . $problem_file_dir . $problem_file_name;
+				$shell_command = "python $generator->script " . $problem_file_dir . " " . json_encode($arg_list);
 				error_log($shell_command);
 				shell_exec($shell_command);
 				
