@@ -40,7 +40,7 @@
 	} else {
 		foreach ($files as $file) {
 			if ($file != "." && $file != "..") {
-				print "<a target='_blank' href='/problems/download/" . $problems->identifier . "/" . $problems->id . "'>" . $file . "</a><br />";
+				print "<a target='_blank' href='/problems/download/" . $problems->id . "'>" . $file . "</a><br />";
 			}
 		}
 	}
