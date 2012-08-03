@@ -58,12 +58,12 @@
 
 		}
 
-		public function download($problem_id, $file) {
+		public function download($problem_id, $file_name) {
 			$this->load->helper('download');
-			$file_dir = '/data/files/problems/' . $problem_id . '/public/';
+			$file = '/data/files/problems/' . $problem_id . '/public/' . $file_name;
 
 			if (file_exists($file)) {
-				$data = file_get_contents($file_dir . $file);
+				$data = file_get_contents($file);
 
 				if ($data != "" && force_download($file, $data)) {
 					force_download($file, $data);
