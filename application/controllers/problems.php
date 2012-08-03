@@ -58,19 +58,17 @@
 
 		}
 
-		public function download($problem_id) {
+		public function download($problem_id, $file) {
 			$this->load->helper('download');
 			$file_dir = '/data/files/problems/' . $problem_id . '/public/';
 
-			foreach (scandir($file_dir) as $file_name) {
-				if ($file_name != "." && $file_name != "..") {
-					$data = file_get_contents($file_dir . $file_name);
+			if (file_exists($file)) {
+				$data = file_get_contents($file_dir . $file);
 
-					if ($data != "" && force_download($file_name, $data)) {
-						force_download($file_name, $data);
-					} else {
-						print "This file is empty.";
-					}
+				if ($data != "" && force_download($file, $data)) {
+					force_download($file, $data);
+				} else {
+					print "This file is empty.";
 				}
 			}
 		}
