@@ -1,3 +1,14 @@
+/* setting color variables */
+/* the theme coloring was pulled from kuler.adobe.com */
+/* and is called 'JW Fashion' */
+
+$base-color: #625D55;
+$dark-blue: #1E2F39;
+$lite-blue: #375351;
+$dark-gray: #A5AD86; //the base color is a darker gray but it is the base :)
+$lite-gray: #CCCFBB;
+
+
 body {font-family:arial; font-size:11px;}
 .clear {clear:both}	
 /* remove the list style */
@@ -104,6 +115,7 @@ div#recent_generators {
 
 div#header {
 	height:20%;
+	//background-color: $lite-blue;
 
 	div#top_header {
 		width:100%;
@@ -143,6 +155,7 @@ div#footer {
 	clear:both;
 	width:100%;
 	height:20%;
+	//background-color: $lite-blue;
 
 	#tacc_footer_image,
 	#footer_text {
@@ -172,6 +185,7 @@ hr {
 div.site_body {
 	width:100%;
 	clear:both;
+	//background-color: $lite-gray;
 }
 
 
