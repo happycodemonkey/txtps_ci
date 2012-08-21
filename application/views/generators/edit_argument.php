@@ -44,7 +44,7 @@
 		<br /><br />
 		<?php echo form_label('<b>*Type:</b>'); ?>
 		<br />
-		<?php echo form_dropdown('argument_type', $argument->types, isset($argument->type) ? $argument->type : '', 'id="argument->type"'); ?>
+		<?php echo form_dropdown('argument_type', $argument->types, isset($argument->type) ? $argument->type : '', 'id="argument_type"'); ?>
 		<br /><br />
 		<div id='argument_select_options' <?php $argument->type != "Select" ? print "style='display:none;'" : ""; ?> >
 			<?php echo form_label('<b>Options (comma-seperated list):</b>'); ?>
