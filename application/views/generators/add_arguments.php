@@ -14,8 +14,10 @@
 	<div id='added_arguments'>
 		<?php 
 			foreach ($arguments as $argument) {
-				print $argument->variable . " : " . $argument->description; 
-				print "&nbsp;&nbsp;<a href='/generators/delete_argument/" . $argument->id . "/" . $generator_id . "'>Delete</a><br />";
+				print $argument->variable;
+				$argument->description ? print " : " . $argument->description : print " : No description "; 
+				print "&nbsp;&nbsp;<a href='/generators/delete_argument/" . $argument->id . "/" . $generator_id . "'>Delete</a>";
+				print "&nbsp;&nbsp;<a href='/generators/edit_argument/" . $argument->id . "/" . $generator_id . "'>Edit</a><br />";
 			}
 		?>
 	</div>

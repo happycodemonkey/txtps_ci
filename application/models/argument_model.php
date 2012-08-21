@@ -20,6 +20,11 @@
 			return $this->db->delete('arguments', array('id'=>$argument_id));
 		}
 
+		function update_generator_argument($updated_argument, $argument_id) {
+			$this->db->where('id', $argument_id);
+			return $this->db->update('arguments', $updated_argument);
+		}
+
 		function add_problem_argument($new_problem_argument) {
 			$this->db->insert('problem_argument', $new_problem_argument);
 			return $this->db->select('last_insert_id() as problem_argument_id')->limit(1)->get('problem_argument');

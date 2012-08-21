@@ -22,9 +22,11 @@
 				if ($this->ion_auth->is_admin()) {
 					echo " (Admin) ";
 				}
+				echo "<br />";
 				echo " <a href='/users/logout'><b>Logout</b></a>  | ";
 				echo " <a href='/users/change_password'><b>Change Password</b></a> ";
 			} else {
+				echo "<br />";
 				echo " <a href='/users/login'><b>Login</b></a>  | ";
 				echo " <a href='/users/register'><b>Register</b></a> ";
 			}

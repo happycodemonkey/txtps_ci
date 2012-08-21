@@ -60,18 +60,6 @@
 					$data['generator_description'] = $this->input->post('generator_description');
 					$data['generator_script'] = $this->input->post('generator_script');
 
-					/**
-					$config['upload_path'] = "/opt/apps/";
-					$config['allowed_types'] = "py|txt|sh";
-					$this->load->library('upload', $config);
-
-					if ($this->upload->do_upload('generator_script')) {
-						$file_data = $this->upload->data();
-					} else {
-						$data['error'] = "ERROR: " . $this->upload->display_errors();
-					}
-					**/
-
 					$new_generator = array(
 						'name' => $this->input->post('generator_name'),
 						'collection_id' => $this->input->post('collection_id'),
@@ -150,9 +138,48 @@
 			}
 		}
 
+		public function edit_argument($argument_id, $generator_id) {
+			if ($this->ion_auth->is_admin()) {
+				$this->load->model('Generator_model');
+				$this->load->model('Argument_model');
+				$this->load->library('form_validation');
+
+				$data['argument'] = array_shift($this->Argument_model->get_generator_argument('id', $argument_id)->result());
+				$data['generator_id'] = $generator_id;
+				$data['generator_name'] = array_shift($this->Generator_model->get_generator('id', $generator_id)->result())->name;
+
+				$this->form_validation->set_rules('argument_name', 'Argument name', 'required');
+				$this->form_validation->set_rules('argument_variable', 'Argument variable', 'required');
+				$this->form_validation->set_rules('argument_type', 'Argument type', 'required');
+				
+				if ($this->input->post('edit_argument') && $this->form_validation->run()) {
+					$updated_argument = array(
+						'name' => $this->input->post('argument_name'),
+						'description' => $this->input->post('argument_description'),
+						'generator_id' => $this->input->post('generator_id'),
+						'variable' => $this->input->post('argument_variable'),
+						'type' => $this->input->post('argument_type'),
+						'options' => $this->input->post('argument_options'),
+						'optional' => $this->input->post('argument_optional')
+					);				
+
+					$this->Argument_model->update_generator_argument($updated_argument, $argument_id);
+					$this->load->helper('url');
+					redirect('/generators/add_arguments/' . $generator_id);
+				}
+
+				$this->load->view('templates/header');
+				$this->load->view('generators/edit_argument', $data);
+				$this->load->view('templates/footer');
+			} else {
+				$this->load->helper('url');
+				redirect('/pages/view/permission');
+			}
+		}
+
 		public function delete_argument($argument_id, $generator_id) {
-			$this->load->model('Generator_model');
-			$this->Generator_model->delete_argument($argument_id);
+			$this->load->model('Argument_model');
+			$this->Argument_model->delete_generator_argument($argument_id);
 			$this->load->helper('url');
 			redirect('/generators/add_arguments/' . $generator_id);
 			
