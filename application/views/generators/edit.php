@@ -1,3 +1,4 @@
+<div class='site_body'>
 <?php
 	if (isset($saved)) {
 		echo "Your generator was successfully created.";
@@ -29,7 +30,7 @@
 		<br /><br />
 		<?php echo form_label('<b>*Script:</b>'); ?>
 		<br />
-		<?php echo $generator->script; ?>
+		<?php echo form_input('generator_script', isset($generator->script) ? $generator->script : ''); ?>
 		<br /><br />
 	</div>
 <?php	
@@ -44,3 +45,4 @@
         echo form_close();
 
 ?>
+</div>

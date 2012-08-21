@@ -1,3 +1,4 @@
+<div class='site_body'>
 <h2>Contact us</h2>
 <?php
 	$this->load->helper('form');
@@ -18,3 +19,4 @@
 	echo form_submit('submit', 'Send message');
 	echo form_close();
 ?>
+</div>

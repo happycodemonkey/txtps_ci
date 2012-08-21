@@ -1,3 +1,4 @@
+<div class='site_body'>
 <?php
 	if (isset($saved)) {
 		echo "Your generator was successfully created.";
@@ -37,3 +38,4 @@
 	echo form_close();
 
 ?>
+</div>

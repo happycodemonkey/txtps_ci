@@ -1,3 +1,4 @@
+<div class='site_body'>
 <?php
 	print "<h1 class='accordian_header'><a href='/collections/profile/" . $generators->collection_id . "'>" . $collections->name . "</a> / " . $generators->name . "</h1>";
 	print "<h2>Description</h2>";
@@ -41,3 +42,4 @@
 		print "</div>";
 	}
 ?>
+</div>

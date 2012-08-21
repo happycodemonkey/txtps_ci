@@ -1,3 +1,4 @@
+<div class='site_body'>
 <?php
 	if (isset($saved)) {
 		echo "Your problem was successfully created.";
@@ -54,3 +55,4 @@
 	echo form_submit('submit', 'Run Problem');
 	echo form_close();
 ?>
+</div>

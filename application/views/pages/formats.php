@@ -1,3 +1,4 @@
+<div class='site_body'>
 	<h1>Problem File Formats</h1> 
 	
  
@@ -60,4 +61,4 @@
 
 
 
-
+</div>

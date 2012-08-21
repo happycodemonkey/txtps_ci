@@ -1,3 +1,4 @@
+<div class='site_body'>
 <h1>Collections</h1>
 
 <?php if ($this->ion_auth->is_admin()) : ?>
@@ -22,3 +23,4 @@
 	}
 ?>
 </table>
+</div>

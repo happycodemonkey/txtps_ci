@@ -1,82 +1,132 @@
-body {font-family:arial; font-size:11px;}
-.clear {clear:both}	
+body {
+  font-family: arial;
+  font-size: 11px; }
+
+.clear {
+  clear: both; }
+
 /* remove the list style */
 #nav {
-	margin:0; 
-	padding:0; 
-	list-style:none;
-}	
-	
-	/* make the LI display inline */
-	/* it's position relative so that position absolute */
-	/* can be used in submenu */
-	#nav li {
-		float:left; 
-		display:block; 
-		width:100px; 
-		background:#ccc; 
-		position:relative;
-		z-index:500; 
-		margin:0 1px;
-	}
-		
-	/* this is the parent menu */
-	#nav li a {
-		display:block; 
-		padding:8px 5px 0 5px; 
-		font-weight:700;  
-		height:23px; 
-		text-decoration:none; 
-		color:#fff; 
-		text-align:center; 
-		color:#333;
-	}
-
-	#nav li a:hover {
-		color:#fff;
-	}
-	
-	/* you can make a different style for default selected value */
-	#nav a.selected {
-		color:#f00;
-	}
-	
-		/* submenu, it's hidden by default */
-		#nav ul {
-			position:absolute; 
-			left:0; 
-			display:none; 
-			margin:0 0 0 -1px; 
-			padding:0; 
-			list-style:none;
-		}
-		
-		#nav ul li {
-			width:100px; 
-			float:left; 
-			border-top:1px solid #fff;
-		}
-		
-		/* display block will make the link fill the whole area of LI */
-		#nav ul a {
-			display:block;  
-			height:15px;
-			padding: 8px 5px; 
-			color:#666;
-		}
-		
-		#nav ul a:hover {
-			text-decoration:underline;	
-		}
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* make the LI display inline */
+  /* it's position relative so that position absolute */
+  /* can be used in submenu */
+  /* you can make a different style for default selected value */
+  /* submenu, it's hidden by default */ }
+  #nav li {
+    float: left;
+    display: block;
+    width: 100px;
+    background: #ccc;
+    position: relative;
+    z-index: 500;
+    margin: 0 1px; }
+    #nav li a {
+      display: block;
+      padding: 8px 5px 0 5px;
+      font-weight: 700;
+      height: 23px;
+      text-decoration: none;
+      color: #fff;
+      text-align: center;
+      color: #333;
+      /* this is the parent menu */ }
+      #nav li a:hover {
+        color: #fff; }
+  #nav a.selected {
+    color: #f00; }
+  #nav ul {
+    position: absolute;
+    left: 0;
+    display: none;
+    margin: 0 0 0 -1px;
+    padding: 0;
+    list-style: none;
+    /* display block will make the link fill the whole area of LI */ }
+    #nav ul li {
+      width: 100px;
+      float: left;
+      border-top: 1px solid #fff; }
+    #nav ul a {
+      display: block;
+      height: 15px;
+      padding: 8px 5px;
+      color: #666; }
+      #nav ul a:hover {
+        text-decoration: underline; }
 
 /* fix ie6 small issue */
 /* we should always avoid using hack like this */
 /* should put it into separate file : ) */
-*html #nav ul {
-	margin:0 0 0 -2px;
-}
+* html #nav ul {
+  margin: 0 0 0 -2px; }
 
 .error {
-color: red;
-}
+  color: red; }
 
+div#home_wrapper {
+  position: relative;
+  clear: both;
+  float: left;
+  width: 100%;
+  overflow: hidden; }
+
+div#recent_problems,
+div#recent_collections,
+div#recent_generators {
+  width: 30%;
+  float: left;
+  position: relative;
+  padding: 0 0 1em 0;
+  overflow: hidden; }
+
+div#header {
+  height: 20%; }
+  div#header div#top_header {
+    width: 100%; }
+    div#header div#top_header div#user_links {
+      float: right;
+      font-size: 15pt;
+      text-align: right;
+      width: 30%; }
+    div#header div#top_header div#txtps_header_image {
+      float: left;
+      width: 30%; }
+    div#header div#top_header div#top_header_text {
+      float: right;
+      width: 35%; }
+  div#header div#header_menu {
+    width: 100%;
+    clear: both;
+    background-color: blue; }
+
+div#header, h3#home_head {
+  clear: both;
+  padding: 1px; }
+
+div#footer {
+  clear: both;
+  width: 100%;
+  height: 20%; }
+  div#footer #tacc_footer_image,
+  div#footer #footer_text {
+    float: left;
+    width: 30%;
+    position: relative; }
+  div#footer #utexas_footer_image {
+    float: right;
+    width: 30%;
+    position: relative;
+    text-align: right; }
+  div#footer #footer_text {
+    text-align: center; }
+
+hr {
+  height: 1px;
+  color: #333333; }
+
+div.site_body {
+  width: 100%;
+  clear: both; }

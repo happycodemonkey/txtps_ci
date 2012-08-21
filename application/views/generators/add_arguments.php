@@ -1,3 +1,4 @@
+<div class='site_body'>
 <?php
 	if (isset($saved)) {
 		echo "Your arguments were successfully saved.";
@@ -74,3 +75,4 @@
 	echo form_close();
 
 ?>
+</div>

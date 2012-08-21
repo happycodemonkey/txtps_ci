@@ -1,29 +1,38 @@
-<h2>Welcome to the Test Problem Server</h2>
-
-<h3 class='accordian_header'>Recent Problems:</h3>
-<div class='accordian'>
-<?php
-	foreach ($recent_problems as $recent_problem) {
-		print "<a href='/problems/profile/" . $recent_problem->id . "'>" . $recent_problem->identifier . "</a><br />";
-	}
-?>
+<div id='home_wrapper' class='site_body'>
+<div id='recent_problems'>
+	<h2>Recent Problems:</h2>
+	<?php
+		$i = 0;
+		foreach ($recent_problems as $recent_problem) {
+			$class = $i%2==0 ? "even" : "odd";
+			print "<div class='problem $class'><a href='/problems/profile/" . $recent_problem->id . "'>" . $recent_problem->identifier . "</a></div><br />";
+			$i++;
+		}
+	?>
 </div>
 
-<h3 class='accordian_header'>Recent Generators:</h3>
-<div class='accordian'>
-<?php
-	foreach ($recent_generators as $recent_generator) {
-		print "<a href='/generators/profile/" . $recent_generator->id . "'>" . $recent_generator->name . "</a><br />";
-	}
-?>
+<div id='recent_generators'>
+	<h2>Recent Generators:</h2>
+	<?php
+		$i = 0;
+		foreach ($recent_generators as $recent_generator) {
+			$class = $i%2==0 ? "even" : "odd";
+			print "<div class='generator $class'><a href='/generators/profile/" . $recent_generator->id . "'>" . $recent_generator->name . "</a></div><br />";
+			$i++;
+		}
+	?>
 </div>
 
-<h3 class='accordian_hearder'>Recent Collections:</h3>
-<div class='accordian'>
-<?php
-	foreach ($recent_collections as $recent_collection) {
-		print "<a href='/collections/profile/" . $recent_collection->id . "'>" . $recent_collection->name . "</a><br />";
-	}
-?>
+<div id='recent_collections'>
+	<h2>Recent Collections:</h2>
+	<?php
+		$i = 0;
+		foreach ($recent_collections as $recent_collection) {
+			$class = $i%2==0 ? "even" : "odd";
+			print "<div class='collection $class'><a href='/collections/profile/" . $recent_collection->id . "'>" . $recent_collection->name . "</a></div><br />";
+			$i++;
+		}
+	?>
+</div>
 </div>
 

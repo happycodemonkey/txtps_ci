@@ -1,3 +1,4 @@
+<div class='site_body'>
 <?php
 	if (isset($saved)) {
 		echo "Your images were successfully uploaded.";
@@ -36,3 +37,4 @@
 	echo form_close();
 
 ?>
+</div>

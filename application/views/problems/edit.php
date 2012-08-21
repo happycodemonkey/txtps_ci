@@ -1,3 +1,4 @@
+<div class='site_body'>
 <?php
 	if (isset($saved)) {
 		echo "Your problem was successfully updated.";
@@ -44,3 +45,4 @@
 	echo form_submit('submit', 'Re-run Problem');
 	echo form_close();
 ?>
+</div>

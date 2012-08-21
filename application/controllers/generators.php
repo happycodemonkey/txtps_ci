@@ -229,7 +229,8 @@
 				if ($this->input->post('generator_id') && $this->form_validation->run()) {
 					$updated_generator = array(
 						'description' => $this->input->post('generator_description'),
-						'name' => $this->input->post('generator_name')
+						'name' => $this->input->post('generator_name'),
+						'script' => $this->input->post('generator_script')
 					);
 
 					if ($this->Generator_model->update_generator($updated_generator, $this->input->post('generator_id'))) {

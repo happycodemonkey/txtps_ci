@@ -1,3 +1,4 @@
+<div class='site_body'>
 <?php
 
 	print "<h1>" . $collections->name . "</h1>";
@@ -19,3 +20,4 @@
 		}
 	}
 ?>
+</div>

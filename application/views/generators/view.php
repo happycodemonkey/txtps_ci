@@ -1,3 +1,4 @@
+<div class='site_body'>
 <h1>Generators</h1>
 
 <?php if($this->ion_auth->is_admin()) : ?>
@@ -30,3 +31,4 @@
 		print "</tr></table>";
 	}
 ?>
+</div>
