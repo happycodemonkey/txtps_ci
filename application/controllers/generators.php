@@ -109,6 +109,8 @@
 				$this->form_validation->set_rules('argument_name', 'Argument name', 'required');
 				$this->form_validation->set_rules('argument_variable', 'Argument variable', 'required');
 				$this->form_validation->set_rules('argument_type', 'Argument type', 'required');
+				$this->form_validation->set_rules('argument_min_value', 'Argument Minimum Value', 'less_than[' . $this->input->post('argument_max_value') . ']');
+				$this->form_validation->set_message('less_than', 'Minimum Value must be less than Maximum Value');
 				
 				if ($this->input->post('add_arguments') && $this->form_validation->run()) {
 					$new_argument = array(
