@@ -38,7 +38,7 @@
 				$arg_options = array();
 				$arg_options[0] = "Select..."; 
 				foreach (explode(',' , $argument->options) as $option) {
-					$arg_options[$option] = $option;
+					$arg_options[htmlspecialchars($option)] = htmlspecialchars($option);
 				}
 				echo "<td width='10%'>(" . $argument->type . ")</td>";
 				echo "<td width='10%'>" . form_dropdown($argument->id, $arg_options) . "</td>";
