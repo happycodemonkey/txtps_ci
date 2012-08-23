@@ -47,6 +47,8 @@ CREATE TABLE `arguments` (
 	`optional` tinyint(1) NOT NULL,
 	`options` varchar(150),
 	`default_value` varchar(30),
+	`min_value` int(10) unsigned,
+	`max_value` int(10) unsigned,
 	PRIMARY KEY (`id`)
 );
 

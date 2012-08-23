@@ -28,6 +28,7 @@
 			echo form_hidden('add_arguments', 'yes');
 			echo form_hidden('generator_id', $generator_id);
 			$argument_types = array(
+				'' => 'Set Type...',
 				'INTEGER' => 'Integer',
 				'FLOAT' => 'Float',
 				'DOUBLE' => 'Double',
@@ -55,6 +56,16 @@
 		<br />
 		<?php echo form_dropdown('argument_type', $argument_types, isset($argument_type) ? $argument_type : '', 'id="argument_type"'); ?>
 		<br /><br />
+		<div id='argument_min_max' style="display:none;">
+		<?php echo form_label('<b>Minimum Value:</b>'); ?>
+		<br />
+		<?php echo form_input(array('name'=>'argument_min_value','id'=>'argument_min_value'), isset($argument_min_value) ? $argument_min_value : ''); ?>
+		<br /><br />
+		<?php echo form_label('<b>Maximum Value:</b>'); ?>
+		<br />
+		<?php echo form_input(array('name'=>'argument_max_value','id'=>'argument_max_value'), isset($argument_max_value) ? $argument_max_value : ''); ?>
+		<br /><br />
+		</div>
 		<div id='argument_select_options' style="display:none;">
 			<?php echo form_label('<b>Options (comma-seperated list):</b>'); ?>
 			<br />

@@ -25,6 +25,12 @@ $(document).ready(function () {
 			} else {
 				$('#argument_select_options').hide();
 			}
+
+			if ($(this).val() == "INTEGER") {
+				$('#argument_min_max').show();
+			} else {
+				$('#argument_min_max').hide();
+			}
 		}
 	);
 });

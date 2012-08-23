@@ -107,6 +107,13 @@
 
 					if ($argument->type == 'INTEGER') {
 						$validation_rules .= 'integer';
+						if ($argument->min_value) {
+							$validation_rules .= '|greater_than[' . $argument->min_value . ']';
+						}
+						if ($argument->max_value) {
+							$validation_rules .= '|less_than[' . $argument->max_value . ']';
+						}
+						
 
 					} else if ($argument->type == 'DECIMAL' || $argument->type == 'FLOAT') {
 						$validation_rules .= 'decimal';

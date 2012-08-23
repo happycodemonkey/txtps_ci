@@ -36,9 +36,9 @@
 			echo form_label($argument->name) . "</td>";
 			if ($argument->type == 'SELECT') {
 				$arg_options = array();
-				$arg_options[0] = "Select..."; 
+				$arg_options[""] = "Select..."; 
 				foreach (explode(',' , $argument->options) as $option) {
-					$arg_options[htmlspecialchars($option)] = htmlspecialchars($option);
+					$arg_options[trim($option,"\"")] = trim($option,"\"");
 				}
 				echo "<td width='10%'>(" . $argument->type . ")</td>";
 				echo "<td width='10%'>" . form_dropdown($argument->id, $arg_options) . "</td>";
