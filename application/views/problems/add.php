@@ -41,10 +41,10 @@
 					$arg_options[trim($option,"\"")] = trim($option,"\"");
 				}
 				echo "<td width='10%'>(" . $argument->type . ")</td>";
-				echo "<td width='10%'>" . form_dropdown($argument->id, $arg_options) . "</td>";
+				echo "<td width='10%'>" . form_dropdown($argument->id, $arg_options, $argument->default_value ? $argument->default_value : "") . "</td>";
 			} else {
 				echo "<td width='10%'>(" . $argument->type . ")</td>";
-				echo "<td width='10%'>" . form_input($argument->id) . "</td>";
+				echo "<td width='10%'>" . form_input($argument->id, $argument->default_value ? $argument->default_value : "") . "</td>";
 			}
 			echo "</tr>";
 		}

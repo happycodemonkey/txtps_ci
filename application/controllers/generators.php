@@ -110,7 +110,8 @@
 				$this->form_validation->set_rules('argument_variable', 'Argument variable', 'required');
 				$this->form_validation->set_rules('argument_type', 'Argument type', 'required');
 				$this->form_validation->set_rules('argument_min_value', 'Argument Minimum Value', 'less_than[' . $this->input->post('argument_max_value') . ']');
-				$this->form_validation->set_message('less_than', 'Minimum Value must be less than Maximum Value');
+				$this->form_validation->set_rules('argument_default', 'Argument Default Value', 'less_than[' . $this->input->post('argument_max_value') . ']');
+				$this->form_validation->set_rules('argument_default', 'Argument Default Value', 'greater_than[' . $this->input->post('argument_min_value') . ']');
 				
 				if ($this->input->post('add_arguments') && $this->form_validation->run()) {
 					$new_argument = array(
@@ -122,7 +123,8 @@
 						'options' => $this->input->post('argument_options'),
 						'optional' => $this->input->post('argument_optional'),
 						'min_value' => $this->input->post('argument_min_value'),
-						'max_value' => $this->input->post('argument_max_value')
+						'max_value' => $this->input->post('argument_max_value'),
+						'default_value' => $this->input->post('argument_default')
 					);				
 
 					$this->Argument_model->add_generator_argument($new_argument);
@@ -156,7 +158,8 @@
 				$this->form_validation->set_rules('argument_variable', 'Argument variable', 'required');
 				$this->form_validation->set_rules('argument_type', 'Argument type', 'required');
 				$this->form_validation->set_rules('argument_min_value', 'Argument Minimum Value', 'less_than[' . $this->input->post('argument_max_value') . ']');
-				$this->form_validation->set_message('less_than', 'Minimum Value must be less than Maximum Value');
+				$this->form_validation->set_rules('argument_default', 'Argument Default Value', 'less_than[' . $this->input->post('argument_max_value') . ']');
+				$this->form_validation->set_rules('argument_default', 'Argument Default Value', 'greater_than[' . $this->input->post('argument_min_value') . ']');
 				
 				if ($this->input->post('edit_argument') && $this->form_validation->run()) {
 					$updated_argument = array(
@@ -168,7 +171,8 @@
 						'options' => $this->input->post('argument_options'),
 						'optional' => $this->input->post('argument_optional'),
 						'min_value' => $this->input->post('argument_min_value'),
-						'max_value' => $this->input->post('argument_max_value')
+						'max_value' => $this->input->post('argument_max_value'),
+						'default_value' => $this->input->post('argument_default')
 					);				
 
 					$this->Argument_model->update_generator_argument($updated_argument, $argument_id);

@@ -1,5 +1,4 @@
 <div id='footer'>
-	<hr />
 	<?php
 		$this->load->helper('asset');
 	?>

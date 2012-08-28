@@ -1,6 +1,16 @@
 /* setting color variables */
 /* the theme coloring was pulled from kuler.adobe.com */
 /* and is called 'JW Fashion' */
+/*
+$base-color: #625D55;
+$dark-blue: #1E2F39;
+$lite-blue: #375351;
+$dark-gray: #A5AD86; //the base color is a darker gray but it is the base :)
+$lite-gray: #CCCFBB;
+*/
+/* setting color variables */
+/* the theme coloring was pulled from kuler.adobe.com */
+/* and is called 'CoolGrays' */
 body {
   font-family: arial;
   font-size: 11px; }
@@ -86,22 +96,28 @@ div#recent_generators {
   overflow: hidden; }
 
 div#header {
-  height: 20%; }
-  div#header div#top_header {
-    width: 100%; }
-    div#header div#top_header div#user_links {
-      float: right;
-      font-size: 15pt;
-      text-align: right;
-      width: 30%; }
-    div#header div#top_header div#txtps_header_image {
-      float: left;
-      width: 30%; }
-    div#header div#top_header div#top_header_text {
-      float: right;
-      width: 35%; }
+  height: 103px;
+  width: 100%;
+  background-color: #686e75;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: solid 1px; }
+  div#header div#top_header div#user_links {
+    float: right;
+    font-size: 15pt;
+    text-align: right;
+    width: 30%; }
+  div#header div#top_header div#txtps_header_image {
+    float: left;
+    width: 30%; }
+  div#header div#top_header div#top_header_text {
+    float: right;
+    width: 35%; }
   div#header div#header_menu {
-    width: 100%;
     clear: both;
     background-color: blue; }
 
@@ -112,7 +128,15 @@ div#header, h3#home_head {
 div#footer {
   clear: both;
   width: 100%;
-  height: 20%; }
+  height: 200px;
+  background-color: #686e75;
+  -webkit-border-bottom-left-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  -moz-border-radius-bottmright: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: solid 1px; }
   div#footer #tacc_footer_image,
   div#footer #footer_text {
     float: left;
@@ -132,4 +156,6 @@ hr {
 
 div.site_body {
   width: 100%;
-  clear: both; }
+  clear: both;
+  background-color: #e4f1d8;
+  border: solid 1px; }
