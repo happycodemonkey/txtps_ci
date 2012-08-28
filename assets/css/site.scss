@@ -13,12 +13,13 @@ $lite-gray: #CCCFBB;
 /* the theme coloring was pulled from kuler.adobe.com */
 /* and is called 'CoolGrays' */
 
+/**
 $base-color: #686E75;
 $blue: #9BAAC1;
 $gray: #82787B;
 $off-white: #E4F1D8; //the base color is a darker gray but it is the base :)
 $seafoam: #AAC19B;
-
+**/
 body {font-family:arial; font-size:11px;}
 .clear {clear:both}	
 /* remove the list style */
@@ -126,7 +127,7 @@ div#recent_generators {
 div#header {
 	height:103px;
 	width:100%;
-	background-color: $base-color;
+//	background-color: $base-color;
 	-webkit-border-top-left-radius: 5px;
 	-webkit-border-top-right-radius: 5px;
 	-moz-border-radius-topleft: 5px;
@@ -170,7 +171,7 @@ div#footer {
 	clear:both;
 	width:100%;
 	height:200px;
-	background-color: $base-color;
+//	background-color: $base-color;
 	-webkit-border-bottom-left-radius: 5px;
 	-webkit-border-bottom-right-radius: 5px;
 	-moz-border-radius-bottomleft: 5px;
@@ -207,7 +208,7 @@ hr {
 div.site_body {
 	width:100%;
 	clear:both;
-	background-color: $off-white;
+//	background-color: $off-white;
 	border: solid 1px;
 }
 
