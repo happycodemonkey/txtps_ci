@@ -13,14 +13,13 @@ $lite-gray: #CCCFBB;
 /* the theme coloring was pulled from kuler.adobe.com */
 /* and is called 'CoolGrays' */
 
-/**
 $base-color: #686E75;
 $blue: #9BAAC1;
 $gray: #82787B;
-$off-white: #E4F1D8; //the base color is a darker gray but it is the base :)
+$off-white: #E4F1D8; 
 $seafoam: #AAC19B;
-**/
-body {font-family:arial; font-size:11px;}
+
+body {font-family:arial; font-size:11px; background-color: $base-color}
 .clear {clear:both}	
 /* remove the list style */
 #nav {
@@ -106,29 +105,12 @@ body {font-family:arial; font-size:11px;}
 color: red;
 }
 
-div#home_wrapper {
-	position:relative;
-	clear:both;
-	float:left;
-	width:100%;
-	overflow:hidden;
-}
-
-div#recent_problems,
-div#recent_collections,
-div#recent_generators {
-	width:30%;
-	float:left;
-	position:relative;
-	padding:0 0 1em 0;
-	overflow:hidden;
-}
-
 div#header {
-	height:103px;
-	width:100%;
-//	background-color: $base-color;
-/**
+	height:110px;
+	width:1000px;
+	margin-left: 150px;
+	padding: 1em 1em 1em 1em;
+	background-color: $seafoam;
 	-webkit-border-top-left-radius: 5px;
 	-webkit-border-top-right-radius: 5px;
 	-moz-border-radius-topleft: 5px;
@@ -136,7 +118,7 @@ div#header {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	border: solid 1px;
-**/
+
 	div#top_header {
 		div#user_links {
 			float:right;
@@ -164,16 +146,16 @@ div#header {
 
 div#header, h3#home_head {
 	clear:both;
-	padding:1px;
 }
 
 
 div#footer {
 	clear:both;
-	width:100%;
+	width:1000px;
+	margin-left: 150px;
+	padding: 1em 1em 1em 1em;
 	height:200px;
-//	background-color: $base-color;
-/**
+	background-color: $seafoam;
 	-webkit-border-bottom-left-radius: 5px;
 	-webkit-border-bottom-right-radius: 5px;
 	-moz-border-radius-bottomleft: 5px;
@@ -181,7 +163,6 @@ div#footer {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 	border: solid 1px;
-**/
 
 	#tacc_footer_image,
 	#footer_text {
@@ -209,10 +190,25 @@ hr {
 }
 
 div.site_body {
-	width:100%;
+	width:1000px;
+	margin-left: 150px;
+	padding: 1em 1em 1em 1em;
 	clear:both;
-//	background-color: $off-white;
-//	border: solid 1px;
+	background-color: $off-white;
+	overflow:hidden;
+	border-left: 1px solid;
+	border-right: 1px solid;
+
+	div#recent_problems,
+	div#recent_collections,
+	div#recent_generators {
+		width:30%;
+		float:left;
+		position:relative;
+		padding:0 0 1em 0;
+		overflow:hidden;
+	}
 }
+
 
 
