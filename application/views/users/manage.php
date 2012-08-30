@@ -1,3 +1,4 @@
+<div class='site_body'>
 <?php
 	$this->load->library('ion_auth');
 
@@ -20,3 +21,4 @@
 
 	echo "</table>";
 ?>
+</div>

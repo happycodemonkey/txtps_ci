@@ -1,3 +1,4 @@
+<div class='site_body'>
 <?php
 	$this->load->helper('form');
 
@@ -25,3 +26,4 @@
 	echo form_submit('submit', 'Register');
 	echo form_close();
 ?>
+</div>

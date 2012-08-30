@@ -1,3 +1,4 @@
+<div class='site_body'>
 <?php
 	if (isset($success)) {
 		print $success;
@@ -23,3 +24,4 @@
 	echo form_submit('submit', 'Update your password');
 	echo form_close();
 ?>
+</div>

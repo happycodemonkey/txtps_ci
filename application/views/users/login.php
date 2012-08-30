@@ -1,3 +1,4 @@
+<div class='site_body'>
 <?php
 	$this->load->helper('form');
 
@@ -13,3 +14,4 @@
 	echo form_submit('submit', 'Login');
 	echo form_close();
 ?>
+</div>
