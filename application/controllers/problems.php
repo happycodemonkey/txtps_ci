@@ -65,8 +65,8 @@
 			if (file_exists($file)) {
 				$data = file_get_contents($file);
 
-				if ($data != "" && force_download($file, $data)) {
-					force_download($file, $data);
+				if ($data != "" && force_download($file_name, $data)) {
+					force_download($file_name, $data);
 				} else {
 					print "This file is empty.";
 				}
