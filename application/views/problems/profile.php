@@ -42,8 +42,9 @@
 		foreach ($files as $file) {
 			if ($file != "." && $file != "..") {
 				if (preg_match("/^.*\.pdf$/i", $file)) {
-					print "<object data='/data/files/problems " . $problems->id . "/public/" . $file . "' type='application/pdf'>";
-					print "<a target='_blank' href='/problems/download/" . $problems->id . "/" . $file . "'>" . $file . "</a><br />";
+					print "<object data='/data/files/problems/" . $problems->id . "/public/" . $file . "' type='application/pdf'>";
+					print "<embed src='/data/files/problems/" . $problems->id . "/public/" . $file . "' type='application/pdf'>";
+					//print "<a target='_blank' href='/problems/download/" . $problems->id . "/" . $file . "'>" . $file . "</a><br />";
 					print "</object>";
 				} else {
 					print "<a target='_blank' href='/problems/download/" . $problems->id . "/" . $file . "'>" . $file . "</a><br />";
