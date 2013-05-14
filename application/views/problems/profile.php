@@ -42,7 +42,7 @@
 		foreach ($files as $file) {
 			if ($file != "." && $file != "..") {
 				if (preg_match("/^.*\.pdf$/i", $file)) {
-					print "<object data='" . $file . "' type='application/pdf'>";
+					print "<object data='/data/files/problems " . $problems->id . "/public/" . $file . "' type='application/pdf'>";
 					print "<p>It appears you don't have a PDF plugin for this browser. ";
 					print "Please <a href='/problems/download/" . $problems->id . "/" . $file . "'>click here to download the file.</a></p>";
 					print "</object>";
