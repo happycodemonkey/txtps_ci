@@ -41,7 +41,14 @@
 	} else {
 		foreach ($files as $file) {
 			if ($file != "." && $file != "..") {
-				print "<a target='_blank' href='/problems/download/" . $problems->id . "/" . $file . "'>" . $file . "</a><br />";
+				if (preg_match("/*.pdf/", $file) {
+					print "<object data='" . $file . "' type='application/pdf'>";
+					print "<p>It appears you don't have a PDF plugin for this browser. ";
+					print "Please <a href='/problems/download/" . $problems->id . "/" . $file . "'>click here to download the file.</a></p>";
+					print "</object>";
+				} else {
+					print "<a target='_blank' href='/problems/download/" . $problems->id . "/" . $file . "'>" . $file . "</a><br />";
+				}
 			}
 		}
 	}
