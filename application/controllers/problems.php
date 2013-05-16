@@ -49,7 +49,13 @@
 			$data['images'] = $this->Resource_model->get_resources_by_reference_id('image', 'problem', $problem_id)->result();
 
 			if (file_exists('/data/files/problems/' . $problem_id)) {
-				$data['files'] = scandir('/data/files/problems/' . $problem_id . '/public');
+				foreach (scandir('/data/files/problems/' . $problem_id . '/public') as $file) {
+					if (preg_match("/^.*\.pdf$/i", $file)) {
+						$data['pdfs'][] = $file;
+					} else {
+						$data['files'][] = $file;
+					}
+				}
 			}
 
 			$this->load->view('templates/header');

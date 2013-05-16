@@ -41,14 +41,16 @@
 	} else {
 		foreach ($files as $file) {
 			if ($file != "." && $file != "..") {
-				if (preg_match("/^.*\.pdf$/i", $file)) {
-					print "<object data='/assets/data/files/problems/" . $problems->id . "/public/" . $file . "' type='application/pdf' width='100%' height='100%'>";
-					print "<embed src='/assets/data/files/problems/" . $problems->id . "/public/" . $file . "' type='application/pdf' width='100%' height='100%'>";
-					print "</object><br />";
-				} else {
-					print "<a target='_blank' href='/problems/download/" . $problems->id . "/" . $file . "'>" . $file . "</a><br />";
-				}
+				print "<a target='_blank' href='/problems/download/" . $problems->id . "/" . $file . "'>" . $file . "</a><br />";
 			}
+		}
+	}
+
+	if (!empty($pdfs)) {
+		foreach ($pdfs as $file) {
+			print "<object data='/assets/data/files/problems/" . $problems->id . "/public/" . $file . "' type='application/pdf' width='100%' height='100%'>";
+			print "<embed src='/assets/data/files/problems/" . $problems->id . "/public/" . $file . "' type='application/pdf' width='100%' height='100%'>";
+			print "</object><br />";
 		}
 	}
 
