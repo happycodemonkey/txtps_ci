@@ -19,7 +19,7 @@
 	<br /><br />
 	<?php echo form_label('<b>Description:</b>'); ?>
 	<br />
-	<?php echo form_textarea('problem_description', isset($problem_description) ? $problem_description : ''); ?>
+	<?php echo form_textarea('problem_description', isset($problem_description) ? $problem_description : $this->input->post('problem_description')); ?>
 	<br /><br />	
 	<?php 
 		echo form_label('<b>Arguments:</b>'); 
