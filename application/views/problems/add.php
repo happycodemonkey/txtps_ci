@@ -2,7 +2,7 @@
 <script type="text/javascript">
 	$(document).ready( function() {
 		$('#add_problem').submit( function() {
-			alert('Your problem is about to be run by the generator. This process could take several minutes to complete. Closing the window will not interrupt this process.');	
+			alert('Your problem is about to be run by the generator. This process could take several minutes to complete. Closing the window will not interrupt this process. You will be emailed when it is complete.');	
 		});
 	});
 </script>
