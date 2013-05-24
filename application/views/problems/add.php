@@ -1,4 +1,11 @@
 <div class='site_body'>
+<script type="text/javascript">
+	$(document).ready( function() {
+		$('#add_problem').submit( function() {
+			alert('Your problem is about to be run by the generator. This process could take several minutes to complete. Closing the window will not interrupt this process.');	
+		});
+	});
+</script>
 <?php
 	if (isset($saved)) {
 		echo "Your problem was successfully created.";
@@ -9,7 +16,7 @@
 	echo "<h3 class='error'>" . validation_errors() . "</h3>";
 
 	$this->load->helper('form');
-	echo form_open_multipart('problems/add/' . $generator_id);
+	echo form_open_multipart('problems/add/' . $generator_id, array('id'=>'add_problem'));
 	echo form_hidden('add_problem', 'yes');
 ?>
 	<?php echo form_label('<b>*Generator:</b>'); ?>
