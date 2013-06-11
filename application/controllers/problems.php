@@ -202,16 +202,17 @@
 				. $_SERVER['SERVER_NAME'] . "/problems/download/" . $problem->identifier
 				. "/" . $problem_id . "'>here</a> to download it.";
 
-				$this->email->from('admin@localhost', 'TxTPS');
+				$this->email->from('admin@txtps', 'TxTPS');
 				$this->email->to($user->email);
 				$this->email->subject("Your problem has been generated.");
 				$this->email->message($message);
 
 				if ($this->email->send()) {
+					error_log("Email sent to " . $user->email);
 					return true;
 				} 
 
-				echo $this->email->print_debugger();
+				error_log($this->email->print_debugger());
 				return false;
 			} 			
 				
