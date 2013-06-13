@@ -196,9 +196,11 @@
 				$this->load->library('email');
 				$user = $this->ion_auth->user()->row();
 
-				$message = "Your problem has been generated. Please click <a href='" 
+				$message = "Your problem has been generated. Please click the following link"
+				. " to view and download your files: <a href='" 
 				. $_SERVER['SERVER_NAME'] . "/problems/profile/" 
-				. $problem_id . "'>here</a> to view it and download your files.";
+				. $problem_id . "'>" . $_SERVER['SERVER_NAME']
+			        . "/problems/profile/" . $problem_id . "</a>";
 
 				$this->email->from('admin@txtps', 'TxTPS');
 				$this->email->to($user->email);
