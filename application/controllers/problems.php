@@ -199,7 +199,7 @@
 				$message = "Your problem has been generated. Please click the following link"
 				. " to view and download your files: <a href='http://" 
 				. $_SERVER['SERVER_NAME'] . "/problems/profile/" 
-				. $problem_id . "'>" . $_SERVER['SERVER_NAME']
+				. $problem_id . "'>http://" . $_SERVER['SERVER_NAME']
 			        . "/problems/profile/" . $problem_id . "</a>";
 
 				$this->email->from('admin@txtps', 'TxTPS');
