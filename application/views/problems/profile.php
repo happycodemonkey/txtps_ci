@@ -46,6 +46,12 @@
 		}
 	}
 
+	if (!empty($pngs)) {
+		foreach ($pngs as $file) {
+			print "<img src='/assets/data/files/problems/" . $problems->id . "/public/" . $file . "' />";
+		}
+	}
+
 	if (!empty($pdfs)) {
 		foreach ($pdfs as $file) {
 			print "<object data='/assets/data/files/problems/" . $problems->id . "/public/" . $file . "' type='application/pdf' width='100%' height='100%'>";
