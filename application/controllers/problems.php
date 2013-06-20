@@ -53,7 +53,6 @@
 					if (preg_match("/^.*\.pdf$/i", $file)) {
 						$data['pdfs'][] = $file;
 					} else if (preg_match("/^.*\.png$/i", $file)) {
-						error_log("put : " . $file);
 						$data['pngs'][] = $file;					
 					} else {
 						$data['files'][] = $file;
