@@ -31,5 +31,37 @@
 			$this->db->where('id', $problem_id);
 			return $this->db->update('problem', $updated_problem);
 		}
+
+		function search_problem($variable, $range, $and_or) {
+			$this->db->select('problem.id,
+				problem.identifier, 
+				arguments.name,
+				arguments.variable,
+				arguments.description,
+				problem_argument.value');
+			$this->db->join('problem_argument', 
+				'problem_argument.problem_id = problem.id', 'left');
+			$this->db->join('arguments',
+				'arguments.id = problem_argument.argument_id', 'left');
+			$this->db->where('arguments.variable', $variable);
+			$this->db->where('arguments.type', 'INTEGER');
+			
+			if ($range['less_than'] != '') {
+				$this->db->where('problem_argument.value < ', 
+					(int) $range['less_than']); 
+			}
+
+			if ($range['greater_than'] != '') {
+				if ($and_or == 'AND') {
+					$this->db->where('problem_argument.value > ', 
+						(int) $range['greater_than']); 					
+				} else {
+					$this->db->or_where('problem_argument.value > ', 
+						(int) $range['greater_than']); 					
+				}
+			}
+
+			return $this->db->get('problem');
+		}
 	}
 ?>

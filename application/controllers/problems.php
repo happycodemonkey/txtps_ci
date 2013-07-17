@@ -25,6 +25,34 @@
 			$this->load->view('templates/footer');
 		}
 
+		public function search() {
+			if ($this->ion_auth->logged_in()) {
+				$this->load->library('form_validation');
+				$this->form_validation->set_rules('problem_variable', 'problem variable', 'required');
+
+				if ($this->input->post('search_problems') && $this->form_validation->run()) {
+					$range = array(
+						'less_than' => $this->input->post('value_less_than'),
+						'greater_than' => $this->input->post('value_greater_than')
+					);
+					
+					$and_or = $this->input->post('and_or');
+				
+					$this->load->model('Problem_model');
+					$problems = $this->Problem_model->search_problem($this->input->post('problem_variable'), $range, $and_or)->result();
+					$data['problems'] = $problems;
+				}
+				
+				$this->load->view('templates/header');
+				$this->load->view('problems/search', isset($data) ? $data : '');
+				$this->load->view('templates/footer');
+
+			} else {
+				$this->load->helper('url');
+				redirect('/users/login');
+			}
+		}
+
 		public function profile($problem_id) {
 			$this->load->model('Problem_model');
 			$this->load->model('Collection_model');
