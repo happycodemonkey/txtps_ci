@@ -47,16 +47,16 @@
 			$this->db->where('arguments.type', 'INTEGER');
 			
 			if ($range['less_than'] != '') {
-				$this->db->where('problem_argument.value < ', 
+				$this->db->where('problem_argument.value <= ', 
 					(int) $range['less_than']); 
 			}
 
 			if ($range['greater_than'] != '') {
 				if ($and_or == 'AND') {
-					$this->db->where('problem_argument.value > ', 
+					$this->db->where('problem_argument.value >= ', 
 						(int) $range['greater_than']); 					
 				} else {
-					$this->db->or_where('problem_argument.value > ', 
+					$this->db->or_where('problem_argument.value >= ', 
 						(int) $range['greater_than']); 					
 				}
 			}
