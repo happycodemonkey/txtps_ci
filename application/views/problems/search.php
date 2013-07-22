@@ -22,11 +22,6 @@
 		$this->input->post('value_less_than') : 
 		'');
 	echo "<br />";
-	echo form_label('<b>AND</b>'); 
-	echo form_radio('and_or', 'AND', $this->input->post('and_or') == 'AND' ? TRUE : FALSE);
-	echo form_label('<b>OR</b>'); 
-	echo form_radio('and_or', 'OR', $this->input->post('and_or') == 'OR' ? TRUE : FALSE);
-	echo "<br />";
 	echo form_label('<b>Problem variable is greater than:</b><br />'); 
 	echo form_input('value_greater_than', 
 		$this->input->post('value_greater_than') ?  
@@ -45,18 +40,12 @@
 	<table width="100%">
 		<thead>
 		<th align='left'>Identifier</th>
-		<th align='left'>Name</th>
-	`	<th align='left'>Description</th>
-		<th align='left'>Value</th>
 		</thead>
 		<tbody>
 <?php
 		foreach ($problems as $problem) {
 			print "<tr>";
 			print "<td><a href='profile/" . $problem->id . "'>" . $problem->identifier . "</a></td>";
-			print "<td>" . $problem->name . "</td>";
-			print "<td>" . $problem->description . "</td>";
-			print "<td>" . $problem->value . "</td>";
 			print "</tr>";
 		}
 ?>

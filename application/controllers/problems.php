@@ -36,10 +36,8 @@
 						'greater_than' => $this->input->post('value_greater_than')
 					);
 					
-					$and_or = $this->input->post('and_or');
-				
 					$this->load->model('Problem_model');
-					$problems = $this->Problem_model->search_problem($this->input->post('problem_variable'), $range, $and_or)->result();
+					$problems = $this->Problem_model->search_problem($this->input->post('problem_variable'), $range)->result();
 					$data['problems'] = $problems;
 				}
 				
