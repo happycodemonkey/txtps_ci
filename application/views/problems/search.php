@@ -1,4 +1,27 @@
 <div class='site_body'>
+<?php $this->load->helper('url'); ?>
+<link type="text/css" href="<?php echo base_url();?>assets/css/jquery-ui/jquery.ui.all.css" rel="stylesheet"></link>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui.min.js" ></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.ui.autocomplete.min.js" ></script>
+<script>
+$(document).ready(function() {
+	$(function () {
+		$("#autocomplete").autocomplete({
+			source: function(request, response) {
+				$.ajax({ url: "<?php echo site_url('autocomplete/anamod'); ?>",
+					data: { filter: $("#autocomplete").val() },
+					dataType: "json",
+					type: "POST",
+					success: function(data) {
+						response(data);
+					}
+				});
+			},
+			minLength: 2
+		});
+	});
+});
+</script>
 <h1>Search Problems</h1>
 <?php
 
@@ -8,11 +31,13 @@
 	echo form_open_multipart('problems/search');
 	echo form_hidden('search_problems', 'yes');
 
-	echo form_label('<b>*Problem variable:</b><br />'); 
-	echo form_input('problem_variable', 
-		$this->input->post('problem_variable') ?  
-		$this->input->post('problem_variable') : 
-		'');
+	echo form_label('<b>*Problem variable:</b><br />');
+       	$problem_variable = array(
+		'name' => 'problem_variable',
+		'value' => $this->input->post('problem_variable') ? $this->input->post('problem_variable') : '', 
+		'id' => 'autocomplete'
+	);	
+	echo form_input($problem_variable);
 
 	echo "<br /><br />";
 	echo "<b>Select Range:</b><br />";
