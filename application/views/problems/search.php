@@ -32,12 +32,7 @@ $(document).ready(function() {
 	echo form_hidden('search_problems', 'yes');
 
 	echo form_label('<b>*Problem variable:</b><br />');
-       	$problem_variable = array(
-		'name' => 'problem_variable',
-		'value' => $this->input->post('problem_variable') ? $this->input->post('problem_variable') : '', 
-		'id' => 'autocomplete'
-	);	
-	echo form_input($problem_variable);
+	echo form_dropdown('problem_variable', $dropdown_options);
 
 	echo "<br /><br />";
 	echo "<b>Select Range:</b><br />";

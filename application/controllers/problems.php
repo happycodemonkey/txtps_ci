@@ -27,6 +27,16 @@
 
 		public function search() {
 			if ($this->ion_auth->logged_in()) {
+				$this->load->model('Autocomplete_model');
+				$rows = $this->Autocomplete_model->GetAnamodColumns();
+				$anamod_options = array();
+
+				foreach($rows as $row) {
+					$anamod_options[$row->Field] = $row->Field;
+				}
+
+				$data['dropdown_options'] = $anamod_options;
+
 				$this->load->library('form_validation');
 				$this->form_validation->set_rules('problem_variable', 'problem variable', 'required');
 
