@@ -36,18 +36,25 @@
 				}
 
 				$data['dropdown_options'] = $anamod_options;
+				$data['num_vars'] = 1;
 
-				$this->load->library('form_validation');
-				$this->form_validation->set_rules('problem_variable', 'problem variable', 'required');
-
-				if ($this->input->post('search_problems') && $this->form_validation->run()) {
-					$range = array(
-						'less_than' => $this->input->post('value_less_than'),
-						'greater_than' => $this->input->post('value_greater_than')
-					);
-					
+				if ($this->input->post('search_problems')) {
 					$this->load->model('Problem_model');
-					$problems = $this->Problem_model->search_problem($this->input->post('problem_variable'), $range)->result();
+					
+					$search_options = array();
+					$num_vars = $this->input->post('num_vars');
+					$data['num_vars'] = $num_vars;
+					while ($num_vars > 0) {
+						$range = array(
+							'less_than' => $this->input->post('value_less_than_' . $num_vars),
+							'greater_than' => $this->input->post('value_greater_than_' . $num_vars)
+						);
+
+						$search_options[$this->input->post('problem_variable_' . $num_vars)] = $range;
+						$num_vars--;
+					}	
+
+					$problems = $this->Problem_model->search_problem($search_options)->result();
 					$data['problems'] = $problems;
 				}
 				

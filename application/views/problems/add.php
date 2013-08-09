@@ -59,7 +59,7 @@
 	</table>
 	<br />
 <?php
-	echo form_submit('submit', 'Run Problem');
+	echo form_submit('submit', 'Run Generator');
 	echo form_close();
 ?>
 </div>

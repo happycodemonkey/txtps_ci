@@ -32,21 +32,23 @@
 			return $this->db->update('problem', $updated_problem);
 		}
 
-		function search_problem($variable, $range) {
+		function search_problem($search_options = array()) {
 			$this->db->select('`problem`.`id`,
 				`problem`.`identifier` from `problem`
 				left join `anamod_data` on `anamod_data`.`problem-id` = `problem`.`id`',
 				FALSE
 			);
-		
-			if ($range['less_than'] != '') {
-				$this->db->where($variable . ' <= ', 
-					(int) $range['less_than']); 
-			}
 
-			if ($range['greater_than'] != '') {
-				$this->db->where($variable . ' >= ', 
-					(int) $range['greater_than']); 					
+			foreach ($search_options as $key => $value) {
+				if ($value['less_than'] != '') {
+					$this->db->where($key . ' <= ', 
+						(int) $value['less_than']); 
+				}
+
+				if ($value['greater_than'] != '') {
+					$this->db->where($key . ' >= ', 
+						(int) $value['greater_than']); 					
+				}
 			}
 
 			$this->db->group_by('problem.identifier');

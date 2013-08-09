@@ -28,7 +28,7 @@
 	print "<h2 class='accordian_header'>Problems</h2>";
 	
 	if ($this->ion_auth->logged_in()) {
-		print "<a href='/problems/add/" . $generators->id . "'>Add a problem</a><br /><br />";
+		print "<a href='/problems/add/" . $generators->id . "'>Generate a problem</a><br /><br />";
 	
 	}
 
