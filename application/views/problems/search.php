@@ -5,13 +5,11 @@ $(document).ready(function() {
 		var old_num = $('input[name=num_vars]').val();
 		var num = parseInt($('input[name=num_vars]').val()) + 1;
 		
-		$('#variable_form').children().each( function() {
-			var new_field = $(this).clone();
-			if (new_field.is('input') || new_field.is('select')) {
-				new_field.attr('name', new_field.attr('name').replace(old_num, num));
+		$('#variable_form').append($('.field_set').last().clone());
+		$('.field_set').last().children().each( function() {
+			if ($(this).is('input') || $(this).is('select')) {
+				$(this).attr('name', $(this).attr('name').replace(old_num, num));
 			}		
-
-			$('#variable_form').append(new_field);
 		});
 
 		$('input[name=num_vars]').val(num);
@@ -35,6 +33,7 @@ $(document).ready(function() {
 	$i = 0;
 	while ($i < $num_vars) {
 		$a = $i+1;
+		echo "<div class='field_set'>";
 		echo form_label('<b>*Problem variable:</b><br />');
 		echo form_dropdown('problem_variable_' . $a, $dropdown_options);
 
@@ -52,6 +51,7 @@ $(document).ready(function() {
 			$this->input->post('value_greater_than_' . $a) : 
 			'');
 		echo "<br /><br />";
+		echo "</div>";
 
 		$i++;
 	}
