@@ -9,6 +9,7 @@ $(document).ready(function() {
 		$('.field_set').last().children().each( function() {
 			if ($(this).is('input') || $(this).is('select')) {
 				$(this).attr('name', $(this).attr('name').replace(old_num, num));
+				$(this).val('');
 			}		
 		});
 
