@@ -109,9 +109,21 @@
 				$this->form_validation->set_rules('argument_name', 'Argument name', 'required');
 				$this->form_validation->set_rules('argument_variable', 'Argument variable', 'required');
 				$this->form_validation->set_rules('argument_type', 'Argument type', 'required');
-				$this->form_validation->set_rules('argument_min_value', 'Argument Minimum Value', 'less_than[' . $this->input->post('argument_max_value') . ']');
-				$this->form_validation->set_rules('argument_default', 'Argument Default Value', 'less_than[' . $this->input->post('argument_max_value') . ']');
-				$this->form_validation->set_rules('argument_default', 'Argument Default Value', 'greater_than[' . $this->input->post('argument_min_value') . ']');
+				$this->form_validation->set_rules('argument_min_value', 'Argument Minimum Value', 
+					'callback_check_gt_lt[' . $this->input->post('argument_max_value') . ']');
+				$this->form_validation->set_rules('argument_default', 'Argument Default Value', 
+					'callback_check_default_gt[' . $this->input->post('argument_min_value') . ']
+					|callback_check_default_lt[' . $this->input->post('argument_max_value') . ']');
+				
+				$data['argument_name'] = $this->input->post('argument_name');
+				$data['argument_description'] = $this->input->post('argument_description');
+				$data['argument_variable'] = $this->input->post('argument_variable');
+				$data['argument_type'] = $this->input->post('argument_type');
+				$data['argument_options'] = $this->input->post('argument_options');
+				$data['argument_optional'] = $this->input->post('argument_optional');
+				$data['argument_min_value'] = $this->input->post('argument_min_value');
+				$data['argument_max_value'] = $this->input->post('argument_max_value');
+				$data['argument_default'] = $this->input->post('argument_default');
 				
 				if ($this->input->post('add_arguments') && $this->form_validation->run()) {
 					$new_argument = array(
@@ -141,6 +153,45 @@
 			} else {
 				$this->load->helper('url');
 				redirect('/pages/view/permission');
+			}
+		}
+
+		public function check_gt_lt($min_value, $max_value) {
+			if ($min_value != '' && $max_value != '' && $min_value > $max_value) {
+				$this->form_validation->set_message(
+					'check_gt_lt',
+					'The minumum value must be less than the maximum value'
+				);
+
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		public function check_default_gt($default, $min_value) {
+			if ($min_value != '' && $default != '' && $min_value > $default) {
+				$this->form_validation->set_message(
+					'check_default_gt',
+					'The minimum value must be less than or equal to the default value'
+				);
+
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		public function check_default_lt($default, $max_value) {
+			if ($max_value != '' && $default != '' && $max_value < $default) {
+				$this->form_validation->set_message(
+					'check_default_lt',
+					'The maximum value must be greater than or equal to the default value'
+				);
+
+				return false;
+			} else {
+				return true;
 			}
 		}
 

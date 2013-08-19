@@ -56,7 +56,11 @@
 		<br />
 		<?php echo form_dropdown('argument_type', $argument_types, isset($argument_type) ? $argument_type : '', 'id="argument_type"'); ?>
 		<br /><br />
-		<div id='argument_min_max' style="display:none;">
+		<?php if(isset($argument_type) && $argument_type != "INTEGER"): ?>
+		<div id='argument_min_max' style="display:none">
+		<?php else: ?>
+		<div id='argument_min_max'>
+		<?php endif; ?>
 		<?php echo form_label('<b>Minimum Value:</b>'); ?>
 		<br />
 		<?php echo form_input(array('name'=>'argument_min_value','id'=>'argument_min_value'), isset($argument_min_value) ? $argument_min_value : ''); ?>
@@ -66,7 +70,11 @@
 		<?php echo form_input(array('name'=>'argument_max_value','id'=>'argument_max_value'), isset($argument_max_value) ? $argument_max_value : ''); ?>
 		<br /><br />
 		</div>
+		<?php if (isset($argument_type) && $argument_type != "SELECT"): ?>
 		<div id='argument_select_options' style="display:none;">
+		<?php else: ?>
+		<div id='argument_select_options'>
+		<?php endif; ?>
 			<?php echo form_label('<b>Options (comma-seperated list):</b>'); ?>
 			<br />
 			<?php echo form_input('argument_options', isset($argument_options) ? $argument_options : ''); ?>
