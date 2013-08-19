@@ -115,15 +115,6 @@
 					'callback_check_default_gt[' . $this->input->post('argument_min_value') . ']
 					|callback_check_default_lt[' . $this->input->post('argument_max_value') . ']');
 				
-				$data['argument_name'] = $this->input->post('argument_name');
-				$data['argument_description'] = $this->input->post('argument_description');
-				$data['argument_variable'] = $this->input->post('argument_variable');
-				$data['argument_type'] = $this->input->post('argument_type');
-				$data['argument_options'] = $this->input->post('argument_options');
-				$data['argument_optional'] = $this->input->post('argument_optional');
-				$data['argument_min_value'] = $this->input->post('argument_min_value');
-				$data['argument_max_value'] = $this->input->post('argument_max_value');
-				$data['argument_default'] = $this->input->post('argument_default');
 				
 				if ($this->input->post('add_arguments') && $this->form_validation->run()) {
 					$new_argument = array(
@@ -145,6 +136,16 @@
 				} else if ($this->input->post('continue')) {
 					$this->load->helper('url');
 					redirect('/generators/add_images/' . $this->input->post('generator_id'));
+				} else if ($this->form_validation->run() == FALSE) {
+					$data['argument_name'] = $this->input->post('argument_name');
+					$data['argument_description'] = $this->input->post('argument_description');
+					$data['argument_variable'] = $this->input->post('argument_variable');
+					$data['argument_type'] = $this->input->post('argument_type');
+					$data['argument_options'] = $this->input->post('argument_options');
+					$data['argument_optional'] = $this->input->post('argument_optional');
+					$data['argument_min_value'] = $this->input->post('argument_min_value');
+					$data['argument_max_value'] = $this->input->post('argument_max_value');
+					$data['argument_default'] = $this->input->post('argument_default');
 				}
 
 				$this->load->view('templates/header');
