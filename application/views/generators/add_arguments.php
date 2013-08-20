@@ -16,7 +16,7 @@
 			foreach ($arguments as $argument) {
 				print $argument->variable;
 				$argument->description ? print " : " . $argument->description : print " : No description "; 
-				print "&nbsp;&nbsp;<a href='/generators/delete_argument/" . $argument->id . "/" . $generator_id . "'>Delete</a>";
+				print "&nbsp;&nbsp;<a href='/generators/delete_argument/" . $argument->id . "/" . $generator_id . "/add_arguments'>Delete</a>";
 				print "&nbsp;&nbsp;<a href='/generators/edit_argument/" . $argument->id . "/" . $generator_id . "'>Edit</a><br />";
 			}
 		?>
@@ -88,11 +88,6 @@
 <?php	
 	echo form_submit('submit', 'Add Argument');
 	echo "&nbsp;&nbsp;";
-	echo form_close();
-	echo form_open('generators/add_arguments');
-	echo form_hidden('continue', 'yes');
-	echo form_hidden('generator_id', $generator_id);
-	echo form_submit('submit', 'Continue');
 	echo form_close();
 
 ?>

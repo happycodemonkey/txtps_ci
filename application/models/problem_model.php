@@ -18,6 +18,12 @@
 			return $this->db->get('problem');
 		}
 
+		function get_recent_problems() {
+			$this->db->limit(10);
+			$this->db->order_by('id', 'desc');
+			return $this->db->get('problem');
+		}
+		
 		function delete_problem($problem_id) {
 			return $this->db->delete('problem', array($id => $problem_id));
 		}

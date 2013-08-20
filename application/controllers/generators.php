@@ -133,9 +133,6 @@
 					$this->Argument_model->add_generator_argument($new_argument);
 					$this->load->helper('url');
 					redirect('/generators/add_arguments/' . $generator_id);
-				} else if ($this->input->post('continue')) {
-					$this->load->helper('url');
-					redirect('/generators/add_images/' . $this->input->post('generator_id'));
 				} else if ($this->form_validation->run() == FALSE) {
 					$data['argument_name'] = $this->input->post('argument_name');
 					$data['argument_description'] = $this->input->post('argument_description');
@@ -171,26 +168,34 @@
 		}
 
 		public function check_default_gt($default, $min_value) {
-			if ($min_value != '' && $default != '' && $min_value > $default) {
-				$this->form_validation->set_message(
-					'check_default_gt',
-					'The minimum value must be less than or equal to the default value'
-				);
+			if ($min_value != '' && $default != '') {
+				if ($min_value <= $default) {
+					return true;
+				} else {
+					$this->form_validation->set_message(
+						'check_default_gt',
+						'The minimum value must be less than or equal to the default value'
+					);
 
-				return false;
+					return false;
+				}
 			} else {
 				return true;
 			}
 		}
 
 		public function check_default_lt($default, $max_value) {
-			if ($max_value != '' && $default != '' && $max_value < $default) {
-				$this->form_validation->set_message(
-					'check_default_lt',
-					'The maximum value must be greater than or equal to the default value'
-				);
+			if ($max_value != '' && $default != '') {
+				if ($max_value >= $default) {
+					return true;
+				} else {
+					$this->form_validation->set_message(
+						'check_default_lt',
+						'The maximum value must be greater than or equal to the default value'
+					);
 
-				return false;
+					return false;
+				}
 			} else {
 				return true;
 			}
@@ -241,74 +246,24 @@
 			}
 		}
 
-		public function delete_argument($argument_id, $generator_id) {
+		public function delete_argument($argument_id, $generator_id, $redirect_url = 'add_arguments') {
 			$this->load->model('Argument_model');
 			$this->Argument_model->delete_generator_argument($argument_id);
 			$this->load->helper('url');
-			redirect('/generators/add_arguments/' . $generator_id);
+			redirect('/generators/' . $redirect_url . '/' . $generator_id);
 			
 		}
 
-		/** TODO: are these images generated too? If so, from where/how? **/
-		public function add_images($generator_id) {
-			if ($this->ion_auth->is_admin()) {
-				$this->load->model('Resource_model');
-				$this->load->model('Generator_model');
-				$data['generator_id'] = $generator_id;
-				$data['images'] = $this->Resource_model->get_resources_by_reference_id('image','generator',$generator_id)->result();
-				$data['generator_name'] = array_shift($this->Generator_model->get_generator('id', $generator_id)->result())->name;
-
-				if ($this->input->post('add_image')) {
-					$config['upload_path'] = getEnv('DOCUMENT_ROOT') . "/assets/image/resource/";
-					$config['allowed_types'] = "jpg|png|gif";
-					$this->load->library('upload', $config);
-
-					if ($this->upload->do_upload('generator_image')) {
-						$file_data = $this->upload->data();
-						if ($file_data['file_name']) {
-							$new_image = array(
-								'resource_type' => 'image',
-								'reference_id' => $this->input->post('generator_id'),
-								'reference_type' => 'generator',
-								'name' => $file_data['file_name']
-							);
-
-							$this->Resource_model->add_resource($new_image);
-							$this->load->helper('url');
-							redirect('/generators/add_images/' . $generator_id);
-						} else {
-							$data['error'] = "ERROR: No file specified";
-						}
-					} else {
-						$data['error'] = "ERROR: " . $this->upload->display_errors();
-					}
-
-				}
-
-				$this->load->view('templates/header');
-				$this->load->view('generators/add_images', $data);
-				$this->load->view('templates/footer');
-			} else {
-				$this->load->helper('url');
-				redirect('/pages/view/permission');
-			}
-		}
-
-		public function delete_image($image_id, $generator_id) {
-			$this->load->model('Resource_model');
-			$this->Resource_model->delete_resource($image_id);
-			$this->load->helper('url');
-			redirect('/generators/add_images/' . $generator_id);
-			
-		}
 
 		public function edit($generator_id) {
 			if ($this->ion_auth->is_admin()) {
 				$this->load->model('Generator_model');
+				$this->load->model('Argument_model');
 				$this->load->model('Collection_model');
 				$this->load->library('form_validation');
 
 				$generator = array_shift($this->Generator_model->get_generator('id', $generator_id)->result());
+				$data['arguments'] = $this->Argument_model->get_generator_argument('generator_id', $generator_id)->result();
 				$data['generator'] = $generator;
 				$data['collection'] = array_shift($this->Collection_model->get_collection($generator->collection_id)->result());
 

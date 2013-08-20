@@ -24,6 +24,12 @@
 			}
 			return $this->db->get('collection');
 		}
+		
+		function get_recent_collections() {
+			$this->db->limit(10);
+			$this->db->order_by('id', 'desc');
+			return $this->db->get('collection');
+		}
 
 		function update_collection($updated_collection, $collection_id) {
 			$this->db->where('id', $collection_id);

@@ -3,16 +3,6 @@
 	print "<h1 class='accordian_header'><a href='/collections/profile/" . $generators->collection_id . "'>" . $collections->name . "</a> / " . $generators->name . "</h1>";
 	print "<h2>Description</h2>";
 	print $generators->description;
-	print "<h2>Images</h2>";
-	if (count($images) == 0) {
-		print "There are no images for this generator.";	
-	} else {
-		$this->load->helper('asset');
-		foreach ($images as $image) {
-			print image_asset('resource/' . $image->name);
-		}
-	}
-
 	print "<h2 class='accordian_header'>Arguments</h2>";
 
 	if ($this->ion_auth->is_admin()) {

@@ -159,10 +159,10 @@
 					if ($argument->type == 'INTEGER') {
 						$validation_rules .= 'integer';
 						if ($argument->min_value) {
-							$validation_rules .= '|greater_than[' . $argument->min_value . ']';
+							$validation_rules .= '|callback_check_min[' . $argument->min_value . ']';
 						}
 						if ($argument->max_value) {
-							$validation_rules .= '|less_than[' . $argument->max_value . ']';
+							$validation_rules .= '|callback_check_max[' . $argument->max_value . ']';
 						}
 						
 
@@ -183,7 +183,7 @@
 						'generator_id' => $this->input->post('generator_id'),
 						'description' => $this->input->post('problem_description'),
 						'user_id' => $this->ion_auth->user()->row()->id,
-						'created_datetime' => time()
+						'created_datetime' => null
 					);
 
 					$problem = array_shift($this->Problem_model->add_problem($new_problem)->result());
@@ -220,6 +220,24 @@
 				redirect('/users/login');
 			}
 
+		}
+
+		public function check_min($value, $arg_min) {
+			if ($value >= $arg_min) {
+				return true;
+			} else {
+				$this->form_validation->set_message('check_min', 'The %s field must be greater than or equal to the argument minimum.');
+				return false;
+			}
+		}
+		
+		public function check_max($value, $arg_max) {
+			if ($value <= $arg_max) {
+				return true;
+			} else {
+				$this->form_validation->set_message('check_min', 'The %s field must be less than or equal to the argument maximum.');
+				return false;
+			}
 		}
 
 		private function generate_problem($generator, $problem_id, $args) {

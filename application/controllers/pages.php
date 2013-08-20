@@ -17,9 +17,9 @@
 				$this->load->model('Generator_model');
 				$this->load->model('Problem_model');
 
-				$data['recent_problems'] = $this->Problem_model->get_problem(null,null,10)->result();
-				$data['recent_collections'] = $this->Collection_model->get_collection(null,10)->result();
-				$data['recent_generators'] = $this->Generator_model->get_generator(null,null,10)->result();
+				$data['recent_problems'] = $this->Problem_model->get_recent_problems()->result();
+				$data['recent_collections'] = $this->Collection_model->get_recent_collections()->result();
+				$data['recent_generators'] = $this->Generator_model->get_recent_generators()->result();
 			}
 
 			$this->load->helper('url');

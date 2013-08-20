@@ -24,6 +24,12 @@
 			$this->db->order_by('collection_id');
 			return $this->db->get('generator');
 		}
+		
+		function get_recent_generators() {
+			$this->db->limit(10);
+			$this->db->order_by('id', 'desc');
+			return $this->db->get('generator');
+		}
 
 		function delete_generator($generator_id) {
 			return $this->db->delete('generator', array('id' => $generator_id));

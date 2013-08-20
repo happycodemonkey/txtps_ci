@@ -37,12 +37,17 @@
 	echo form_submit('submit', 'Update Generator');
 	echo form_close();
         echo "<br /><br />";
-        echo form_open('generators/add_arguments/' . $generator->id);
-        echo form_submit('submit', 'Edit Arguments');
-        echo form_close();
-        echo form_open('generators/add_images/' . $generator->id);
-        echo form_submit('submit', 'Edit Images');
-        echo form_close();
-
 ?>
+        <div id='added_arguments'>
+                <?php 
+			print "<b><a href='/generators/add_arguments/" . $generator->id . "'>Add Arguments</a></b>";
+			print "<br /><br />";
+                        foreach ($arguments as $argument) {
+                                print $argument->variable;
+                                $argument->description ? print " : " . $argument->description : print " : No description "; 
+                                print "&nbsp;&nbsp;<a href='/generators/delete_argument/" . $argument->id . "/" . $generator->id . "/edit'>Delete</a>";
+                                print "&nbsp;&nbsp;<a href='/generators/edit_argument/" . $argument->id . "/" . $generator->id . "'>Edit</a><br />";
+                        }
+                ?>
+        </div>
 </div>
