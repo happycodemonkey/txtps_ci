@@ -32,7 +32,7 @@
 			}
 		?>
 		</div>
-		<div id='top_header_text'><h1 id='header_title'>Welcome to the Texas Test Problem Server</h1></div>
+		<div id='top_header_text'><h1 id='header_title'>Welcome to the <br />Texas Test Problem Server</h1></div>
 		<div id='txtps_header_image'><a href="/pages/view/home"><?php echo image_asset('TxTPS_s.png'); ?></a></div>
 	</div>
 	<div id='header_menu'>
