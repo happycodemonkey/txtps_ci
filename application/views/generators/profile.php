@@ -2,7 +2,7 @@
 <?php
 	print "<h1 class='accordian_header'><a href='/collections/profile/" . $generators->collection_id . "'>" . $collections->name . "</a> / " . $generators->name . "</h1>";
 	print "<h2>Description</h2>";
-	print $generators->description;
+	print str_replace("\n", "<br />", $generators->description);
 	print "<h2 class='accordian_header'>Arguments</h2>";
 
 	if ($this->ion_auth->is_admin()) {

@@ -102,6 +102,7 @@ div#header {
     float: left;
     width: 30%; }
   div#header div#top_header div#top_header_text {
+    text-align: center;
     float: right;
     width: 35%; }
   div#header div#header_menu {

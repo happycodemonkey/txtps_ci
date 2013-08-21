@@ -58,6 +58,7 @@
 					$data['generator_name'] = $this->input->post('generator_name');
 					$data['collection_id'] = $this->input->post('collection_id');
 					$data['generator_description'] = $this->input->post('generator_description');
+					error_log($this->input->post('generator_description'));
 					$data['generator_script'] = $this->input->post('generator_script');
 
 					$new_generator = array(
@@ -214,9 +215,11 @@
 				$this->form_validation->set_rules('argument_name', 'Argument name', 'required');
 				$this->form_validation->set_rules('argument_variable', 'Argument variable', 'required');
 				$this->form_validation->set_rules('argument_type', 'Argument type', 'required');
-				$this->form_validation->set_rules('argument_min_value', 'Argument Minimum Value', 'less_than[' . $this->input->post('argument_max_value') . ']');
-				$this->form_validation->set_rules('argument_default', 'Argument Default Value', 'less_than[' . $this->input->post('argument_max_value') . ']');
-				$this->form_validation->set_rules('argument_default', 'Argument Default Value', 'greater_than[' . $this->input->post('argument_min_value') . ']');
+				$this->form_validation->set_rules('argument_min_value', 'Argument Minimum Value', 
+					'callback_check_gt_lt[' . $this->input->post('argument_max_value') . ']');
+				$this->form_validation->set_rules('argument_default', 'Argument Default Value', 
+					'callback_check_default_gt[' . $this->input->post('argument_min_value') . ']
+					|callback_check_default_lt[' . $this->input->post('argument_max_value') . ']');
 				
 				if ($this->input->post('edit_argument') && $this->form_validation->run()) {
 					$updated_argument = array(
@@ -273,6 +276,7 @@
 
 				$this->form_validation->set_rules('generator_name', 'Generator name', 'required');
 				if ($this->input->post('generator_id') && $this->form_validation->run()) {
+					error_log($this->input->post('generator_description'));
 					$updated_generator = array(
 						'description' => $this->input->post('generator_description'),
 						'name' => $this->input->post('generator_name'),
