@@ -203,12 +203,28 @@
 
 					$run_generator = array_shift($this->Generator_model->get_generator('id', $this->input->post('generator_id'))->result());
 
-					//@TODO: we need to run the generator, then store files, images, etc that are outputted.
 					if ($this->generate_problem($run_generator, $problem->id, $script_args)) {
 						$this->load->helper('url');
 						redirect('/problems/profile/' . $problem->id);
 					} else {
-						error_log("ERROR MESSAGE!");
+						$this->load->library('email');
+						$user = $this->ion_auth->user()->row();
+
+						$message = "Your generator has produced no output and may have encountered an error."
+							. " Please check your script and inputs and try again. If the problem persists" 
+							. "please contact an administrator.";
+
+						$this->email->from('admin@txtps', 'TxTPS');
+						$this->email->to($user->email);
+						$this->email->bcc("eijkhout@tacc.utexas.edu");
+						$this->email->subject("There was a problem running your generator.");
+						$this->email->message($message);
+
+						if ($this->email->send()) {
+							error_log("Email sent to " . $user->email);
+						}  else {
+							error_log($this->email->print_debugger());
+						}
 					}
 				}
 
@@ -246,7 +262,6 @@
 				$arg_list[$name] = $value;
 			}			
 
-			//$problem = array_shift($this->Problem_model->get_problem('id', $problem_id)->result());
 			$problem_file_dir = "/data/files/problems/" . $problem_id;
 
 			if(mkdir($problem_file_dir) && mkdir($problem_file_dir . "/public") && mkdir($problem_file_dir . "/private")) {

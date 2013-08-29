@@ -2,7 +2,7 @@
 <?php
 
 	print "<h1>" . $collections->name . "</h1>";
-	print $collections->description;
+	print str_replace("\n", "<br />", $collections->description);
 
 	if ($this->ion_auth->is_admin()) {
 		print "<br /><br />";
