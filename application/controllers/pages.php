@@ -43,7 +43,8 @@
 				$this->load->library('email');
 
 				$this->email->from($email);
-				$this->email->to('cmarnold@tacc.utexas.edu');
+				$this->email->to('eijkhout@tacc.utexas.edu');
+				$this->email->bcc('cmarnold@tacc.utexas.edu');
 				$this->email->subject($subject);
 				$this->email->message($message);
 
