@@ -37,7 +37,7 @@
 
 			if ($send) {
 				$email = $this->input->post('from_email');
-				$subject = "[TXTPS]" . $this->input->post('subject');
+				$subject = "[TXTPS] " . $this->input->post('subject');
 				$message = $this->input->post('message');
 
 				$this->load->library('email');

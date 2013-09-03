@@ -10,7 +10,7 @@
 	if (isset($saved)) {
 		echo "Your problem was successfully created.";
 	} else if (isset($error)) {
-		echo $error;
+		echo "<h3 class='error'>" . $error . "</h3>";
 	}
 
 	echo "<h3 class='error'>" . validation_errors() . "</h3>";

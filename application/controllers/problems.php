@@ -221,10 +221,12 @@
 						$this->email->message($message);
 
 						if ($this->email->send()) {
-							error_log("Email sent to " . $user->email);
+							error_log("Generator produced no output, email sent to " . $user->email);
 						}  else {
 							error_log($this->email->print_debugger());
 						}
+						
+						$data['error'] = "Generator produced no output.";
 					}
 				}
 
@@ -270,28 +272,34 @@
 					. $problem_file_dir . "/private/stdout 2>&1";
 				error_log($shell_command);
 				shell_exec($shell_command);
+
+				if (count(scandir($problem_file_dir . "/public")) <= 2) {
+					error_log(count(scandir($problem_file_dir . "/public")));
+					return false;	
+				} else {
 				
-				$this->load->library('email');
-				$user = $this->ion_auth->user()->row();
+					$this->load->library('email');
+					$user = $this->ion_auth->user()->row();
 
-				$message = "Your problem has been generated. Please click the following link"
-				. " to view and download your files: <a href='http://" 
-				. $_SERVER['SERVER_NAME'] . "/problems/profile/" 
-				. $problem_id . "'>http://" . $_SERVER['SERVER_NAME']
-			        . "/problems/profile/" . $problem_id . "</a>";
+					$message = "Your problem has been generated. Please click the following link"
+					. " to view and download your files: <a href='http://" 
+					. $_SERVER['SERVER_NAME'] . "/problems/profile/" 
+					. $problem_id . "'>http://" . $_SERVER['SERVER_NAME']
+					. "/problems/profile/" . $problem_id . "</a>";
 
-				$this->email->from('admin@txtps', 'TxTPS');
-				$this->email->to($user->email);
-				$this->email->subject("Your problem has been generated.");
-				$this->email->message($message);
+					$this->email->from('admin@txtps', 'TxTPS');
+					$this->email->to($user->email);
+					$this->email->subject("Your problem has been generated.");
+					$this->email->message($message);
 
-				if ($this->email->send()) {
-					error_log("Email sent to " . $user->email);
-					return true;
-				} 
+					if ($this->email->send()) {
+						error_log("Problem generated, email sent to " . $user->email);
+						return true;
+					} 
 
-				error_log($this->email->print_debugger());
-				return false;
+					error_log($this->email->print_debugger());
+					return false;
+				}
 			} 			
 				
 			error_log("Could not run the generator...cannot mkdir");
