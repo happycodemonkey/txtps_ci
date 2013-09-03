@@ -5,17 +5,6 @@
 	print $problems->description;
 	print "</h2><h3>Generator Description</h3>";
 	print str_replace("\n", "<br />", $generators->description);
-	print "<h3>Images</h3>";
-
-	if (empty($images)) {
-		print "There are no images for this problem.";
-	} else {
-		$this->load->helper('asset');
-		foreach ($images as $image) {
-			print image_asset('resource/' . $image->name);
-			print "<br /><br />";
-		}
-	}
 	
 	print "<h3>Arguments</h3>";
 
