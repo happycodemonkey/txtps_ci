@@ -217,7 +217,7 @@
 							. $_SERVER['SERVER_NAME'] . "/problems/profile/" 
 							. $problem->id . "'>Click here</a> to view the problem.";
 
-						$this->email->from('admin@txtps', 'TxTPS');
+						$this->email->from('eijkhout@tacc.utexas.edu', 'TxTPS');
 						$this->email->to($user->email);
 						$this->email->bcc("eijkhout@tacc.utexas.edu");
 						$this->email->subject("There was a problem running your generator.");
@@ -291,7 +291,7 @@
 					. $problem_id . "'>http://" . $_SERVER['SERVER_NAME']
 					. "/problems/profile/" . $problem_id . "</a>";
 
-					$this->email->from('admin@txtps', 'TxTPS');
+					$this->email->from('eijkhout@tacc.utexas.edu', 'TxTPS');
 					$this->email->to($user->email);
 					$this->email->subject("Your problem has been generated.");
 					$this->email->message($message);
