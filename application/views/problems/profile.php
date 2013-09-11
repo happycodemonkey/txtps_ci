@@ -15,6 +15,12 @@
 
 	print "<h3>Files</h3>";
 
+	if (!empty($error_file)) {
+		foreach ($error_file as $file) {
+			print file_get_contents($file);
+		}
+	}
+
 	if (empty($files)) {
 		print "There are no files for this problem.";
 	} else {
