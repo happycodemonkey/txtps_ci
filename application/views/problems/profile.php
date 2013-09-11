@@ -17,7 +17,7 @@
 
 	if (!empty($error_file)) {
 		foreach ($error_file as $file) {
-			print "<pre>" . file_get_contents("assets/data/files/problems/" . $problems->id . "/public/" . $file) . "</pre>"; 
+			print "<pre>" . htmlspecialchars(file_get_contents("assets/data/files/problems/" . $problems->id . "/public/" . $file)) . "</pre>"; 
 		}
 	}
 
