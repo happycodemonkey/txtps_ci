@@ -13,13 +13,15 @@
 		print $key . " = " . $value . "<br />";
 	}
 
-	print "<h3>Files</h3>";
+	print "<h3>Generator Errors</h3>";
 
 	if (!empty($error_file)) {
 		foreach ($error_file as $file) {
 			print file_get_contents("assets/data/files/problems/" . $problems->id . "/public/" . $file); 
 		}
 	}
+
+	print "<h3>Files</h3>";
 
 	if (empty($files)) {
 		print "There are no files for this problem.";
