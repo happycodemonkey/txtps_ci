@@ -96,7 +96,9 @@
 					if (preg_match("/^.*\.pdf$/i", $file)) {
 						$data['pdfs'][] = $file;
 					} else if (preg_match("/^.*\.png$/i", $file)) {
-						$data['pngs'][] = $file;					
+						$data['pngs'][] = $file;				
+					} else if (preg_match("/ERROR\.txt/i", $file)) {
+						$data['error_file'][] = $file;
 					} else {
 						$data['files'][] = $file;
 					}
