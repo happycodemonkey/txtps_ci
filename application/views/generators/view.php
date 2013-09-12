@@ -18,16 +18,16 @@
 			print "<span class='accordian_header'><h2>" . $collections[$generator->collection_id] . "</h2></span>";
 			print "<div class='accordian'>";
 		}
-		print "<table width=50%><tr>";
+		print "<table width=100%><tr>";
 		if ($this->ion_auth->is_admin()) {
-			print "<td>" . $generator->name . "</td>";
+			print "<td width=25%>" . $generator->name . "</td>";
 			print "<td width=10%><a href='/generators/profile/" . $generator->id . "'>View</a></td>";
 			print "<td width=10%><a href='/generators/edit/" . $generator->id . "'>Edit</a></td>";
 			print "<td width=10%><a href='/generators/delete/" . $generator->id . "'>Delete</a></td>";
 		} else {
 			print "<td><a href='/generators/profile/" . $generator->id . "'>" . $generator->name . "</a></td>";
 		}
-		print "<td width=20%><a href='/problems/add/" . $generator->id . "'>Generate Problem</a></td>";
+		print "<td><a href='/problems/add/" . $generator->id . "'>Generate Problem</a></td>";
 		print "</tr></table>";
 	}
 ?>
