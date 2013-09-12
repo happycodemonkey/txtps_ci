@@ -27,7 +27,7 @@
 		} else {
 			print "<td><a href='/generators/profile/" . $generator->id . "'>" . $generator->name . "</a></td>";
 		}
-		print "<td width=20%><a href='/problems/add/" . $generator->id . "'>Add Problem</a></td>";
+		print "<td width=20%><a href='/problems/add/" . $generator->id . "'>Generate Problem</a></td>";
 		print "</tr></table>";
 	}
 ?>
