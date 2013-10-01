@@ -22,7 +22,13 @@
 		<br /><br />
 		<?php echo form_label('<b>*Collection:</b>'); ?>
 		<br />
-		<?php echo form_dropdown('collection_id', $options, isset($collection_id) ? $collection_id : ''); ?>
+		<?php 
+			if (empty($options)) {
+				echo "<h3 class='error'>You do not have any collections defined. Please <a href='/collections/add'>add one</a> before you try to add a generator.</h3>";
+			} else {
+				echo form_dropdown('collection_id', $options, isset($collection_id) ? $collection_id : '');
+			}
+		?>
 		<br /><br />
 		<?php echo form_label('<b>Description:</b>'); ?>
 		<br />

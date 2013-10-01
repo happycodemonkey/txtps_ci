@@ -138,107 +138,109 @@
 			$this->Problem_model->delete_problem($problem_id);
 		}
 
-		public function add($generator_id) {
+		public function add($generator_id = null) {
 			if ($this->ion_auth->logged_in()) {
 				$this->load->model('Generator_model');
 				$this->load->model('Problem_model');
 				$this->load->model('Argument_model');
 				$this->load->library('form_validation');
 
-				$data['generator'] = array_shift($this->Generator_model->get_generator('id',$generator_id)->result());
-				$arguments = $this->Argument_model->get_generator_argument('generator_id', $generator_id)->result();
-				
-				$data['generator_id'] = $generator_id;
-				$data['arguments'] = $arguments;
-				$this->form_validation->set_rules('generator_id', 'Generator', 'required');
-
-				foreach ($arguments as $argument) {
-					$validation_rules = '';
-					if (!$argument->optional) {
-						$validation_rules .= 'required|';
-					}
-
-					if ($argument->type == 'INTEGER') {
-						$validation_rules .= 'integer';
-						if ($argument->min_value) {
-							$validation_rules .= '|callback_check_min[' . $argument->min_value . ']';
-						}
-						if ($argument->max_value) {
-							$validation_rules .= '|callback_check_max[' . $argument->max_value . ']';
-						}
-						
-
-					} else if ($argument->type == 'DECIMAL' || $argument->type == 'FLOAT') {
-						$validation_rules .= 'decimal';
-
-					} else if ($argument->type == 'STRING') {
-						$validation_rules .= 'string';
-					}
-
-					$this->form_validation->set_rules($argument->id, $argument->name, $validation_rules);
-				}
-
-				if ($this->input->post('add_problem') && $this->form_validation->run()) {
-					$this->load->helper('string');
-					$new_problem = array(
-						'identifier' => random_string('alnum', 6),
-						'generator_id' => $this->input->post('generator_id'),
-						'description' => $this->input->post('problem_description'),
-						'user_id' => $this->ion_auth->user()->row()->id,
-						'created_datetime' => null
-					);
-
-					$problem = array_shift($this->Problem_model->add_problem($new_problem)->result());
-					$script_args = array();
+				if ($generator_id == null) {
+					$data['generator'] = array_shift($this->Generator_model->get_generator('id',$generator_id)->result());
+					$arguments = $this->Argument_model->get_generator_argument('generator_id', $generator_id)->result();
+					
+					$data['generator_id'] = $generator_id;
+					$data['arguments'] = $arguments;
+					$this->form_validation->set_rules('generator_id', 'Generator', 'required');
 
 					foreach ($arguments as $argument) {
-						$new_problem_arguments = array(
-							'problem_id' => $problem->id,
-							'argument_id' => $argument->id,
-							'value' => $this->input->post($argument->id)
-						);
-						
-						$script_args[$argument->variable] = $this->input->post($argument->id);
+						$validation_rules = '';
+						if (!$argument->optional) {
+							$validation_rules .= 'required|';
+						}
 
-						$this->Argument_model->add_problem_argument($new_problem_arguments);
+						if ($argument->type == 'INTEGER') {
+							$validation_rules .= 'integer';
+							if ($argument->min_value) {
+								$validation_rules .= '|callback_check_min[' . $argument->min_value . ']';
+							}
+							if ($argument->max_value) {
+								$validation_rules .= '|callback_check_max[' . $argument->max_value . ']';
+							}
+							
+
+						} else if ($argument->type == 'DECIMAL' || $argument->type == 'FLOAT') {
+							$validation_rules .= 'decimal';
+
+						} else if ($argument->type == 'STRING') {
+							$validation_rules .= 'string';
+						}
+
+						$this->form_validation->set_rules($argument->id, $argument->name, $validation_rules);
 					}
 
-					$run_generator = array_shift($this->Generator_model->get_generator('id', $this->input->post('generator_id'))->result());
+					if ($this->input->post('add_problem') && $this->form_validation->run()) {
+						$this->load->helper('string');
+						$new_problem = array(
+							'identifier' => random_string('alnum', 6),
+							'generator_id' => $this->input->post('generator_id'),
+							'description' => $this->input->post('problem_description'),
+							'user_id' => $this->ion_auth->user()->row()->id,
+							'created_datetime' => null
+						);
 
-					if ($this->generate_problem($run_generator, $problem->id, $script_args)) {
-						$this->load->helper('url');
-						redirect('/problems/profile/' . $problem->id);
-					} else {
-						$this->load->library('email');
-						$user = $this->ion_auth->user()->row();
+						$problem = array_shift($this->Problem_model->add_problem($new_problem)->result());
+						$script_args = array();
 
-						$message = "Your generator has produced no output and may have encountered an error."
-							. " Please check your script and inputs and try again. If the problem persists" 
-							. "please contact an administrator."
-							. " <a href='http://" 
-							. $_SERVER['SERVER_NAME'] . "/problems/profile/" 
-							. $problem->id . "'>Click here</a> to view the problem.";
+						foreach ($arguments as $argument) {
+							$new_problem_arguments = array(
+								'problem_id' => $problem->id,
+								'argument_id' => $argument->id,
+								'value' => $this->input->post($argument->id)
+							);
+							
+							$script_args[$argument->variable] = $this->input->post($argument->id);
 
-						$this->email->from('admin@txtps.tacc.utexas.edu', 'TxTPS');
-						$this->email->reply_to('help@tacc.utexas.edu', 'TACC Help');
-						$this->email->to($user->email);
-						$this->email->bcc("eijkhout@tacc.utexas.edu");
-						$this->email->subject("There was a problem running your generator.");
-						$this->email->message($message);
-
-						if ($this->email->send()) {
-							error_log("Generator produced no output, email sent to " . $user->email);
-							error_log($message);
-						}  else {
-							error_log($this->email->print_debugger());
+							$this->Argument_model->add_problem_argument($new_problem_arguments);
 						}
-						
-						$data['error'] = "Generator produced no output.";
+
+						$run_generator = array_shift($this->Generator_model->get_generator('id', $this->input->post('generator_id'))->result());
+
+						if ($this->generate_problem($run_generator, $problem->id, $script_args)) {
+							$this->load->helper('url');
+							redirect('/problems/profile/' . $problem->id);
+						} else {
+							$this->load->library('email');
+							$user = $this->ion_auth->user()->row();
+
+							$message = "Your generator has produced no output and may have encountered an error."
+								. " Please check your script and inputs and try again. If the problem persists" 
+								. "please contact an administrator."
+								. " <a href='http://" 
+								. $_SERVER['SERVER_NAME'] . "/problems/profile/" 
+								. $problem->id . "'>Click here</a> to view the problem.";
+
+							$this->email->from('admin@txtps.tacc.utexas.edu', 'TxTPS');
+							$this->email->reply_to('help@tacc.utexas.edu', 'TACC Help');
+							$this->email->to($user->email);
+							$this->email->bcc("eijkhout@tacc.utexas.edu");
+							$this->email->subject("There was a problem running your generator.");
+							$this->email->message($message);
+
+							if ($this->email->send()) {
+								error_log("Generator produced no output, email sent to " . $user->email);
+								error_log($message);
+							}  else {
+								error_log($this->email->print_debugger());
+							}
+							
+							$data['error'] = "Generator produced no output.";
+						}
 					}
 				}
 
 				$this->load->view('templates/header');
-				$this->load->view('problems/add', $data);
+				$this->load->view('problems/add', isset($data) ? $data : '');
 				$this->load->view('templates/footer');
 			} else {
 				$this->load->helper('url');

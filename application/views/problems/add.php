@@ -15,6 +15,10 @@
 
 	echo "<h3 class='error'>" . validation_errors() . "</h3>";
 
+	if (!isset($generator) || !isset($generator_id)) {
+		print "There are no generators defined. You must <a href='/generators/add'>add one</a> before you can run a problem.";
+	} else {
+
 	$this->load->helper('form');
 	echo form_open_multipart('problems/add/' . $generator_id, array('id'=>'add_problem'));
 	echo form_hidden('add_problem', 'yes');
@@ -61,5 +65,6 @@
 <?php
 	echo form_submit('submit', 'Run Generator');
 	echo form_close();
+	}
 ?>
 </div>
