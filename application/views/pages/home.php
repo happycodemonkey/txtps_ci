@@ -8,6 +8,10 @@
 			print "<div class='problem $class'><a href='/problems/profile/" . $recent_problem->id . "'>" . $recent_problem->identifier . "</a></div><br />";
 			$i++;
 		}
+		
+		if (empty($recent_problems)) {
+			print "<div class='problem'>There are no problems defined. <a href='/problems/add'>Add one!</a></div>";
+		}
 	?>
 </div>
 
@@ -20,6 +24,10 @@
 			print "<div class='generator $class'><a href='/generators/profile/" . $recent_generator->id . "'>" . $recent_generator->name . "</a></div><br />";
 			$i++;
 		}
+
+		if (empty($recent_generators)) {
+			print "<div class='generator'>There are no generators defined. <a href='/generators/add'>Add one!</a></div>";
+		}
 	?>
 </div>
 
@@ -31,6 +39,10 @@
 			$class = $i%2==0 ? "even" : "odd";
 			print "<div class='collection $class'><a href='/collections/profile/" . $recent_collection->id . "'>" . $recent_collection->name . "</a></div><br />";
 			$i++;
+		}
+		
+		if (empty($recent_collections)) {
+			print "<div class='collection'>There are no collections defined. <a href='/collections/add'>Add one!</a></div>";
 		}
 	?>
 </div>
