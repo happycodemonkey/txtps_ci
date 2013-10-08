@@ -1,0 +1,215 @@
+/* setting color variables */
+/* the theme coloring was pulled from kuler.adobe.com */
+/* and is called 'JW Fashion' */
+/*
+$base-color: #625D55;
+$dark-blue: #1E2F39;
+$lite-blue: #375351;
+$dark-gray: #A5AD86; //the base color is a darker gray but it is the base :)
+$lite-gray: #CCCFBB;
+*/
+
+/* setting color variables */
+/* the theme coloring was pulled from kuler.adobe.com */
+/* and is called 'CoolGrays' */
+
+$base-color: #686E75;
+$blue: #9BAAC1;
+$gray: #82787B;
+$off-white: #E4F1D8; 
+$seafoam: #AAC19B;
+
+body {font-family:arial; font-size:11px; background-color: $base-color}
+.clear {clear:both}	
+/* remove the list style */
+#nav {
+	margin:0; 
+	padding:0; 
+	list-style:none;
+	
+	/* make the LI display inline */
+	/* it's position relative so that position absolute */
+	/* can be used in submenu */
+	li {
+		float:left; 
+		/*display:block; */
+		width:100px; 
+		background:#ccc; 
+		position:relative;
+		z-index:500; 
+
+		 a {
+			display:block; 
+			padding:8px 5px 0 0; 
+			font-weight:700;  
+			height:25px; 
+			font-size: 1.5em;
+			text-decoration:none; 
+			/*color:#fff; */
+			text-align:center; 
+			color:#333;
+
+			/* this is the parent menu */
+			&:hover {
+				color:#fff;
+			}
+		}
+
+	}
+		
+
+	
+	/* you can make a different style for default selected value */
+	a.selected {
+		color:#f00;
+	}
+	
+		/* submenu, it's hidden by default */
+	ul {
+		position:absolute; 
+		left:0; 
+		display:none; 
+		margin:0 0 0 -1px; 
+		padding:0; 
+		list-style:none;
+
+		li {
+			width:100px; 
+			float:left; 
+			/*border-top:1px solid #fff;*/
+		}
+
+		/* display block will make the link fill the whole area of LI */
+		a {
+			display:block;  
+			height:15px;
+			padding: 8px 5px; 
+			color:#666;
+
+			&:hover {
+				text-decoration:underline;	
+			}
+		}
+
+	}			
+}	
+
+/* fix ie6 small issue */
+/* we should always avoid using hack like this */
+/* should put it into separate file : ) */
+* html #nav ul {
+	margin:0 0 0 -2px;
+}
+
+.error {
+color: red;
+}
+
+div#header {
+	height:110px;
+	width:1000px;
+	margin-left: 150px;
+	padding: 1em 1em 1em 1em;
+	background-color: $seafoam;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border: solid 1px;
+
+	div#top_header {
+		div#user_links {
+			float:right;
+			font-size: 15pt;
+			text-align:right;
+			width:30%;
+		}
+
+		div#txtps_header_image {
+			float:left;
+			width:30%;
+		}
+
+		div#top_header_text {
+			text-align:center;
+			float:right;
+			width:35%;
+		}
+	}
+
+	div#header_menu {
+		clear:both;
+		background-color: blue;
+	}
+}
+
+div#header, h3#home_head {
+	clear:both;
+}
+
+
+div#footer {
+	clear:both;
+	width:1000px;
+	margin-left: 150px;
+	padding: 1em 1em 1em 1em;
+	height:200px;
+	background-color: $seafoam;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottmright: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border: solid 1px;
+
+	#tacc_footer_image,
+	#footer_text {
+		float:left;
+		width:30%;
+		position:relative;
+	}
+
+	#utexas_footer_image {
+		float:right;
+		width:30%;
+		position:relative;
+		text-align:right;
+	}
+
+	#footer_text {
+		text-align:center;
+	}
+
+}
+
+hr {
+	height:1px;
+	color:#333333;
+}
+
+div.site_body {
+	width:1000px;
+	margin-left: 150px;
+	padding: 1em 1em 1em 1em;
+	clear:both;
+	background-color: $off-white;
+	overflow:hidden;
+	border-left: 1px solid;
+	border-right: 1px solid;
+
+	div#recent_problems,
+	div#recent_collections,
+	div#recent_generators {
+		width:30%;
+		float:left;
+		position:relative;
+		padding:0 0 1em 0;
+		overflow:hidden;
+	}
+}
+
+
+

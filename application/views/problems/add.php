@@ -6,6 +6,7 @@
 		});
 	});
 </script>
+<h2>Add A New Problem</h2>
 <?php
 	if (isset($saved)) {
 		echo "Your problem was successfully created.";

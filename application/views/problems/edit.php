@@ -1,4 +1,5 @@
 <div class='site_body'>
+<h1>Edit Problem <?php print $problem->identifier; ?></h1>
 <?php
 	if (isset($saved)) {
 		echo "Your problem was successfully updated.";

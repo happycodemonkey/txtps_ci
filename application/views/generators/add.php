@@ -1,4 +1,5 @@
 <div class='site_body'>
+<h1>Add A New Generator</h1>
 <?php
 	if (isset($saved)) {
 		echo "Your generator was successfully created.";

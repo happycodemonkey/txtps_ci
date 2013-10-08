@@ -145,7 +145,7 @@
 				$this->load->model('Argument_model');
 				$this->load->library('form_validation');
 
-				if ($generator_id == null) {
+				if ($generator_id != null) {
 					$data['generator'] = array_shift($this->Generator_model->get_generator('id',$generator_id)->result());
 					$arguments = $this->Argument_model->get_generator_argument('generator_id', $generator_id)->result();
 					
