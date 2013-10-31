@@ -69,6 +69,7 @@
 				<a href="/pages/view/admin_menu">Admin</a>
 				<ul>
 					<li><a href="/users/manage">Users</a></li>
+					<li><a href="/problems/search">Search</a></li>
 				</ul>
 				<div class="clear"></div>
 			</li>
