@@ -26,46 +26,41 @@
 		}
 
 		public function search() {
-			if ($this->ion_auth->logged_in()) {
-				$this->load->model('Autocomplete_model');
-				$rows = $this->Autocomplete_model->GetAnamodColumns();
-				$anamod_options = array();
+			$this->load->model('Autocomplete_model');
+			$rows = $this->Autocomplete_model->GetAnamodColumns();
+			$anamod_options = array();
 
-				foreach($rows as $row) {
-					$anamod_options[$row->Field] = $row->Field;
-				}
-
-				$data['dropdown_options'] = $anamod_options;
-				$data['num_vars'] = 1;
-
-				if ($this->input->post('search_problems')) {
-					$this->load->model('Problem_model');
-					
-					$search_options = array();
-					$num_vars = $this->input->post('num_vars');
-					$data['num_vars'] = $num_vars;
-					while ($num_vars > 0) {
-						$range = array(
-							'less_than' => $this->input->post('value_less_than_' . $num_vars),
-							'greater_than' => $this->input->post('value_greater_than_' . $num_vars)
-						);
-
-						$search_options[$this->input->post('problem_variable_' . $num_vars)] = $range;
-						$num_vars--;
-					}	
-
-					$problems = $this->Problem_model->search_problem($search_options)->result();
-					$data['problems'] = $problems;
-				}
-				
-				$this->load->view('templates/header');
-				$this->load->view('problems/search', isset($data) ? $data : '');
-				$this->load->view('templates/footer');
-
-			} else {
-				$this->load->helper('url');
-				redirect('/users/login');
+			foreach($rows as $row) {
+				$anamod_options[$row->Field] = $row->Field;
 			}
+
+			$data['dropdown_options'] = $anamod_options;
+			$data['num_vars'] = 1;
+
+			if ($this->input->post('search_problems')) {
+				$this->load->model('Problem_model');
+				
+				$search_options = array();
+				$num_vars = $this->input->post('num_vars');
+				$data['num_vars'] = $num_vars;
+				while ($num_vars > 0) {
+					$range = array(
+						'less_than' => $this->input->post('value_less_than_' . $num_vars),
+						'greater_than' => $this->input->post('value_greater_than_' . $num_vars)
+					);
+
+					$search_options[$this->input->post('problem_variable_' . $num_vars)] = $range;
+					$num_vars--;
+				}	
+
+				$problems = $this->Problem_model->search_problem($search_options)->result();
+				$data['problems'] = $problems;
+			}
+			
+			$this->load->view('templates/header');
+			$this->load->view('problems/search', isset($data) ? $data : '');
+			$this->load->view('templates/footer');
+
 		}
 
 		public function profile($problem_id) {
