@@ -266,6 +266,7 @@
 			$arg_list = array();
 			foreach($args as $name=>$value){
 				$arg_list[$name] = $value;
+				error_log("Args: " . $name . "=>" . $value); 
 			}			
 
 			$problem_file_dir = "/data/files/problems/" . $problem_id;

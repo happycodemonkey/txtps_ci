@@ -65,7 +65,7 @@
 		</div>
 		<?php echo form_label('<b>Default:</b>'); ?>
 		<br />
-		<?php echo form_input(array('name'=>'argument_default','id'=>'argument_default'), isset($argument->default) ? $argument->default : ''); ?>
+		<?php echo form_input(array('name'=>'argument_default','id'=>'argument_default'), isset($argument->default_value) ? $argument->default_value : ''); ?>
 		<br /><br />
 	</div>
 <?php	
