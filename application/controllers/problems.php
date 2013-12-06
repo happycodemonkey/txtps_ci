@@ -226,7 +226,7 @@
 							$this->email->from('admin@txtps.tacc.utexas.edu', 'TxTPS');
 							$this->email->reply_to('help@tacc.utexas.edu', 'TACC Help');
 							$this->email->to($user->email);
-							//$this->email->bcc("eijkhout@tacc.utexas.edu");
+							$this->email->bcc("eijkhout@tacc.utexas.edu");
 							$this->email->subject("There was a problem running your generator.");
 							$this->email->message($message);
 
