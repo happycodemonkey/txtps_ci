@@ -133,7 +133,7 @@
 			$this->Problem_model->delete_problem($problem_id);
 		}
 
-		public function add($generator_id = null) {
+		public function add($generator_id = null, $problem_id = null) {
 			if ($this->ion_auth->logged_in()) {
 				$this->load->model('Generator_model');
 				$this->load->model('Problem_model');
@@ -143,7 +143,7 @@
 				if ($generator_id != null) {
 					$data['generator'] = array_shift($this->Generator_model->get_generator('id',$generator_id)->result());
 					$arguments = $this->Argument_model->get_generator_argument('generator_id', $generator_id)->result();
-					
+
 					$data['generator_id'] = $generator_id;
 					$data['arguments'] = $arguments;
 					$this->form_validation->set_rules('generator_id', 'Generator', 'required');
@@ -172,6 +172,14 @@
 						}
 
 						$this->form_validation->set_rules($argument->id, $argument->name, $validation_rules);
+
+						$data['problem_id'] = $problem_id;
+						if ($problem_id != null) {
+							$problem_argument = array_shift($this->Argument_model->get_problem_argument('argument_id', $argument->id, 'problem_id', $problem_id)->result());
+							$argument->value = $problem_argument->value;
+						}
+
+							
 					}
 
 					if ($this->input->post('add_problem') && $this->form_validation->run()) {
@@ -210,7 +218,7 @@
 
 							$message = "Your generator has produced no output and may have encountered an error."
 								. " Please check your script and inputs and try again. If the problem persists" 
-								. "please contact an administrator."
+								. " please contact an administrator."
 								. " <a href='http://" 
 								. $_SERVER['SERVER_NAME'] . "/problems/profile/" 
 								. $problem->id . "'>Click here</a> to view the problem.";
@@ -218,7 +226,7 @@
 							$this->email->from('admin@txtps.tacc.utexas.edu', 'TxTPS');
 							$this->email->reply_to('help@tacc.utexas.edu', 'TACC Help');
 							$this->email->to($user->email);
-							$this->email->bcc("eijkhout@tacc.utexas.edu");
+							//$this->email->bcc("eijkhout@tacc.utexas.edu");
 							$this->email->subject("There was a problem running your generator.");
 							$this->email->message($message);
 

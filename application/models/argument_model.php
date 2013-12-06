@@ -30,9 +30,12 @@
 			return $this->db->select('last_insert_id() as problem_argument_id')->limit(1)->get('problem_argument');
 		}
 
-		function get_problem_argument($filter = null, $key = null) {
+		function get_problem_argument($filter = null, $key = null, $filter2 = null, $key2 = null) {
 			if ($filter && $key) {
 				$this->db->where($filter, $key);
+			}
+			if ($filter2 && $key2) {
+				$this->db->where($filter2, $key2);
 			}
 			return $this->db->get('problem_argument');
 		}

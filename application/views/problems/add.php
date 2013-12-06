@@ -28,6 +28,7 @@
 	<br />
 	<b><?php echo $generator->name; ?></b>
 	<?php echo form_hidden('generator_id', $generator_id); ?>
+	<?php echo form_hidden('problem_id', $problem_id); ?>
 	<br /><br />
 	<?php echo form_label('<b>Description:</b>'); ?>
 	<br />
@@ -39,7 +40,12 @@
 	<br />
 	<table width='40%'>
 	<?php
-		foreach ($arguments as $argument) {
+	foreach ($arguments as $argument) {
+		if ($problem_id) {
+			$value = $argument->value;
+		} else {
+			$value = $argument->default_value;
+		}
 			echo "<tr>";
 			echo "<td width='20%'>";
 			if (!$argument->optional) {
@@ -53,10 +59,10 @@
 					$arg_options[trim($option,"\"")] = trim($option,"\"");
 				}
 				echo "<td width='10%'>(" . $argument->type . ")</td>";
-				echo "<td width='10%'>" . form_dropdown($argument->id, $arg_options, $this->input->post($argument->id) ? $this->input->post($argument->id) : $argument->default_value) . "</td>";
+				echo "<td width='10%'>" . form_dropdown($argument->id, $arg_options, $this->input->post($argument->id) ? $this->input->post($argument->id) : $value) . "</td>";
 			} else {
 				echo "<td width='10%'>(" . $argument->type . ")</td>";
-				echo "<td width='10%'>" . form_input($argument->id, $this->input->post($argument->id) ? $this->input->post($argument->id) : $argument->default_value) . "</td>";
+				echo "<td width='10%'>" . form_input($argument->id, $this->input->post($argument->id) ? $this->input->post($argument->id) : $value) . "</td>";
 			}
 			echo "</tr>";
 		}

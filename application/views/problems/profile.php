@@ -47,5 +47,9 @@
 		}
 	}
 
+	print "<br /><br />";
+	print "<a target='_blank' href='/problems/add/" . $generators->id . "/" . $problems->id . "'>";
+	print "Re-run this problem";
+	print "</a>";
 ?>
 </div>
