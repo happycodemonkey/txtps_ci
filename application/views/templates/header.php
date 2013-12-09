@@ -51,8 +51,7 @@
 				<a href="/pages/view/help_menu">Help</a>
 				<ul>
 					<li><a href="/pages/view/formats">File Formats</a></li>
-					<li><a href="#">Using TxTPS</a></li>
-					<li><a href="#">Software</a></li>
+					<li><a href="/pages/view/faq">FAQ</a></li>
 				</ul>
 				<div class="clear"></div>
 			</li>
@@ -61,7 +60,6 @@
 				<ul>
 					<li><a href="/pages/view/about">About TxTPS</a></li>
 					<li><a href="/pages/contact">Contact Us</a></li>
-					<li><a href="/pages/view/faq">FAQ</a></li>
 				</ul>
 				<div class="clear"></div>
 			</li>
