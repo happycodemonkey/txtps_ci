@@ -131,6 +131,9 @@
 		public function delete($problem_id) {
 			$this->load->model('Problem_model');
 			$this->Problem_model->delete_problem($problem_id);
+
+			$this->load->helper('url');
+			redirect('problems/view');
 		}
 
 		public function add($generator_id = null, $problem_id = null) {

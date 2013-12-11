@@ -25,7 +25,7 @@
 		}
 		
 		function delete_problem($problem_id) {
-			return $this->db->delete('problem', array($id => $problem_id));
+			return $this->db->delete('problem', array('id' => $problem_id));
 		}
 
 		function add_problem($new_problem) {

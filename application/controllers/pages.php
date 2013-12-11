@@ -35,7 +35,13 @@
 				show_404();
 			}
 
-			if ($send) {
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('recaptcha_challenge_field', 'Security Question', 'required|callback_val_recaptcha');
+			$this->form_validation->set_rules('from_email', 'From Email', 'required|valid_email');
+			$this->form_validation->set_rules('subject', 'Email Subject', 'required');
+			$this->form_validation->set_rules('message', 'Message', 'required');
+
+			if ($send && $this->form_validation->run()) {
 				$email = $this->input->post('from_email');
 				$subject = "[TXTPS] " . $this->input->post('subject');
 				$message = $this->input->post('message');
@@ -57,6 +63,22 @@
 			$this->load->view('templates/header', $data);
 			$this->load->view('pages/contact.php', $data);
 			$this->load->view('templates/footer', $data);
+		}
+
+		public function validate_captcha($input) {
+			$captcha_response = recaptcha_check_answer(
+				'6Lf8mOsSAAAAAMgP8sJnUKtS86Uy2vztww_nplCG',
+				$_SERVER["REMOTE_ADDR"],
+				$_POST["recaptcha_challenge_field"],
+				$_POST["recaptcha_response_field"]
+			);
+
+			if (!$captcha_response->is_valid) {
+				$this->validation->set_message('validate_captcha','Your answer for the captcha was incorrect, please try again');
+				return false;
+			} else {
+				return true;
+			}
 		}
 	}
 ?>
