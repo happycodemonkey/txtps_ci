@@ -29,20 +29,37 @@
 
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
+			$email = $this->input->post('email');
 
-			if ($username && $password) {
+			$this->load->library('form_validation');
 
-				$addit_info = array(
-					'first_name' => $this->input->post('first_name'),
-					'last_name' => $this->input->post('last_name')
-				);
+			$this->form_validation->set_rules('first_name', 'First Name', 'required');
+			$this->form_validation->set_rules('last_name', 'Last Name', 'required');
+			$this->form_validation->set_rules('username', 'Email', 'required|valid_email');
+			$this->form_validation->set_rules('password', 'Password', 'required');
+			$this->form_validation->set_rules('retype_password', 'Retype Password', 'required|matches[password]');
 
-				$this->load->helper('url');
+			if ($username && $password && $this->form_validation->run()) {
+				if (!$this->ion_auth->email_check($username)) {
+					if (!$this->ion_auth->username_check($username)) {
 
-				if ($this->ion_auth->register($username, $password, $username, $addit_info)) {
-					redirect('users/login');
+						$addit_info = array(
+							'first_name' => $this->input->post('first_name'),
+							'last_name' => $this->input->post('last_name')
+						);
+
+						$this->load->helper('url');
+
+						if ($this->ion_auth->register($username, $password, $username, $addit_info)) {
+							redirect('users/login');
+						} else {
+							$data['errors'][] = "There was an issue with your registration.";
+						}
+					} else {
+						$data['errors'][] = 'This username is already registered with this site.';
+					}
 				} else {
-					echo "There was an issue with your registration.";
+					$data['errors'][] = 'This email is already registered with this site.';
 				}
 			}
 

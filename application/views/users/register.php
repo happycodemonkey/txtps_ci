@@ -1,5 +1,14 @@
 <div class='site_body'>
+<h2>Register</h2>
 <?php
+	if (isset($errors)) {
+		foreach($errors as $error) {
+			print "<h3 class='error'>" . $error . "</h3>";
+		}
+	}
+
+	print "<h3 class='error'>" . validation_errors() . "</h3>";
+
 	$this->load->helper('form');
 
 	echo form_open('users/register');
