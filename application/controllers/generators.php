@@ -42,6 +42,9 @@
 		public function delete($generator_id) {
 			$this->load->model('Generator_model');
 			$this->Generator_model->delete_generator($generator_id);
+			
+			$this->load->helper('url');
+			redirect('generators/view');
 		}
 
 		public function add($collection_id = null) {
