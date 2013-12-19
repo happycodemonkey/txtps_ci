@@ -27,12 +27,12 @@
 	/**
 	 * Site Title, example.com
 	 */
-	$config['site_title']		   = "Example.com";
+	$config['site_title']		   = "TxTPS";
 	
 	/**
 	 * Admin Email, admin@example.com
 	 */
-	$config['admin_email']		   = "admin@example.com";
+	$config['admin_email']		   = "admin@txtps.tacc.utexas.edu";
 	
 	/**
 	 * Default group, use name
@@ -71,7 +71,7 @@
 	/**
 	 * Email Activation for registration
 	 **/
-	$config['email_activation']    = false;
+	$config['email_activation']    = true;
 
 	/**
 	 * Manual Activation for registration
@@ -97,7 +97,7 @@
 	 * Send Email using the builtin CI email class
 	 * if false it will return the code and the identity
 	 **/
-	$config['use_ci_email']= FALSE;
+	$config['use_ci_email']= true;
 
 	/**
 	 * Email content type

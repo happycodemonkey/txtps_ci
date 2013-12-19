@@ -233,6 +233,7 @@ class Ion_auth
 		$this->ci->ion_auth_model->trigger_events('pre_account_creation');
 
 		$email_activation = $this->ci->config->item('email_activation', 'ion_auth');
+		error_log($email_activation);
 
 		if (!$email_activation)
 		{
@@ -259,6 +260,8 @@ class Ion_auth
 				$this->set_error('account_creation_unsuccessful');
 				return FALSE;
 			}
+
+			error_log($id);
 
 			$deactivate = $this->ci->ion_auth_model->deactivate($id);
 
@@ -288,6 +291,7 @@ class Ion_auth
 			else
 			{
 				$message = $this->ci->load->view($this->ci->config->item('email_templates', 'ion_auth').$this->ci->config->item('email_activate', 'ion_auth'), $data, true);
+				error_log($message . " to: " . $email);
 
 				$this->ci->email->clear();
 				$this->ci->email->set_newline("\r\n");
