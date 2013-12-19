@@ -71,38 +71,46 @@
 			$this->load->model('Resource_model');
 
 			$problems = array_shift($this->Problem_model->get_problem('id', $problem_id)->result());
-			$generators = array_shift($this->Generator_model->get_generator('id', $problems->generator_id)->result());
-			$collections = array_shift($this->Collection_model->get_collection($generators->collection_id)->result());
-			
-			$arguments = array();
-			foreach ($this->Argument_model->get_problem_argument('problem_id', $problem_id)->result() as $argument) {
-				$gen_arg = array_shift($this->Argument_model->get_generator_argument('id', $argument->argument_id)->result());
-				$arguments[$gen_arg->variable] = $argument->value;
-			}
 
-			$data['problems'] = $problems;
-			$data['generators'] = $generators;
-			$data['collections'] = $collections;
-			$data['arguments'] = $arguments;
-			$data['images'] = $this->Resource_model->get_resources_by_reference_id('image', 'problem', $problem_id)->result();
-
-			if (file_exists('/data/files/problems/' . $problem_id)) {
-				foreach (scandir('/data/files/problems/' . $problem_id . '/public') as $file) {
-					if (preg_match("/^.*\.pdf$/i", $file)) {
-						$data['pdfs'][] = $file;
-					} else if (preg_match("/^.*\.png$/i", $file)) {
-						$data['pngs'][] = $file;				
-					} else if (preg_match("/ERROR\.txt/i", $file)) {
-						$data['error_file'][] = $file;
-					} else {
-						$data['files'][] = $file;
+			if (!empty($problems)) {
+				$generators = array_shift($this->Generator_model->get_generator('id', $problems->generator_id)->result());
+				$collections = array_shift($this->Collection_model->get_collection($generators->collection_id)->result());
+				
+				$arguments = array();
+				foreach ($this->Argument_model->get_problem_argument('problem_id', $problem_id)->result() as $argument) {
+					$gen_arg = array_shift($this->Argument_model->get_generator_argument('id', $argument->argument_id)->result());
+					if (!empty($gen_arg)) {
+						$arguments[$gen_arg->variable] = $argument->value;
 					}
 				}
-			}
 
-			$this->load->view('templates/header');
-			$this->load->view('problems/profile', $data);
-			$this->load->view('templates/footer');
+				$data['problems'] = $problems;
+				$data['generators'] = $generators;
+				$data['collections'] = $collections;
+				$data['arguments'] = $arguments;
+				$data['images'] = $this->Resource_model->get_resources_by_reference_id('image', 'problem', $problem_id)->result();
+
+				if (file_exists('/data/files/problems/' . $problem_id)) {
+					foreach (scandir('/data/files/problems/' . $problem_id . '/public') as $file) {
+						if (preg_match("/^.*\.pdf$/i", $file)) {
+							$data['pdfs'][] = $file;
+						} else if (preg_match("/^.*\.png$/i", $file)) {
+							$data['pngs'][] = $file;				
+						} else if (preg_match("/ERROR\.txt/i", $file)) {
+							$data['error_file'][] = $file;
+						} else {
+							$data['files'][] = $file;
+						}
+					}
+				}
+
+				$this->load->view('templates/header');
+				$this->load->view('problems/profile', $data);
+				$this->load->view('templates/footer');
+			} else {
+				$this->load->helper('url');
+				redirect('problems/view');
+			}
 
 		}
 
