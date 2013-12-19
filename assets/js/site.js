@@ -1,5 +1,4 @@
 $(document).ready(function () {	
-	
 	$('#nav li').hover(
 		function () {
 			//show its submenu
@@ -33,5 +32,10 @@ $(document).ready(function () {
 			}
 		}
 	);
+
+	$('#image_wrapper.site_body').click(function() {
+		$('#home_wrapper.site_body').show();
+		$(this).hide();
+	});
 });
 

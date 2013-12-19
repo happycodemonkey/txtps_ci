@@ -1,4 +1,10 @@
-<div id='home_wrapper' class='site_body'>
+<div id='image_wrapper' class='site_body'>
+	<img src="/assets/data/files/problems/251/public/mmdump-c-1-1-110.png">
+	<br />
+	<h2>Click to enter the site.</h2>
+</div>
+
+<div id='home_wrapper' class='site_body' style="display:none;">
 <div id='recent_problems'>
 	<h2>Recent Problems:</h2>
 	<?php

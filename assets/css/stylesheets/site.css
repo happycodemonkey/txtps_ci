@@ -212,3 +212,7 @@ div.site_body div#recent_generators {
   padding: 0 0 1em 0;
   overflow: hidden;
 }
+/* line 213, ../sass/site.scss */
+div.site_body#image_wrapper {
+  text-align: center;
+}
