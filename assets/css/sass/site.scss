@@ -105,6 +105,10 @@ body {font-family:arial; font-size:11px; background-color: $base-color}
 color: red;
 }
 
+.success {
+color: green;
+}
+
 div#header {
 	height:110px;
 	width:1000px;
@@ -212,6 +216,11 @@ div.site_body {
 	
 	&#image_wrapper {
 		text-align: center;
+
+		img {
+			width: 700px;
+			height: 700px;
+		}
 	}
 }
 

@@ -6,6 +6,9 @@
 			print "<h3 class='error'>" . $error . "</h3>";
 		}
 	}
+	if (isset($success)) {
+		print "<h3 class='success'>" . $success . "</h3>";
+	}
 
 	print "<h3 class='error'>" . validation_errors() . "</h3>";
 

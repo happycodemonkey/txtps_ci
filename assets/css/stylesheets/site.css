@@ -107,6 +107,11 @@ body {
 }
 
 /* line 108, ../sass/site.scss */
+.success {
+  color: green;
+}
+
+/* line 112, ../sass/site.scss */
 div#header {
   height: 110px;
   width: 1000px;
@@ -121,36 +126,36 @@ div#header {
   border-top-right-radius: 5px;
   border: solid 1px;
 }
-/* line 123, ../sass/site.scss */
+/* line 127, ../sass/site.scss */
 div#header div#top_header div#user_links {
   float: right;
   font-size: 15pt;
   text-align: right;
   width: 30%;
 }
-/* line 130, ../sass/site.scss */
+/* line 134, ../sass/site.scss */
 div#header div#top_header div#txtps_header_image {
   float: left;
   width: 30%;
 }
-/* line 135, ../sass/site.scss */
+/* line 139, ../sass/site.scss */
 div#header div#top_header div#top_header_text {
   text-align: center;
   float: right;
   width: 35%;
 }
-/* line 142, ../sass/site.scss */
+/* line 146, ../sass/site.scss */
 div#header div#header_menu {
   clear: both;
   background-color: blue;
 }
 
-/* line 148, ../sass/site.scss */
+/* line 152, ../sass/site.scss */
 div#header, h3#home_head {
   clear: both;
 }
 
-/* line 153, ../sass/site.scss */
+/* line 157, ../sass/site.scss */
 div#footer {
   clear: both;
   width: 1000px;
@@ -166,32 +171,32 @@ div#footer {
   border-bottom-right-radius: 5px;
   border: solid 1px;
 }
-/* line 169, ../sass/site.scss */
+/* line 173, ../sass/site.scss */
 div#footer #tacc_footer_image,
 div#footer #footer_text {
   float: left;
   width: 30%;
   position: relative;
 }
-/* line 175, ../sass/site.scss */
+/* line 179, ../sass/site.scss */
 div#footer #utexas_footer_image {
   float: right;
   width: 30%;
   position: relative;
   text-align: right;
 }
-/* line 182, ../sass/site.scss */
+/* line 186, ../sass/site.scss */
 div#footer #footer_text {
   text-align: center;
 }
 
-/* line 188, ../sass/site.scss */
+/* line 192, ../sass/site.scss */
 hr {
   height: 1px;
   color: #333333;
 }
 
-/* line 193, ../sass/site.scss */
+/* line 197, ../sass/site.scss */
 div.site_body {
   width: 1000px;
   margin-left: 150px;
@@ -202,7 +207,7 @@ div.site_body {
   border-left: 1px solid;
   border-right: 1px solid;
 }
-/* line 205, ../sass/site.scss */
+/* line 209, ../sass/site.scss */
 div.site_body div#recent_problems,
 div.site_body div#recent_collections,
 div.site_body div#recent_generators {
@@ -212,7 +217,12 @@ div.site_body div#recent_generators {
   padding: 0 0 1em 0;
   overflow: hidden;
 }
-/* line 213, ../sass/site.scss */
+/* line 217, ../sass/site.scss */
 div.site_body#image_wrapper {
   text-align: center;
+}
+/* line 220, ../sass/site.scss */
+div.site_body#image_wrapper img {
+  width: 700px;
+  height: 700px;
 }

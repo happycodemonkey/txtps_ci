@@ -3,9 +3,6 @@
 		public function login() {
 			$data['title'] = 'Login';
 
-			$this->load->view('templates/header', $data);
-			$this->load->view('users/login.php', $data);
-			$this->load->view('templates/footer', $data);
 
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
@@ -15,16 +12,20 @@
 				if($this->ion_auth->login($username, $password, TRUE)) {
 					redirect('pages/view/home');
 				} else {
-					redirect('users/register/login');
+					$data["errors"][] = "You entered an incorrect username or password, or your account has not yet been activated. Please try again.";
 				}
 			}
+			
+			$this->load->view('templates/header', $data);
+			$this->load->view('users/login.php', $data);
+			$this->load->view('templates/footer', $data);
 		}
 
 		public function register($login = null) {
 			$data['title'] = 'Register';
 
 			if ($login) {
-				echo "Please register.";
+				$data["errors"][] = "Please register.";
 			}
 
 			$username = $this->input->post('username');
@@ -51,7 +52,7 @@
 						$this->load->helper('url');
 
 						if ($this->ion_auth->register($username, $password, $username, $addit_info)) {
-							redirect('users/login');
+							$data['success'] = "You have successfully registered. Please check for your activation email.";
 						} else {
 							$data['errors'][] = "There was an issue with your registration.";
 						}

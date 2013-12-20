@@ -1,5 +1,11 @@
 <div class='site_body'>
 <?php
+if (isset($errors)) {
+		foreach ($errors as $error) {
+			print "<h3 class='error'>" . $error . "</h3>";
+		}
+	}
+
 	$this->load->helper('form');
 
 	echo form_open('users/login');

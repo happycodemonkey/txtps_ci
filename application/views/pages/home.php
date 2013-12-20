@@ -1,5 +1,5 @@
 <div id='image_wrapper' class='site_body'>
-	<img src="/assets/data/files/problems/251/public/mmdump-c-1-1-110.png">
+	<img src="/assets/image/matrix2_dg.png">
 	<br />
 	<h2>Click to enter the site.</h2>
 </div>
