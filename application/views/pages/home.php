@@ -1,7 +1,5 @@
 <div id='image_wrapper' class='site_body'>
 	<img src="/assets/image/matrix2_dg.png">
-	<br />
-	<h2>Click to enter the site.</h2>
 </div>
 
 <div id='home_wrapper' class='site_body' style="display:none;">
