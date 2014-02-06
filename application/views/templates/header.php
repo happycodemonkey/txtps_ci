@@ -25,8 +25,6 @@
 				echo "<br />";
 				echo " <a href='/users/logout'><b>Logout</b></a>  | ";
 				echo " <a href='/users/change_password'><b>Change Password</b></a> ";
-				echo "<br />";
-				echo "<a href='https://lists.tacc.utexas.edu/mailman/listinfo/txtps-announce'>Sign up for the mailing list</a>";
 			} else {
 				echo "<br />";
 				echo " <a href='/users/login'><b>Login</b></a>  | ";
@@ -56,6 +54,7 @@
 					<li><a href="/pages/view/formats">File Formats</a></li>
 					<li><a href="/pages/view/faq">FAQ</a></li>
 					<li><a href="/pages/contact">Contact Us</a></li>
+					<li><a href='https://lists.tacc.utexas.edu/mailman/listinfo/txtps-announce'>Mailing List</a></li>
 				</ul>
 				<div class="clear"></div>
 			</li>

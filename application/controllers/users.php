@@ -52,6 +52,7 @@
 						$this->load->helper('url');
 
 						if ($this->ion_auth->register($username, $password, $username, $addit_info)) {
+							$data['redirect_mailing_list'] = $this->input->post('mailing_list');
 							$data['success'] = "You have successfully registered. Please check for your activation email.";
 						} else {
 							$data['errors'][] = "There was an issue with your registration.";
