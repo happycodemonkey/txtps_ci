@@ -55,6 +55,11 @@
 					$this->db->where($key . ' >= ', 
 						(int) $value['greater_than']); 					
 				}
+
+				if ($value['like'] != '') {
+					error_log($key . " " . $value['like']);
+					$this->db->like($key, $value['like']);
+				}
 			}
 
 			$this->db->group_by('problem.identifier');

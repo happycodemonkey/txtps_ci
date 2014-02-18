@@ -30,6 +30,7 @@
 			$rows = $this->Autocomplete_model->GetAnamodColumns();
 			$anamod_options = array();
 
+			$anamod_options['identifier'] = 'identifier'; 
 			foreach($rows as $row) {
 				$anamod_options[$row->Field] = $row->Field;
 			}
@@ -46,7 +47,8 @@
 				while ($num_vars > 0) {
 					$range = array(
 						'less_than' => $this->input->post('value_less_than_' . $num_vars),
-						'greater_than' => $this->input->post('value_greater_than_' . $num_vars)
+						'greater_than' => $this->input->post('value_greater_than_' . $num_vars),
+						'like' => $this->input->post('value_like_' . $num_vars)
 					);
 
 					$search_options[$this->input->post('problem_variable_' . $num_vars)] = $range;
@@ -263,6 +265,60 @@
 
 		}
 
+		public function rerun($problem_id) {
+			$this->load->model('Generator_model');
+			$this->load->model('Problem_model');
+			$this->load->model('Argument_model');
+
+			$problem = array_shift($this->Problem_model->get_problem('id', $problem_id)->result());
+
+			if (!empty($problem)) {
+				$generator = array_shift($this->Generator_model->get_generator('id', $problem->generator_id)->result());
+				
+				$arguments = array();
+				foreach ($this->Argument_model->get_problem_argument('problem_id', $problem_id)->result() as $argument) {
+					$gen_arg = array_shift($this->Argument_model->get_generator_argument('id', $argument->argument_id)->result());
+					if (!empty($gen_arg)) {
+						$arguments[$gen_arg->variable] = $argument->value;
+					}
+				}
+			}
+
+			if ($this->generate_problem($generator, $problem_id, $arguments)) {
+				$this->load->helper('url');
+				redirect('/problems/profile/' . $problem_id);
+			} else {
+				$this->load->library('email');
+				$user = $this->ion_auth->user()->row();
+
+				$message = "Your generator has produced no output and may have encountered an error."
+					. " Please check your script and inputs and try again. If the problem persists" 
+					. " please contact an administrator."
+					. " <a href='http://" 
+					. $_SERVER['SERVER_NAME'] . "/problems/profile/" 
+					. $problem->id . "'>Click here</a> to view the problem.";
+
+				$this->email->from('admin@txtps.tacc.utexas.edu', 'TxTPS');
+				$this->email->reply_to('help@tacc.utexas.edu', 'TACC Help');
+				$this->email->to($user->email);
+				$this->email->bcc("eijkhout@tacc.utexas.edu");
+				$this->email->subject("There was a problem running your generator.");
+				$this->email->message($message);
+
+				if ($this->email->send()) {
+					error_log("Generator produced no output, email sent to " . $user->email);
+					error_log($message);
+				}  else {
+					error_log($this->email->print_debugger());
+				}
+				
+				$data['error'] = "Generator produced no output.";
+			}
+			
+			$this->load->helper('url');
+			redirect('/problems/profile/' . $problem_id);
+		}
+
 		public function check_min($value, $arg_min) {
 			if ($value >= $arg_min) {
 				return true;
@@ -290,7 +346,13 @@
 
 			$problem_file_dir = "/data/files/problems/" . $problem_id;
 
-			if(mkdir($problem_file_dir) && mkdir($problem_file_dir . "/public") && mkdir($problem_file_dir . "/private")) {
+			if (!is_dir($problem_file_dir)) {
+				mkdir($problem_file_dir); 
+				mkdir($problem_file_dir . "/public");
+				mkdir($problem_file_dir . "/private");
+			}
+
+			if(is_dir($problem_file_dir)) {
 
 				$shell_command = "python $generator->script " . $problem_file_dir . " '" . json_encode($arg_list) . "' > " 
 					. $problem_file_dir . "/private/stdout 2>&1";

@@ -37,6 +37,15 @@ $(document).ready(function() {
 		echo "<div class='field_set'>";
 		echo form_label('<b>*Problem variable:</b><br />');
 		echo form_dropdown('problem_variable_' . $a, $dropdown_options);
+		
+		echo "<br /><br />";
+		echo "<b>Search Value:</b><br />";
+		echo form_label('<b>Problem variable is like:</b><br />'); 
+		echo form_input('value_like_' . $a, 
+			$this->input->post('value_like_' . $a) ?  
+			$this->input->post('value_like_' . $a) : 
+			'');
+		echo "<br />";
 
 		echo "<br /><br />";
 		echo "<b>Select Range:</b><br />";
