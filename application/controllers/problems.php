@@ -79,10 +79,12 @@
 				$collections = array_shift($this->Collection_model->get_collection($generators->collection_id)->result());
 				
 				$arguments = array();
-				foreach ($this->Argument_model->get_problem_argument('problem_id', $problem_id)->result() as $argument) {
-					$gen_arg = array_shift($this->Argument_model->get_generator_argument('id', $argument->argument_id)->result());
-					if (!empty($gen_arg)) {
-						$arguments[$gen_arg->variable] = $argument->value;
+				foreach ($this->Argument_model->get_generator_argument('generator_id', $problems->generator_id)->result() as $argument) {
+					$problem_argument = array_shift($this->Argument_model->get_problem_argument('argument_id', $argument->id, 'problem_id', $problem_id)->result());
+					if (!empty($problem_argument)) {
+						$arguments[$argument->variable] = $problem_argument->value;
+					} else {
+						$arguments[$argument->variable] = $argument->default_value;
 					}
 				}
 
@@ -189,7 +191,9 @@
 						$data['problem_id'] = $problem_id;
 						if ($problem_id != null) {
 							$problem_argument = array_shift($this->Argument_model->get_problem_argument('argument_id', $argument->id, 'problem_id', $problem_id)->result());
-							$argument->value = $problem_argument->value;
+							if (!empty($problem_argument)) {
+								$argument->value = $problem_argument->value;
+							}
 						}
 
 							
@@ -276,10 +280,12 @@
 				$generator = array_shift($this->Generator_model->get_generator('id', $problem->generator_id)->result());
 				
 				$arguments = array();
-				foreach ($this->Argument_model->get_problem_argument('problem_id', $problem_id)->result() as $argument) {
-					$gen_arg = array_shift($this->Argument_model->get_generator_argument('id', $argument->argument_id)->result());
-					if (!empty($gen_arg)) {
-						$arguments[$gen_arg->variable] = $argument->value;
+				foreach ($this->Argument_model->get_generator_argument('generator_id', $problem->generator_id)->result() as $argument) {
+					$problem_argument = array_shift($this->Argument_model->get_problem_argument('argument_id', $argument->id, 'problem_id', $problem_id)->result());
+					if (!empty($problem_argument)) {
+						$arguments[$argument->variable] = $problem_argument->value;
+					} else {
+						$arguments[$argument->variable] = $argument->default_value;
 					}
 				}
 			}

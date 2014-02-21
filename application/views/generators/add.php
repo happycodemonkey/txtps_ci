@@ -39,6 +39,9 @@
 		<br />
 		<?php echo form_input('generator_script', isset($generator_script) ? $generator_script : ''); ?>
 		<br /><br />
+		<?php echo form_label('<b>*Publish this generator</b>'); ?>
+		<?php echo form_checkbox('publish', 'publish', TRUE); ?>
+		<br /><br />
 	</div>
 <?php	
 	echo form_submit('submit', 'Continue');

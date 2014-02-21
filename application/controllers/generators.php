@@ -68,7 +68,8 @@
 						'name' => $this->input->post('generator_name'),
 						'collection_id' => $this->input->post('collection_id'),
 						'description' => $this->input->post('generator_description'),
-						'script' => $this->input->post('generator_script')
+						'script' => $this->input->post('generator_script'),
+						'published' => $this->input->post('publish')
 					);
 
 					$generator = array_shift($this->Generator_model->add_generator($new_generator)->result());
@@ -292,6 +293,16 @@
 					}
 				}
 			}
+		}
+
+		public function unpublished() {
+			$this->load->model('Generator_model');
+
+			$data['generators'] = array_shift($this->Generator_model->get_generator('published', 'false')->result());
+			
+			$this->load->view('templates/header');
+			$this->load->view('generators/unpublished', $data);
+			$this->load->view('templates/footer');
 		}
 
 	}

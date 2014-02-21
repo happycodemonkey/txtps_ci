@@ -41,7 +41,7 @@
 	<table width='40%'>
 	<?php
 	foreach ($arguments as $argument) {
-		if ($problem_id) {
+		if ($problem_id && isset($argument->value)) {
 			$value = $argument->value;
 		} else {
 			$value = $argument->default_value;
