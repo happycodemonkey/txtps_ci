@@ -28,7 +28,6 @@
 		function get_recent_generators() {
 			$this->db->limit(10);
 			$this->db->order_by('id', 'desc');
-			$this->db->where('published', 'true');
 			return $this->db->get('generator');
 		}
 
