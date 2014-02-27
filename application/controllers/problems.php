@@ -233,7 +233,9 @@
 							$this->load->library('email');
 							$user = $this->ion_auth->user()->row();
 
-							$message = "Your generator has produced no output and may have encountered an error."
+							$message = "Hello " . $user->first_name . " " . $user->last_name . ", "
+								. " This email is to inform you that your generator, " . $run_generator->generator_name
+								. " has produced no output and may have encountered an error." 
 								. " Please check your script and inputs and try again. If the problem persists" 
 								. " please contact an administrator."
 								. " <a href='http://" 
