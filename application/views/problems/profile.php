@@ -47,13 +47,13 @@
 		}
 	}
 
-	print "<br /><br />";
-	print "<a target='_blank' href='/problems/rerun/" . $problems->id . "'>";
-	print "Re-run this problem";
-	print "</a>";
+	//print "<br /><br />";
+	//print "<a target='_blank' href='/problems/rerun/" . $problems->id . "'>";
+	//print "Re-run this problem";
+	//print "</a>";
 	print "<br /><br />";
 	print "<a target='_blank' href='/problems/add/" . $generators->id . "/" . $problems->id . "'>";
-	print "Re-run this problem with new arguments";
+	print "Revisit this problem's parameters";
 	print "</a>";
 ?>
 </div>
